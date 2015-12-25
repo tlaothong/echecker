@@ -13,7 +13,7 @@ namespace ApiApp.Controllers
     public class ohaeVehicleController : ApiController
     {
         /// <summary>
-        /// List values by email.
+        /// List vehicles by email.
         /// </summary>
         /// <param name="email">username email</param>
         /// <returns>vehicles</returns>
@@ -29,6 +29,23 @@ namespace ApiApp.Controllers
 
             return document;
         }
+
+        /// <summary>
+        /// Post a new vehicle.
+        /// </summary>
+        /// <param name="vehicle">The new vehicle.</param>
+        // POST api/values
+        public void Post(ohaeVehicle vehicle)
+        {
+            var client = new MongoDB.Driver.MongoClient("mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o");
+            var database = client.GetDatabase("MongoLab-4o");
+
+            var collection = database.GetCollection<ohaeVehicle>("test.ohaevehicle");            
+
+            collection.InsertOne(vehicle);
+        }
+
+
 
         /// <summary>
         /// Update the modified value.
@@ -48,7 +65,7 @@ namespace ApiApp.Controllers
 
             //var documents = collection.Find(x => x.Email == email).ToList();
 
-            collection.UpdateMany(x=>x.Email == email, update);
+            collection.UpdateMany(x => x.Email == email, update);
         }
     }
 }
