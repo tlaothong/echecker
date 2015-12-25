@@ -66,9 +66,19 @@
 
     }
 
+    export class MockVehicles extends MockTableDataServiceBase {
+
+        static $inject = ['$resource'];
+        constructor($resource: angular.resource.IResourceService) {
+            super("mas-appmob-Vehicles", $resource);
+        }
+
+    }
+
 	angular
 		.module('app.shared')
         .service('app.shared.SampleDataService', SampleDataService)
         .service('app.shared.SampleUrlDataService', SampleUrlDataService)
-        .service('app.shared.MockTableDataServiceBase', MockTableDataServiceBase);
+        .service('app.shared.MockTableDataServiceBase', MockTableDataServiceBase)
+        .service('app.shared.MockVehicles', MockVehicles);
 }

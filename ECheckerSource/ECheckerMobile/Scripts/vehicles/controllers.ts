@@ -1,20 +1,35 @@
 ﻿module app.vehicles {
 	'use strict';
 
-	class MyController {
+    class VehicleListController {
+        static $inject = ['data', '$scope']
+        constructor(public data, public scope: any) {
+        }
+    }
 
-		//public model: any = null;
+    class VehicleEditController {
+        static $inject = ['data', '$scope', '$state']
+        constructor(public data, public scope: any, private $state) {
+        }
 
-		static $inject = ['$scope'];
-		constructor(private $scope: ng.IScope) {
-		}
+        public Submit(): void {
+        
+            //TODO: Process something...
+            this.$state.go('app.manvehicles');
+        }
+    }
 
-		// public myMethod(): void {
-		// }
+    class ManageVehicleController {
 
-	}
+        static $inject = ['data', '$scope'];
+        constructor(public data, private $scope: ng.IScope) {
+        }
 
-	angular
-		.module('app.vehicles')
-		.controller('app.vehicles.MyController', MyController);
+    }
+
+    angular
+        .module('app.vehicles')
+        .controller('app.vehicles.VehicleListController', VehicleListController)
+        .controller('app.vehicles.VehicleEditController', VehicleEditController)
+        .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

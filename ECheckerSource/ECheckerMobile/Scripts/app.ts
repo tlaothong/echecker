@@ -28,7 +28,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
         .state('app', {
             url: '/app',
             abstract: true,
-            templateUrl: 'templates/menu.html',
+            
+            templateUrl: 'templates/sidemenu.html',
             controller: 'AppCtrl'
         })
 
@@ -41,6 +42,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 }
             }
         })
+
         .state('app.vehicle.status', {
             url: '/status',
             views: {
@@ -49,6 +51,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 }
             }
         })
+        
+        .state('app.vehicles', {
+            url: '/vehicles',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/VehicleList.html',
+                    controller: 'app.vehicles.VehicleListController as VehicleListCtrl',
+                    resolve: {
+                        "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                    }
+                }
+            }
+        })
+        .state('app.manvehicles', {
+            url: '/manvehicles',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/ManageVehicle.html',
+                    controller: 'app.vehicles.ManageVehicleController as ManageVehicleCtrl',
+                    resolve: {
+                        "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                    }
+                }
+            }
+        })
+        .state('app.editvehicle', {
+            url: '/editvehicle/:vid',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/UpdateVehicle.html',
+                    controller: 'app.vehicles.VehicleEditController as VehicleEditCtrl',
+                    resolve: {
+                        "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
+                            return svc.get(p.vid);
+                        }]
+                    }
+                }
+            }
+        })
+
 
         .state('app.search', {
             url: '/search',
@@ -58,7 +100,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 }
             }
         })
-
+        
         .state('app.browse', {
             url: '/browse',
             views: {
@@ -105,5 +147,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
         })
       ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+    $urlRouterProvider.otherwise('/app/vehicles');
 });

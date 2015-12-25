@@ -1,0 +1,29 @@
+﻿<ion-view view-title="UpdateVehicle">
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">ทะเบียนรถ</span>
+                <input class="text-center" type="text" value="{{ VehicleEditCtrl.data.PlateNumber }}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">ประเภทรถยนต์</span>
+                <input class="text-center" type="text" disabled="disabled" value=" {{ VehicleEditCtrl.data.VehicleTypeId }}">
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">
+                    จังหวัด
+                </span>
+                <select  class="text-center">
+                    <option selected>กรุงเทพฯ</option>
+                    <option>ขอนแก่น</option>
+                    <option>อุดรธานี</option>
+                    <option>อุบลราชธานี</option>
+                </select>
+            </label>
+        </div>
+        <button ng-click="VehicleEditCtrl.Submit()" class="col button button-balanced">
+            ยืนยัน
+        </button>
+
+    </ion-content>
+</ion-view>
