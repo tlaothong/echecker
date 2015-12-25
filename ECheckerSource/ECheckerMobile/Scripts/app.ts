@@ -32,6 +32,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared'])
             controller: 'AppCtrl'
         })
 
+        .state('app.vehicle', {
+            url: '/vehicle/:vid',
+            abstract: true,
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/vehicle.html'
+                }
+            }
+        })
+        .state('app.vehicle.status', {
+            url: '/status',
+            views: {
+                'vContent': {
+                    templateUrl: 'templates/vehicle-status.html'
+                }
+            }
+        })
+
         .state('app.search', {
             url: '/search',
             views: {
