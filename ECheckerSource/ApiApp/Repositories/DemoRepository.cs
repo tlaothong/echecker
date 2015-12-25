@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiApp.Repositories
 {
-    public class DemoRepository : IDemoRepository
+    class DemoRepository : IDemoRepository
     {
         public string GetEmail(string userId)
         {
