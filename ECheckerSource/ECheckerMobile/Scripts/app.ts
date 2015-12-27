@@ -57,7 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
             views: {
                 'menuContent': {
                     templateUrl: 'templates/VehicleList.html',
-                    controller: 'app.vehicles.VehicleListController as VehicleListCtrl',
+                    controller: 'app.vehicles.VehicleListController as cx',
                     resolve: {
                         "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
                     }
@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
             views: {
                 'menuContent': {
                     templateUrl: 'templates/ManageVehicle.html',
-                    controller: 'app.vehicles.ManageVehicleController as ManageVehicleCtrl',
+                    controller: 'app.vehicles.ManageVehicleController as cx',
                     resolve: {
                         "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
                     }
@@ -81,7 +81,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
             views: {
                 'menuContent': {
                     templateUrl: 'templates/UpdateVehicle.html',
-                    controller: 'app.vehicles.VehicleEditController as VehicleEditCtrl',
+                    controller: 'app.vehicles.VehicleEditController as cx',
                     resolve: {
                         "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
                             return svc.get(p.vid);
@@ -90,8 +90,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 }
             }
         })
-
-
+        .state('app.addvehicle', {
+            url: '/addvehicle',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/addvehicle.html',
+                    controller: 'app.vehicles.VehicleAddController as cx'
+                }
+            }
+        })
+        .state('app.schedules', {
+            url: '/schedules/',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/notification.html',
+                    controller: 'app.noti.NotificationController as cx'
+                }
+            }
+        })
+        
         .state('app.search', {
             url: '/search',
             views: {

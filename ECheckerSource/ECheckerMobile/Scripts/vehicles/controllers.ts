@@ -2,17 +2,29 @@
 	'use strict';
 
     class VehicleListController {
-        static $inject = ['data', '$scope']
-        constructor(public data, public scope: any) {
+        static $inject = ['data']
+        constructor(public data) {
         }
     }
 
     class VehicleEditController {
-        static $inject = ['data', '$scope', '$state']
-        constructor(public data, public scope: any, private $state) {
+        static $inject = ['data', '$state']
+        constructor(private data, private $state) {
         }
 
-        public Submit(): void {
+        private Submit(): void {
+        
+            //TODO: Process something...
+            this.$state.go('app.manvehicles');
+        }
+    }
+    
+    class VehicleAddController {
+        static $inject = ['$state']
+        constructor(private $state) {
+        }
+
+        private Submit(): void {
         
             //TODO: Process something...
             this.$state.go('app.manvehicles');
@@ -21,8 +33,8 @@
 
     class ManageVehicleController {
 
-        static $inject = ['data', '$scope'];
-        constructor(public data, private $scope: ng.IScope) {
+        static $inject = ['data'];
+        constructor(public data) {
         }
 
     }
@@ -31,5 +43,6 @@
         .module('app.vehicles')
         .controller('app.vehicles.VehicleListController', VehicleListController)
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
+        .controller('app.vehicles.VehicleAddController', VehicleAddController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }
