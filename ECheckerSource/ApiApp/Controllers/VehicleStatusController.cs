@@ -1,6 +1,6 @@
 ﻿using ApiApp.Models;
-using MongoDB.Bson;
-using MongoDB.Driver;
+//using MongoDB.Bson;
+//using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace ApiApp.Controllers
     /// </summary>
     public class VehicleStatusController : ApiController
     {
-        MongoClient _mongo = new MongoClient("mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o");
+        //MongoClient _mongo = new MongoClient("mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o");
 
 
         /// <summary>
@@ -25,18 +25,20 @@ namespace ApiApp.Controllers
         // GET api/values
         public string Get(int vid)
         {
-            var _db = _mongo.GetDatabase("MongoLab-4o");
+            //var _db = _mongo.GetDatabase("MongoLab-4o");
 
-            var collection = _db.GetCollection<ReadyStatus>("ReadyStatus6");
+            //var collection = _db.GetCollection<ReadyStatus>("ReadyStatus6");
 
-            //var filter = Builders<ReadyStatus>.Filter.Eq("VehicleId", "1");
-            //var result = collection.Find(filter).FirstOrDefault();
+            ////var filter = Builders<ReadyStatus>.Filter.Eq("VehicleId", "1");
+            ////var result = collection.Find(filter).FirstOrDefault();
 
-            //return result.Status;
+            ////return result.Status;
 
-            var qry = collection.Find(x => x.VehicleId == vid).ToList().OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
+            //var qry = collection.Find(x => x.VehicleId == vid).ToList().OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
 
-            return qry.Status;
+            //return qry.Status;
+
+            return "";
         }
 
         /// <summary>
@@ -72,13 +74,13 @@ namespace ApiApp.Controllers
         public void Put(int id, [FromBody]string value)
         {
 
-            var _db = _mongo.GetDatabase("MongoLab-4o");
-            var collection = _db.GetCollection<ReadyStatus>("ReadyStatus6");
+            //var _db = _mongo.GetDatabase("MongoLab-4o");
+            //var collection = _db.GetCollection<ReadyStatus>("ReadyStatus6");
 
 
-            var update = Builders<ReadyStatus>.Update
-                .Set("Status", value);          
-            collection.UpdateOne(x => x.Id == id, update);
+            //var update = Builders<ReadyStatus>.Update
+            //    .Set("Status", value);          
+            //collection.UpdateOne(x => x.Id == id, update);
         }
 
         /// <summary>

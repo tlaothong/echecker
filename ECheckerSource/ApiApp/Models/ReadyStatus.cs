@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +11,11 @@ namespace ApiApp.Models
     /// </summary>
     public class ReadyStatus
     {
+        [BsonId]
         /// <summary>
         /// 
         /// </summary>
-        public int Id { get; set; }
+        public string id { get; set; }
         /// <summary>
         /// รหัส รถ
         /// </summary>

@@ -10,8 +10,9 @@ namespace ApiApp.Repositories
     {
         public string GetEmail(string userId)
         {
-            var coltn = MongoAccess.MongoUtil.GetCollection("");
-            return string.Format("You've send a {0}.", userId);
+            //var coltn = MongoAccess.MongoUtil.GetCollection("");
+            //return string.Format("You've send a {0}.", userId);
+            return "";
         }
     }
 }
