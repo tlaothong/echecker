@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'app.shared'])
+angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.vehicles'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -28,10 +28,87 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared'])
         .state('app', {
             url: '/app',
             abstract: true,
-            templateUrl: 'templates/menu.html',
+            
+            templateUrl: 'templates/sidemenu.html',
             controller: 'AppCtrl'
         })
 
+        .state('app.vehicle', {
+            url: '/vehicle/:vid',
+            abstract: true,
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/vehicle.html'
+                }
+            }
+        })
+
+        .state('app.vehicle.status', {
+            url: '/status',
+            views: {
+                'vContent': {
+                    templateUrl: 'templates/vehicle-status.html'
+                }
+            }
+        })
+        
+        .state('app.vehicles', {
+            url: '/vehicles',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/VehicleList.html',
+                    controller: 'app.vehicles.VehicleListController as cx',
+                    resolve: {
+                        "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                    }
+                }
+            }
+        })
+        .state('app.manvehicles', {
+            url: '/manvehicles',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/ManageVehicle.html',
+                    controller: 'app.vehicles.ManageVehicleController as cx',
+                    resolve: {
+                        "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                    }
+                }
+            }
+        })
+        .state('app.editvehicle', {
+            url: '/editvehicle/:vid',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/UpdateVehicle.html',
+                    controller: 'app.vehicles.VehicleEditController as cx',
+                    resolve: {
+                        "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
+                            return svc.get(p.vid);
+                        }]
+                    }
+                }
+            }
+        })
+        .state('app.addvehicle', {
+            url: '/addvehicle',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/addvehicle.html',
+                    controller: 'app.vehicles.VehicleAddController as cx'
+                }
+            }
+        })
+        .state('app.schedules', {
+            url: '/schedules/',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/notification.html',
+                    controller: 'app.noti.NotificationController as cx'
+                }
+            }
+        })
+        
         .state('app.search', {
             url: '/search',
             views: {
@@ -40,7 +117,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared'])
                 }
             }
         })
-
+        
         .state('app.browse', {
             url: '/browse',
             views: {
@@ -87,5 +164,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared'])
         })
       ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+    $urlRouterProvider.otherwise('/app/vehicles');
 });

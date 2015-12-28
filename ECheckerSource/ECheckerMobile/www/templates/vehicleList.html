@@ -1,0 +1,67 @@
+﻿<ion-view view-title="DLT Checker">
+    <ion-content>
+        <div class="calm-bg padding">
+            <label class="item item-light item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" class="light-bg" placeholder="Search">
+            </label>
+        </div>
+        <div class="padding-top">
+            <div class="energized-bg row">
+                <div class="col col-33 text-center"><h4 class="light">ยังไม่ตรวจ</h4></div>
+                <div class="col col-33 text-center"><h4 class="positive">ตรวจแล้ว</h4></div>
+                <div class="col col-33 text-center"><h4 class="positive">ส่งวิเคราะห์</h4></div>
+            </div>
+            <div>
+                <ion-list>
+                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 0 }" href="#/app/playlists/{{ item.VehicleId }}">
+                        <h2>
+                            {{ item.PlateNumber }}
+                            <i class="item-note">{{ item.VehicleProgress }}</i>
+                        </h2>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div>
+            <div class="energized-bg row">
+                <div class="col col-33 text-center"><h4 class="positive">ยังไม่ตรวจ</h4></div>
+                <div class="col col-33 text-center"><h4 class="light">ตรวจแล้ว</h4></div>
+                <div class="col col-33 text-center"><h4 class="positive">ส่งวิเคราะห์</h4></div>
+            </div>
+            <div>
+                <ion-list>
+                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 1 }" href="#/app/playlists/{{ item.VehicleId }}">
+                        <h2>
+                            {{ item.PlateNumber }}
+                            <i class="item-note">รอส่งวิเคราะห์</i>
+                        </h2>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div>
+            <div class="energized-bg row">
+                <div class="col col-33 text-center"><h4 class="positive">ยังไม่ตรวจ</h4></div>
+                <div class="col col-33 text-center"><h4 class="positive">ตรวจแล้ว</h4></div>
+                <div class="col col-33 text-center"><h4 class="light">ส่งวิเคราะห์</h4></div>
+            </div>
+            <div>
+                <ion-list>
+                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 2 }" href="#/app/playlists/{{ item.VehicleId }}">
+                        <h2>
+                            {{ item.PlateNumber }}
+                            <i class="item-note">รอส่งวิเคราะห์</i>
+                        </h2>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+
+    </ion-content>
+    <ion-footer-bar class="bar-balanced tabs">
+        <a class="tab-item col tab-item-active">
+            <h4 class="light">ส่งวิเคราะห์ทั้งหมด</h4>
+        </a>
+    </ion-footer-bar>
+</ion-view>

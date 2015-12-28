@@ -1,0 +1,23 @@
+﻿<ion-view view-title="Manage Vehicle">
+    <ion-content>
+
+        <div class="calm-bg padding">
+            <label class="item item-light item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" class="light-bg" placeholder="Search">
+            </label>
+        </div>
+
+        <ion-list>
+            <ion-item class=" item item-calm card" ng-repeat="vehicle in cx.data" ui-sref="app.editvehicle({ vid: vehicle.id })">
+                <h2> {{ vehicle.PlateNumber }} </h2>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+    <ion-footer-bar class="bar-balanced tabs">
+        <a class="tab-item col tab-item-active" ui-sref="app.addvehicle">
+            <h4 class="light">เพิ่มรถ</h4>
+        </a>
+    </ion-footer-bar>
+</ion-view>
