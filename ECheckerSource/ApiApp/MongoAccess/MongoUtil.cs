@@ -11,17 +11,30 @@ namespace ApiApp.MongoAccess
     static class MongoUtil
     {
         private static IMongoClient _client;
-        private static IMongoDatabase _database;
-        private static MongoDbHelper<ReadyStatus> _readyStatus;
-    
+        public static IMongoDatabase _database;
+        public static IMongoCollection<ReadyStatus> _readyStatus;
+        public static IMongoCollection<Vehicles> _vehicles;
+        public static IMongoCollection<Amissed> _amissed;
+        public static IMongoCollection<Checked> _checked;
+        public static IMongoCollection<Topic> _topic;
+        public static IMongoCollection<Users> _users;
+
         static MongoUtil()
         {
             var connectionString = WebConfigurationManager.AppSettings["primaryConnectionString"];
             _client = new MongoClient(connectionString);
             var dbName = WebConfigurationManager.AppSettings["databaseName"];
             _database = _client.GetDatabase(dbName);
-            _readyStatus = new MongoDbHelper<ReadyStatus>(_database, "echecker.ReadyStatus");            
-        }       
+
+            //_vehicles =_database.GetCollection<Vehicles>("echecker.Vehicles");
+            //_readyStatus = _database.GetCollection<ReadyStatus>("echecker.ReadyStatus");
+            //_amissed = _database.GetCollection<Amissed>("echecker.Amissed");
+            //_checked = _database.GetCollection<Checked>("echecker.Checked");
+            //_topic = _database.GetCollection<Topic>("echecker.Topic");
+            //_users = _database.GetCollection<Users>("echecker.Users");
+        }
+
+      
 
 
     }
