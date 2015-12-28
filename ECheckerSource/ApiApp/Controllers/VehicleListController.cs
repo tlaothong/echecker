@@ -1,4 +1,5 @@
 ﻿using ApiApp.Models;
+using ApiApp.Repositories;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -10,8 +11,22 @@ using System.Web.Http;
 
 namespace ApiApp.Controllers
 {
+   
+    /// <summary>
+    /// 
+    /// </summary>
     public class VehicleListController : ApiController
     {
+        private IVechicleRepository repo;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        public VehicleListController(IVechicleRepository repo)
+        {
+            this.repo = repo;
+        }
         /// <summary>
         /// List vehicles by email.
         /// </summary>
@@ -29,7 +44,7 @@ namespace ApiApp.Controllers
 
             //return document;
 
-            return MongoAccess.MongoUtil._vehicles.Find(x=>x.id == id).ToList();
+            return repo.GetVehicles(id);
         }
 
         /// <summary>

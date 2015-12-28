@@ -11,7 +11,7 @@ namespace ApiApp.MongoAccess
     static class MongoUtil
     {
         private static IMongoClient _client;
-        private static IMongoDatabase _database;
+        public static IMongoDatabase _database;
         public static IMongoCollection<ReadyStatus> _readyStatus;
         public static IMongoCollection<Vehicles> _vehicles;
         public static IMongoCollection<Amissed> _amissed;
@@ -26,12 +26,12 @@ namespace ApiApp.MongoAccess
             var dbName = WebConfigurationManager.AppSettings["databaseName"];
             _database = _client.GetDatabase(dbName);
 
-            _vehicles =_database.GetCollection<Vehicles>("echecker.Vehicles");
-            _readyStatus = _database.GetCollection<ReadyStatus>("echecker.ReadyStatus");
-            _amissed = _database.GetCollection<Amissed>("echecker.Amissed");
-            _checked = _database.GetCollection<Checked>("echecker.Checked");
-            _topic = _database.GetCollection<Topic>("echecker.Topic");
-            _users = _database.GetCollection<Users>("echecker.Users");
+            //_vehicles =_database.GetCollection<Vehicles>("echecker.Vehicles");
+            //_readyStatus = _database.GetCollection<ReadyStatus>("echecker.ReadyStatus");
+            //_amissed = _database.GetCollection<Amissed>("echecker.Amissed");
+            //_checked = _database.GetCollection<Checked>("echecker.Checked");
+            //_topic = _database.GetCollection<Topic>("echecker.Topic");
+            //_users = _database.GetCollection<Users>("echecker.Users");
         }
 
       

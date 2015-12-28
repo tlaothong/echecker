@@ -149,6 +149,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AddVehicleController.cs" />
     <Compile Include="Controllers\VehicleListController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VehicleStatusController.cs" />
