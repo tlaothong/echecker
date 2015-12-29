@@ -1,5 +1,30 @@
-﻿<ion-view view-title="Vehicle Status" cache-view="false">
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.data.PlateNumber}}" cache-view="false">
     <ion-content>
-        <h1>Vehicle Status (Ready)</h1>
+        <div class="calm-bg padding">
+            <div class="text-center">
+                <h4 class="text-center"><i class="icon ion-checkmark"></i> พร้อมใช้งาน</h4>
+                <div class="row">
+                    <div class="col col-50">
+                        <button class="button col button-energized" href="" ui-sref="app.vehicle.checklists">
+                            ตรวจรถ
+                        </button>
+                    </div>
+                    <div class="col col-50">
+                        <button class="button col button-balanced">
+                            วิเคราะห์
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ion-content>
+    <ion-footer-bar align-title="left" class="bar-energized">
+        <div class="buttons">
+            <button class="button">Left Button</button>
+        </div>
+        <h1 class="title">Title!</h1>
+        <div class="buttons" ng-click="doSomething()">
+            <button class="button">Right Button</button>
+        </div>
+    </ion-footer-bar>
 </ion-view>

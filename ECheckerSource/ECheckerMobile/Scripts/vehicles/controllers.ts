@@ -31,6 +31,12 @@
         }
     }
 
+    class VehicleStatusController {
+        static $inject = ['data'];
+        constructor(public data) {
+        }
+    }
+
     class ManageVehicleController {
 
         static $inject = ['data'];
@@ -44,5 +50,6 @@
         .controller('app.vehicles.VehicleListController', VehicleListController)
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
         .controller('app.vehicles.VehicleAddController', VehicleAddController)
+        .controller('app.vehicles.VehicleStatusController', VehicleStatusController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

@@ -1,0 +1,13 @@
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.data.PlateNumber}}" cache-view="false">
+    <ion-content>
+        <ion-list>
+            <ion-item class="item item-calm " ng-repeat="cx.data" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                <h2>
+                    {{ cx.data.PlateNumber }}
+                    <i class="item-note">รอส่งวิเคราะห์</i>
+                </h2>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+   
+</ion-view>
