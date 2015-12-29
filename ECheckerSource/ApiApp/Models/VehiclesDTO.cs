@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,12 +8,11 @@ namespace ApiApp.Models
     /// <summary>
     /// 
     /// </summary>
-    public class Vehicles
+    public class VehiclesDTO
     {
-        [BsonId]
         /// <summary>
         /// 
-        /// </summary>
+        /// </summary> 
         public string id { get; set; }
         /// <summary>
         /// 
@@ -37,8 +35,12 @@ namespace ApiApp.Models
         /// </summary>
         public int VehicleProgress { get; set; }
         /// <summary>
-        /// 
+        ///  0 = ตรวจยังไม่เสร็จ ,1=รอส่งวิเคราะห์ ,2=วิเคราะห์แล้ว
         /// </summary>
         public int StatusCode { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime LatestCheckedDate { get; set; }
     }
 }

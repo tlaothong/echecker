@@ -13,14 +13,53 @@ namespace ApiApp.Repositories.Imprementation
     public class VechicleRepository : IVechicleRepository
     {
         /// <summary>
-        /// 
+        /// เพิ่มรถ
+        /// </summary>
+        /// <param name="vehicle"></param>
+        public void AddVehicle(Vehicle vehicle)
+        {
+            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            coltn.InsertOne(vehicle);
+        }
+
+        /// <summary>
+        /// ดึงข้อมูลรถของผู้ใช้
+        /// </summary>
+        /// <param name="id">รหัส รถ</param>
+        /// <returns></returns>
+        public Vehicle GetVehicle(string id)
+        {
+            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            return coltn.Find(x => x.id == id).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// ดึง
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IEnumerable<Vehicles> GetVehicles(string id)
+        public IEnumerable<Vehicle> GetVehicles(string id)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicles>("echecker.Vehicles"); ;
+            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
             return coltn.Find(x => x.id == id).ToList();
+        }
+
+        /// <summary>
+        /// แก้ไขรถ ปล.แก้ได้เฉพาะ เลขทะเบียน กับ จังหวัด
+        /// </summary>
+        /// <param name="vehicle"></param>
+        public void UpdateVehicle(Vehicle vehicle)
+        {
+            var filter = Builders<Vehicle>.Filter.Eq("id", vehicle.id);
+
+            var update = Builders<Vehicle>.Update
+                    .Set(x => x.PlateNumber, vehicle.PlateNumber)
+                    .Inc(x => x.Province, vehicle.Province);
+
+
+            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            coltn.UpdateOne(filter, update);
+
         }
     }
 }

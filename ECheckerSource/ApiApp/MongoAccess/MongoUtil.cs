@@ -13,7 +13,7 @@ namespace ApiApp.MongoAccess
         private static IMongoClient _client;
         public static IMongoDatabase _database;
         public static IMongoCollection<ReadyStatus> _readyStatus;
-        public static IMongoCollection<Vehicles> _vehicles;
+        public static IMongoCollection<Vehicle> _vehicles;
         public static IMongoCollection<Amissed> _amissed;
         public static IMongoCollection<Checked> _checked;
         public static IMongoCollection<Topic> _topic;

@@ -9,23 +9,21 @@ namespace ApiApp.Models
     /// <summary>
     /// 
     /// </summary>
-    public class Checked
+    public class Vehicle
     {
-
         /// <summary>
         /// 
         /// </summary>
         [BsonId]
         public string id { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<CheckTopics> CheckedTopics { get; set; }
+        public string PlateNumber { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public bool IsDone { get; set; }
+        public string Province { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -33,31 +31,10 @@ namespace ApiApp.Models
         /// <summary>
         /// 
         /// </summary>
-        public string VehicleId { get; set; }
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class CheckTopics
-    {
+        public string Email { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [BsonId]      
-        public string id { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsPass { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Comment { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string PhotoURL { get; set; }
+        public DateTime LatestCheckedDate { get; set; }
     }
 }
