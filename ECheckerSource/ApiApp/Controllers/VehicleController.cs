@@ -15,7 +15,7 @@ namespace ApiApp.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [RoutePrefix("api")]
+    [RoutePrefix("api/vehicle")]
     public class VehicleController : ApiController
     {
         private IVechicleRepository repoVehicle;
@@ -42,25 +42,30 @@ namespace ApiApp.Controllers
         [Route("vehicles/{id}")]
         public IEnumerable<VehiclesDTO> Vehicles(string id)
         {
+            //return null;
+
             List<VehiclesDTO> _vehicleList = new List<VehiclesDTO>();
             var vehicle = repoVehicle.GetVehicles(id);
             if (vehicle.Count() > 0)
             {
                 foreach (var item in vehicle)
                 {
+                    var vehicleDto = new VehiclesDTO
+                    {
+                        id = item.id,
+                        PlateNumber = item.PlateNumber,
+                        Province = item.Province,
+                        Email = item.Email,
+                        CreateDate = item.CreateDate,
+                        LatestCheckedDate = item.LatestCheckedDate,
+                        VehicleTypeId = item.VehicleTypeId,
+                    };
+
                     var qry = repoChecking.GetLastChecked(item.id, item.LatestCheckedDate);
 
                     if (qry != null)
                     {
-                        var vehicleDto = new VehiclesDTO
-                        {
-                            id = item.id,
-                            PlateNumber = item.PlateNumber,
-                            Province = item.Province,
-                            Email = item.Email,
-                            CreateDate = item.CreateDate,
-                            LatestCheckedDate = item.LatestCheckedDate,
-                        };
+                       
 
                         if (qry.IsDone)
                         {
@@ -75,14 +80,14 @@ namespace ApiApp.Controllers
                                 vehicleDto.StatusCode = 1;
                             else
                                 vehicleDto.StatusCode = 0;
-                        }
-
-                        _vehicleList.Add(vehicleDto);
+                        }                       
                     }
+                    _vehicleList.Add(vehicleDto);
                 }
             }
 
             return _vehicleList;
+
         }
 
         /// <summary>
@@ -95,7 +100,8 @@ namespace ApiApp.Controllers
         [Route("vehicle/{id}")]
         public Vehicle Vehicle(string id)
         {
-            return repoVehicle.GetVehicle(id);
+            var qry = repoVehicle.GetVehicle(id);
+            return  qry;
         }
 
         /// <summary>

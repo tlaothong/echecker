@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace ApiApp.Repositories.Imprementation
 {
-    public class FormRepository
+    class FormRepository
     {
     }
 }

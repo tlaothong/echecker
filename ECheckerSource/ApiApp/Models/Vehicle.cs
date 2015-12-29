@@ -36,5 +36,10 @@ namespace ApiApp.Models
         /// 
         /// </summary>
         public DateTime LatestCheckedDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int VehicleTypeId { get; set; }
     }
 }

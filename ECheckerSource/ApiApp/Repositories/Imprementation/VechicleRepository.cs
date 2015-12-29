@@ -10,7 +10,7 @@ namespace ApiApp.Repositories.Imprementation
     /// <summary>
     /// 
     /// </summary>
-    public class VechicleRepository : IVechicleRepository
+    class VechicleRepository : IVechicleRepository
     {
         /// <summary>
         /// เพิ่มรถ
@@ -41,7 +41,7 @@ namespace ApiApp.Repositories.Imprementation
         public IEnumerable<Vehicle> GetVehicles(string id)
         {
             var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
-            return coltn.Find(x => x.id == id).ToList();
+            return coltn.Find(x => x.Email == id).ToList();
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="vehicle"></param>
         public void UpdateVehicle(Vehicle vehicle)
         {
-            var filter = Builders<Vehicle>.Filter.Eq("id", vehicle.id);
+            var filter = Builders<Vehicle>.Filter.Eq("Email", vehicle.Email);
 
             var update = Builders<Vehicle>.Update
                     .Set(x => x.PlateNumber, vehicle.PlateNumber)
-                    .Inc(x => x.Province, vehicle.Province);
+                    .Set(x => x.Province, vehicle.Province);
 
 
             var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");

@@ -38,6 +38,12 @@ namespace ApiApp.Models
         ///  0 = ตรวจยังไม่เสร็จ ,1=รอส่งวิเคราะห์ ,2=วิเคราะห์แล้ว
         /// </summary>
         public int StatusCode { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int VehicleTypeId { get; set; }
+
         /// <summary>
         /// 
         /// </summary>

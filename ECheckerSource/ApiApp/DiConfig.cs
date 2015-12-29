@@ -15,6 +15,8 @@ namespace ApiApp
             return new Container(c =>
             {
                 //c.For<repo.IDemoRepository>().Use<repo.DemoRepository>();
+                c.For<repo.IVechicleRepository>().Use<repo.Imprementation.VechicleRepository>();
+                c.For<repo.ICheckingRepository>().Use<repo.Imprementation.CheckingRepository>();
             });
         }
     }

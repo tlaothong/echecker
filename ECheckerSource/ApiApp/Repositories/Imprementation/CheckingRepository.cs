@@ -10,7 +10,7 @@ namespace ApiApp.Repositories.Imprementation
     /// <summary>
     /// 
     /// </summary>
-    public class CheckingRepository : ICheckingRepository
+    class CheckingRepository : ICheckingRepository
     {
         /// <summary>
         /// 
