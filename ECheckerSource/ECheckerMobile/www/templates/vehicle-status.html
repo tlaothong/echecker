@@ -10,7 +10,7 @@
                         </button>
                     </div>
                     <div class="col col-50">
-                        <button class="button col button-balanced">
+                        <button class="button col button-balanced" ng-disabled="cx.data.VehicleStatus != 1">
                             วิเคราะห์
                         </button>
                     </div>
@@ -18,13 +18,8 @@
             </div>
         </div>
     </ion-content>
-    <ion-footer-bar align-title="left" class="bar-energized">
-        <div class="buttons">
-            <button class="button">Left Button</button>
-        </div>
-        <h1 class="title">Title!</h1>
-        <div class="buttons" ng-click="doSomething()">
-            <button class="button">Right Button</button>
-        </div>
+    <ion-footer-bar align-title="left" class="bar-dark row row-no-padding">
+            <button class="button col col-50">แจ้งเตือน</button>
+            <button class="button col col-50">สรุป</button>
     </ion-footer-bar>
 </ion-view>

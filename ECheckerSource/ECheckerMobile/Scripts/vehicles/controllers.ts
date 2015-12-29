@@ -44,6 +44,20 @@
         }
 
     }
+    class TopicsController {
+
+        static $inject = ['data'];
+        constructor(public data) {
+        }
+
+        public IsPass(topic: any): boolean {
+            return topic.IsPass == "TRUE";
+        }
+        public IsFalse(topic: any): boolean {
+            return topic.IsPass == "FALSE";
+        }
+
+    }
 
     angular
         .module('app.vehicles')
@@ -51,5 +65,6 @@
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
         .controller('app.vehicles.VehicleAddController', VehicleAddController)
         .controller('app.vehicles.VehicleStatusController', VehicleStatusController)
+        .controller('app.vehicles.TopicsController', TopicsController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

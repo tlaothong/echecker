@@ -59,10 +59,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
             })
 
             .state('app.vehicle.checklists', {
-                url: '/check2',
+                url: '/checkvehicle',
                 views: {
                     'vContent': {
-                        templateUrl: 'templates/check2.html',
+                        templateUrl: 'templates/checkvehicle.html',
+                        controller: 'app.vehicles.TopicsController as cx',
+                        resolve: {
+                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                        }
+                    }
+                }
+            })
+
+            .state('app.vehicle.amisseddetail', {
+                url: '/checkvehicle/:id',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/amisseddetail.html',
+                        controller: 'app.vehicles.TopicsController as cx',
+                        resolve: {
+                            "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
+                                return svc.get(p.vid);
+                            }]
+                        }
                     }
                 }
             })
