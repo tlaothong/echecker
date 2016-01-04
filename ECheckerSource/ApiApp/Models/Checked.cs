@@ -50,7 +50,7 @@ namespace ApiApp.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool IsPass { get; set; }
+        public bool? IsPass { get; set; }
         /// <summary>
         /// 
         /// </summary>

@@ -15,7 +15,7 @@ namespace ApiApp.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [RoutePrefix("api/vehicle")]
+    [RoutePrefix("api")]
     public class VehicleController : ApiController
     {
         private IVechicleRepository repoVehicle;
@@ -59,6 +59,7 @@ namespace ApiApp.Controllers
                         CreateDate = item.CreateDate,
                         LatestCheckedDate = item.LatestCheckedDate,
                         VehicleTypeId = item.VehicleTypeId,
+                        FormId = item.FormId,
                     };
 
                     var qry = repoChecking.GetLastChecked(item.id, item.LatestCheckedDate);
@@ -74,7 +75,7 @@ namespace ApiApp.Controllers
                         else
                         {
                             //HACK * fix มี 20 รายการ ทำเป็น เปอเซน *5
-                            vehicleDto.VehicleProgress = qry.CheckedTopics.Where(x => x.IsPass).Count() * 5;
+                            vehicleDto.VehicleProgress = qry.CheckedTopics.Where(x => x.IsPass.HasValue && x.IsPass.Value).Count() * 5;
 
                             if (vehicleDto.VehicleProgress == 100)
                                 vehicleDto.StatusCode = 1;

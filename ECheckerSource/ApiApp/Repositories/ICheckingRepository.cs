@@ -18,6 +18,18 @@ namespace ApiApp.Repositories
         /// <param name="vehicleId">รหัสรถ</param>
         /// <param name="lastCreateCheckDate">วันที่เชคล่าสุด</param>
         /// <returns></returns>
-        Checked GetLastChecked(string vehicleId,DateTime lastCreateCheckDate);
+        Checked GetLastChecked(string vehicleId, DateTime lastCreateCheckDate);
+
+        /// <summary>
+        /// ตรวจรถ
+        /// </summary>
+        /// <param name="check">ข้อมูล การตรวจรถ</param>
+        void UpdateChecked(Checked check);
+
+        /// <summary>
+        /// สร้าง checked รถ
+        /// </summary>
+        /// <param name="check"> ข้อมูลการตรวจรถ</param>
+        void AddChecked(Checked check);
     }
 }

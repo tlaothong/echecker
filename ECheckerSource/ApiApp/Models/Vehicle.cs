@@ -41,5 +41,9 @@ namespace ApiApp.Models
         /// 
         /// </summary>
         public int VehicleTypeId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int FormId { get; set; }
     }
 }

@@ -7,7 +7,13 @@ using MongoDB.Driver;
 
 namespace ApiApp.Repositories.Imprementation
 {
-    class FormRepository
+
+    class FormRepository : IFormRepository
     {
+        public IEnumerable<Topic> GetForm(int fromId)
+        {
+            var coltn = MongoAccess.MongoUtil._database.GetCollection<Topic>("echecker.Topics");
+            return coltn.Find(x => x.FromId == fromId).ToList();
+        }
     }
 }
