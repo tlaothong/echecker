@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiApp.Repositories
 {
-    interface IAccountRepository
+    public interface IAccountRepository
     {
     }
 }

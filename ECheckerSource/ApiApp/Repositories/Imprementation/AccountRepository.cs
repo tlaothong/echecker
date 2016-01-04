@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ApiApp.Repositories.Imprementation
 {
-    public class AccountRepository
+    public class AccountRepository : IAccountRepository
     {
     }
 }

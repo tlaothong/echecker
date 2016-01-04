@@ -9,7 +9,7 @@ namespace ApiApp.Models
     /// <summary>
     /// 
     /// </summary>
-    public class Users
+    public class User
     {
         [BsonId]
         /// <summary>

@@ -9,7 +9,7 @@ namespace ApiApp.Models
     /// <summary>
     /// 
     /// </summary>
-    public class Vehicles
+    public class Vehicle
     {
         [BsonId]
         /// <summary>
@@ -33,12 +33,9 @@ namespace ApiApp.Models
         /// </summary>
         public string Email { get; set; }
         /// <summary>
-        /// 
+        /// วันล่าสุดที่ตรวจสภาพ
         /// </summary>
-        public int VehicleProgress { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public int StatusCode { get; set; }
+        //[BsonDateTimeOptions(DateOnly = true)]
+        public DateTime LatestCheckedDate { get; set; }
     }
 }

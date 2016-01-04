@@ -33,7 +33,7 @@ namespace ApiApp.Controllers
         /// <param name="id">username email</param>
         /// <returns>vehicles</returns>
         // GET api/vehicles/aaa@aaa.com
-        public IEnumerable<Vehicles> Get(string id)
+        public IEnumerable<Vehicle> Get(string id)
         {
             //var client = new MongoDB.Driver.MongoClient("mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o");
             //var database = client.GetDatabase("MongoLab-4o");
@@ -44,7 +44,8 @@ namespace ApiApp.Controllers
 
             //return document;
 
-            return repo.GetVehicles(id);
+            //return repo.GetVehicles(id);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace ApiApp.Controllers
         /// </summary>
         /// <param name="vehicle">The new vehicle.</param>
         // POST api/values
-        public void Post(Vehicles vehicle)
+        public void Post(Vehicle vehicle)
         {
             //var client = new MongoDB.Driver.MongoClient("mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o");
             //var database = client.GetDatabase("MongoLab-4o");
