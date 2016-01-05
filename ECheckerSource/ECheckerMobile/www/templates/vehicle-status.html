@@ -19,7 +19,7 @@
         </div>
 
         <ion-list>
-            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.data" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.data" href="" ui-sref="app.vehicle.amisseddetail">
                 <h2>
                     {{ item.Detail }}
                     <i class="icon ion-model-s" ng-class="{'balanced': cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>
@@ -29,7 +29,7 @@
 
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-dark row row-no-padding">
-        <a class="button col col-50" ui-sref="app.schedules">แจ้งเตือน</a>
-        <button class="button col col-50">สรุป</button>
+        <a class="button col col-50" ui-sref="app.vehicle.schedules">แจ้งเตือน</a>
+        <a class="button col col-50">สรุป</a>
     </ion-footer-bar>
 </ion-view>

@@ -33,6 +33,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 controller: 'AppCtrl'
             })
 
+            .state('app.vehicles', {
+                url: '/vehicles',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/vehicleList.html',
+                        controller: 'app.vehicles.VehicleListController as cx',
+                        resolve: {
+                            "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                        }
+                    }
+                }
+            })
+
             .state('app.vehicle', {
                 url: '/vehicle/:vid',
                 abstract: true,
@@ -91,32 +104,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
             })
 
             .state('app.vehicle.amisseddetail', {
-                url: '/checkvehicle/:id',
+                url: '/amissed',
                 views: {
-                    'menuContent': {
+                    'vContent': {
                         templateUrl: 'templates/amisseddetail.html',
-                        controller: 'app.vehicles.TopicsController as cx',
+                        controller: 'app.amissed.AmissedDetailController as cx',
                         resolve: {
-                            "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
-                                return svc.get(p.vid);
-                            }]
+                            "data": ['app.shared.MockAmissed', svc => { return svc.getAll(); }]
                         }
+                    }
+                }
+            })
+            .state('app.vehicle.schedules', {
+                url: '/schedules',
+                views: {
+                    'vContent': {
+                        templateUrl: 'templates/notification.html',
+                        controller: 'app.noti.NotificationController as cx'
                     }
                 }
             })
 
-            .state('app.vehicles', {
-                url: '/vehicles',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/vehicleList.html',
-                        controller: 'app.vehicles.VehicleListController as cx',
-                        resolve: {
-                            "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
-                        }
-                    }
-                }
-            })
             .state('app.manvehicles', {
                 url: '/manvehicles',
                 views: {
@@ -129,6 +137,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                     }
                 }
             })
+
+            .state('app.addvehicle', {
+                url: '/addvehicle',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/addvehicle.html',
+                        controller: 'app.vehicles.VehicleAddController as cx'
+                    }
+                }
+            })
+
             .state('app.editvehicle', {
                 url: '/editvehicle/:vid',
                 views: {
@@ -143,24 +162,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                     }
                 }
             })
-            .state('app.addvehicle', {
-                url: '/addvehicle',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/addvehicle.html',
-                        controller: 'app.vehicles.VehicleAddController as cx'
-                    }
-                }
-            })
-            .state('app.schedules', {
-                url: '/schedules/',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/notification.html',
-                        controller: 'app.noti.NotificationController as cx'
-                    }
-                }
-            })
+
 
             .state('app.search', {
                 url: '/search',
