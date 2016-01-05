@@ -54,6 +54,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 views: {
                     'vContent': {
                         templateUrl: 'templates/vehicle-status.html',
+                        controller: 'app.vehicles.TopicsController as cx',
+                        resolve: {
+                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                        }
                     }
                 }
             })
@@ -211,7 +215,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                     }
                 }
             })
-        ;
+            ;
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/vehicles');
     });

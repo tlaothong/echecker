@@ -1,5 +1,5 @@
 ﻿module app.vehicles {
-	'use strict';
+    'use strict';
 
     class VehicleListController {
         static $inject = ['data']
@@ -18,7 +18,7 @@
             this.$state.go('app.manvehicles');
         }
     }
-    
+
     class VehicleAddController {
         static $inject = ['$state']
         constructor(private $state) {
@@ -32,8 +32,10 @@
     }
 
     class VehicleStatusController {
-        static $inject = ['data'];
-        constructor(public data) {
+
+        static $inject = ['data', 'app.shared.VehicleService'];
+        constructor(public data, private vehicleSvc: app.shared.VehicleService) {
+            vehicleSvc.VehiclesData = data;
         }
     }
 
@@ -46,8 +48,13 @@
     }
     class TopicsController {
 
-        static $inject = ['data'];
-        constructor(public data) {
+        private PlateNumber: any;
+        private VehicleStatus: any;
+
+        static $inject = ['data', 'app.shared.VehicleService'];
+        constructor(public data, private vehicleSvc: app.shared.VehicleService) {
+            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
+            this.VehicleStatus = vehicleSvc.VehiclesData.VehicleStatus;
         }
 
         public IsPass(topic: any): boolean {

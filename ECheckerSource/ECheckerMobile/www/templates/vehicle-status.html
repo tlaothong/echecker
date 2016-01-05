@@ -1,4 +1,4 @@
-﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.data.PlateNumber}}" cache-view="false">
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.PlateNumber}}" cache-view="false">
     <ion-content>
         <div class="calm-bg padding">
             <div class="text-center">
@@ -10,16 +10,26 @@
                         </button>
                     </div>
                     <div class="col col-50">
-                        <button class="button col button-balanced" ng-disabled="cx.data.VehicleStatus != 1">
+                        <button class="button col button-balanced" ng-disabled="cx.VehicleStatus != 1">
                             วิเคราะห์
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <ion-list>
+            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.data" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                <h2>
+                    {{ item.Detail }}
+                    <i class="icon ion-model-s" ng-class="{'balanced': cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>
+                </h2>
+            </ion-item>
+        </ion-list>
+
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-dark row row-no-padding">
-            <button class="button col col-50">แจ้งเตือน</button>
-            <button class="button col col-50">สรุป</button>
+        <a class="button col col-50" ui-sref="app.schedules">แจ้งเตือน</a>
+        <button class="button col col-50">สรุป</button>
     </ion-footer-bar>
 </ion-view>

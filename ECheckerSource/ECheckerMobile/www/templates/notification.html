@@ -1,12 +1,9 @@
-﻿<ion-view view-title="รถหมายเลขทะเบียน {{ cx.data.PlateNumber }}">
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{ cx.PlateNumber }}" cache-view="false">
     <ion-content>
-        <div class="row">
-            <ion-checkbox class="col" ng-checked="cx.data.PBRActive">พรบ</ion-checkbox>
-            <input class="col" type="date" value="cx.data.PBRDate" />
-        </div>
-            <ion-checkbox ng-checked="cx.data.DrivingLicenseActive">ใบขับขี่หมดอายุ</ion-checkbox>
-            <ion-checkbox ng-checked="cx.data.CheckActive">ตรวจสภาพ</ion-checkbox>
-            <ion-checkbox ng-checked="cx.data.TaxActive">ต่อภาษีคู่มือรถ</ion-checkbox>
-            <ion-checkbox ng-checked="cx.data.PayActive">จ่ายงวดรถ</ion-checkbox>
+        <ion-checkbox ng-checked="cx.PBRActive">พรบ <a href="" class="button botton-positive item-note">{{ cx.PBRDate | date: 'longDate' }}</a> </ion-checkbox>
+        <ion-checkbox ng-checked="cx.DrivingLicenseActive">ใบขับขี่หมดอายุ</ion-checkbox>
+        <ion-checkbox ng-checked="cx.CheckActive">ตรวจสภาพ</ion-checkbox>
+        <ion-checkbox ng-checked="cx.TaxActive">ต่อภาษีคู่มือรถ</ion-checkbox>
+        <ion-checkbox ng-checked="cx.PayActive">จ่ายงวดรถ</ion-checkbox>
     </ion-content>
 </ion-view>
