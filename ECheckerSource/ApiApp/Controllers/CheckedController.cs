@@ -88,11 +88,10 @@ namespace ApiApp.Controllers
             //        return "ไม่พร้อมใช้งาน";
             //    }
             //}
-            
+
             //TODO: update checked[] to done
         }
 
-       
 
         /// <summary>
         /// GetLastChecked
@@ -104,63 +103,137 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public Checked GetCheckedByVehicleId(string id)
         {
-            var qry = repoVehicle.GetVehicle(id);
+            var check = repoChecking.GetLastChecked(id);
 
-            return repoChecking.GetLastChecked(id, qry.LatestCheckedDate);
+            if (check != null)
+            {
+                return check;
+            }
+            else
+            {
+                var qry = repoVehicle.GetVehicle(id);
+
+                if (qry != null)
+                {
+                    var now = DateTime.Now;
+                    var newChecked = GetNewChecked(id, qry.FormId);
+                    newChecked.CreateDate = now;
+
+                    repoChecking.AddChecked(newChecked);
+                    repoVehicle.UpdateLastChecked(id, now);
+
+                    return repoChecking.GetLastChecked(id);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+          
         }
 
         /// <summary>
         /// create Checked
         /// </summary>
         /// <param name="id">VehicleId</param>
+        [HttpPost]
+        [Route("{id}")]
         public void Post(string id)
         {
-            var qry = repoVehicle.GetVehicle(id);
+            var qry = repoVehicle.GetVehicle(id);       
 
             if (qry != null)
             {
-                var form = repoForm.GetForm(qry.FormId);
+                var now = DateTime.Now;
+                var newChecked = GetNewChecked(id,qry.FormId);
+                newChecked.CreateDate = now;
 
-                List<CheckTopics> _checkTopic = new List<CheckTopics>();
-                if (form.Count() > 0)
-                {
-                    foreach (var item in form)
-                    {
-                        var checkTopic = new CheckTopics
-                        {
-                            id = item.id,
-                            IsPass = null,
-                            Comment = string.Empty,
-                            PhotoURL = string.Empty,
-                        };
-
-                        _checkTopic.Add(checkTopic);
-                    }
-                }
-
-                Checked check = new Checked
-                {
-                    id = Guid.NewGuid().ToString(),
-                    IsDone = false,
-                    CreateDate = DateTime.Today,
-                    VehicleId = id,
-                    CheckedTopics = _checkTopic
-                };
-
-                repoChecking.AddChecked(check);
+                repoChecking.AddChecked(newChecked);
+                repoVehicle.UpdateLastChecked(id, now);
             }
+
+            ////HACK : mock 
+            //var xx = GetMock();
+            //var now = DateTime.Now;
+            //xx.CreateDate = now;
+            //repoChecking.AddChecked(xx);
+            //repoVehicle.UpdateLastChecked(xx.VehicleId, now);
         }
 
-        [HttpPut]
-        [Route("{id}")]
+
         /// <summary>
         /// update checked
         /// </summary>
         /// <param name="check"></param>
+        [HttpPut]
         public void Put(Checked check)
         {
             repoChecking.UpdateChecked(check);
+
+            //HACK Test
+            //var cc = GetMock();
+
+            //repoChecking.UpdateChecked(cc);
+
+
         }
-      
+
+
+        Checked GetNewChecked(string vehicleId, int formId)
+        {
+            var now = DateTime.Now;
+            var form = repoForm.GetForm(formId);
+
+            List<CheckTopics> _checkTopic = new List<CheckTopics>();
+            if (form.Count() > 0)
+            {
+                foreach (var item in form)
+                {
+                    var checkTopic = new CheckTopics
+                    {
+                        id = item.id,
+                        IsPass = null,
+                        Comment = string.Empty,
+                        PhotoURL = string.Empty,
+                    };
+
+                    _checkTopic.Add(checkTopic);
+                }
+            }
+
+            Checked check = new Checked
+            {
+                id = Guid.NewGuid().ToString(),
+                IsDone = false,
+                CreateDate = now,
+                VehicleId = vehicleId,
+                CheckedTopics = _checkTopic
+            };
+
+            return check;
+        }
+        
+
+        Checked GetMock()
+        {
+            return new Checked
+            {
+                id = Guid.NewGuid().ToString(),
+                VehicleId = "C37EBF61 - 20E4 - 4612 - 9160 - A94A7281F2E4",
+                CreateDate = DateTime.Now,
+                IsDone = false,
+                CheckedTopics = new List<CheckTopics>
+                {
+                    new CheckTopics {  Comment = "ddddddd", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "seewr", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "wrtwret", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "45wrt6", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "wert", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                },
+            };
+        }
+
     }
+
+ 
 }

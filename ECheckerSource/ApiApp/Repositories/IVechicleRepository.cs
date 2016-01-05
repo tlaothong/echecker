@@ -38,5 +38,12 @@ namespace ApiApp.Repositories
         /// <param name="vehicle"></param>
         void UpdateVehicle(Models.Vehicle vehicle);
 
+        /// <summary>
+        /// update last checked
+        /// </summary>
+        /// <param name="vehicleId"> รหัสรถ</param>
+        /// <param name="datetime"> last checked datetimec</param>
+        void UpdateLastChecked(string vehicleId, DateTime datetime);
+
     }
 }

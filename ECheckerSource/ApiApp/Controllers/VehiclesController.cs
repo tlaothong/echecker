@@ -54,7 +54,7 @@ namespace ApiApp.Controllers
                         FormId = item.FormId,
                     };
 
-                    var qry = repoChecking.GetLastChecked(item.id, item.LatestCheckedDate);
+                    var qry = repoChecking.GetLastChecked(item.id);
 
                     if (qry != null)
                     {

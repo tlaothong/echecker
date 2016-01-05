@@ -17,7 +17,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableName = "echecker.Vehicles";
+        private const string tableName = "echecker.Vehicles";
 
 
         /// <summary>
@@ -53,6 +53,20 @@ namespace ApiApp.Repositories.Imprementation
         }
 
         /// <summary>
+        /// update last checked
+        /// </summary>
+        /// <param name="vehicleId"> รหัสรถ</param>
+        /// <param name="datetime"> last checked datetimec</param>
+        public void UpdateLastChecked(string vehicleId, DateTime datetime)
+        {
+            var update = Builders<Vehicle>.Update
+                   .Set(x => x.LatestCheckedDate, datetime);               
+
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
+            coltn.UpdateOne(v => v.id == vehicleId, update);
+        }
+
+        /// <summary>
         /// แก้ไขรถ ปล.แก้ได้เฉพาะ เลขทะเบียน กับ จังหวัด
         /// </summary>
         /// <param name="vehicle"></param>
@@ -63,7 +77,7 @@ namespace ApiApp.Repositories.Imprementation
                     .Set(x => x.Province, vehicle.Province);
 
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
-            coltn.UpdateOne( v =>v.id == vehicle.id, update);
+            coltn.UpdateOne( v =>v.id == vehicle.id , update);
 
         }
     }
