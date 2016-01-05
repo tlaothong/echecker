@@ -12,12 +12,12 @@ namespace ApiApp.MongoAccess
     {
         private static IMongoClient _client;
         public static IMongoDatabase _database;
-        public static IMongoCollection<ReadyStatus> _readyStatus;
-        public static IMongoCollection<Vehicle> _vehicles;
-        public static IMongoCollection<Amissed> _amissed;
-        public static IMongoCollection<Checked> _checked;
-        public static IMongoCollection<Topic> _topic;
-        public static IMongoCollection<User> _users;
+        //public static IMongoCollection<ReadyStatus> _readyStatus;
+        //public static IMongoCollection<Vehicle> _vehicles;
+        //public static IMongoCollection<Amissed> _amissed;
+        //public static IMongoCollection<Checked> _checked;
+        //public static IMongoCollection<Topic> _topic;
+        //public static IMongoCollection<Users> _users;
 
         static MongoUtil()
         {
@@ -32,9 +32,17 @@ namespace ApiApp.MongoAccess
             //_checked = _database.GetCollection<Checked>("echecker.Checked");
             //_topic = _database.GetCollection<Topic>("echecker.Topic");
             //_users = _database.GetCollection<User>("echecker.User");
+
         }
 
-      
+        public static IMongoCollection<T> GetCollection<T>(string tableName)
+        {
+
+            return _database.GetCollection<T>(tableName);
+        }
+
+
+
 
 
     }

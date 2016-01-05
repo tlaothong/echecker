@@ -11,10 +11,10 @@ namespace ApiApp.Models
     /// </summary>
     public class Vehicle
     {
-        [BsonId]
         /// <summary>
         /// 
         /// </summary>
+        [BsonId]
         public string id { get; set; }
         /// <summary>
         /// 
@@ -37,5 +37,14 @@ namespace ApiApp.Models
         /// </summary>
         //[BsonDateTimeOptions(DateOnly = true)]
         public DateTime LatestCheckedDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int VehicleTypeId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int FormId { get; set; }
     }
 }

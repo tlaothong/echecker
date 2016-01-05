@@ -13,24 +13,30 @@ namespace ApiApp.Repositories
     public interface IVechicleRepository
     {
         /// <summary>
-        /// 
+        /// ดึงข้อมูลรถทั้งหมดของผู้ใช้
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="email">email</param>
         /// <returns></returns>
-        IEnumerable<Vehicle> GetVehicles(string id);
+        IEnumerable<Models.Vehicle> GetVehicles(string email);
 
         /// <summary>
-        /// 
+        /// ดึงข้อมูลรถของผู้ใช้
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="vehicleId">รหัส รถ</param>
         /// <returns></returns>
-        Vehicle GetVehicleInfoById(string id);
+        Models.Vehicle GetVehicle(string vehicleId);
 
         /// <summary>
-        /// 
+        /// เพิ่มรถ
         /// </summary>
-        /// <param name="vehicleId"></param>
-        /// <param name="status"></param>
-        void ComputeReadyStatus(string vehicleId, string status);
+        /// <param name="vehicle"></param>
+        void AddVehicle(Models.Vehicle vehicle);
+        
+        /// <summary>
+        /// แก้ไขรถ ปล.แก้ได้เฉพาะ เลขทะเบียน กับ จังหวัด
+        /// </summary>
+        /// <param name="vehicle"></param>
+        void UpdateVehicle(Models.Vehicle vehicle);
+
     }
 }

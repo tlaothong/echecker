@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace ApiApp.Repositories
 {
     /// <summary>
-    /// manage form base
+    /// 
     /// </summary>
     public interface IFormRepository
     {
         /// <summary>
-        /// ดึงข้อมูล topic 
+        /// ดึงข้อมูล ฟอร์ม
         /// </summary>
-        /// <param name="id">form id</param>
-        /// <returns>รายการตรวจ</returns>
-        IEnumerable<Topic> GetTopicByVehicleId(int id);
+        /// <param name="fromId"> รหัส ฟอร์ม</param>
+        /// <returns></returns>
+        IEnumerable<Topic> GetForm(int fromId);
     }
 }

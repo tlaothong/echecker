@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,53 +8,46 @@ namespace ApiApp.Models
     /// <summary>
     /// 
     /// </summary>
-    public class Topic
+    public class VehiclesDTO
     {
-        [BsonId]
         /// <summary>
-        /// รหัส topic id
-        /// </summary>
+        /// 
+        /// </summary> 
         public string id { get; set; }
-        
         /// <summary>
-        /// รหัสประเภทรถที่ใช้ topic 
+        /// 
+        /// </summary>
+        public string PlateNumber { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Province { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Email { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int VehicleProgress { get; set; }
+        /// <summary>
+        ///  0 = ตรวจยังไม่เสร็จ ,1=รอส่งวิเคราะห์ ,2=วิเคราะห์แล้ว
+        /// </summary>
+        public int StatusCode { get; set; }
+
+        /// <summary>
+        /// 
         /// </summary>
         public int VehicleTypeId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Detail { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int DamagePercent { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string How2Topic { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public string How2Url { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string SuggestTopic { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string SuggestDetail { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime LatestCheckedDate { get; set; }
 
         /// <summary>
         /// 
