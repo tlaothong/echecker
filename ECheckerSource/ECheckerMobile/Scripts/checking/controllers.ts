@@ -1,20 +1,25 @@
 ﻿module app.checking {
-	'use strict';
+    'use strict';
 
-	class MyController {
+    class MyController {
 
-		//public model: any = null;
+        //public model: any = null;
 
-		static $inject = ['$scope'];
-		constructor(private $scope: ng.IScope) {
-		}
+        static $inject = ['$scope'];
+        constructor(private $scope: ng.IScope) {
+        }
 
-		// public myMethod(): void {
-		// }
+    }
 
-	}
+    class CheckAmissController {
+        static $inject = ['data'];
+        constructor(public data) {
+        }
 
-	angular
-		.module('app.checking')
-		.controller('app.checking.MyController', MyController);
+    }
+
+    angular
+        .module('app.checking')
+        .controller('app.checking.MyController', MyController)
+        .controller('app.checking.CheckAmissController', CheckAmissController);
 }

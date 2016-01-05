@@ -71,6 +71,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 }
             })
 
+            .state('app.vehicle.checkamiss', {
+                url: '/checkamiss/:tid',
+                views: {
+                    'vContent': {
+                        templateUrl: 'templates/checkamiss.html',
+                        controller: 'app.vehicles.TopicsController as cx',
+                        resolve: {
+                            "data": ["$stateParams", 'app.shared.MockTopics', (p, svc) => {
+                                return svc.get(p.tid);
+                            }]
+                        }
+                    }
+                }
+            })
+
             .state('app.vehicle.amisseddetail', {
                 url: '/checkvehicle/:id',
                 views: {
