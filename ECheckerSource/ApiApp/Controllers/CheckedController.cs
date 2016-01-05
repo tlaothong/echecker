@@ -15,15 +15,21 @@ namespace ApiApp.Controllers
     [RoutePrefix("api/checked")]
     public class CheckedController : ApiController
     {
-        public ICheckingRepository checkingRepo { get; set; }
+        private IVechicleRepository repoVehicle;
+        private ICheckingRepository repoChecking;
+        private IFormRepository repoForm;
 
         /// <summary>
-        /// 
+        /// api การตรวจรถ
         /// </summary>
-        /// <param name="checkingRepo"></param>
-        public CheckedController(ICheckingRepository checkingRepo)
+        /// <param name="repoChecking"> repo การตรวจรถ</param>
+        /// <param name="repoVehicle">repo ข้อมูลรถ</param>
+        /// <param name="repoForm">repo ข้อมูลform</param>
+        public CheckedController(ICheckingRepository repoChecking, IVechicleRepository repoVehicle, IFormRepository repoForm)
         {
-            this.checkingRepo = checkingRepo;
+            this.repoVehicle = repoVehicle;
+            this.repoChecking = repoChecking;
+            this.repoForm = repoForm;
         }
 
         [HttpGet]
@@ -36,7 +42,7 @@ namespace ApiApp.Controllers
         // GET /checked/{vehicle-id}/amissed
         public IEnumerable<Amissed> Get(string id)
         {
-            var amissedList = this.checkingRepo.GetAmissedByVehicleId(id);
+            var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
             return amissedList.GroupBy(x => x.CreateDate.Date).OrderByDescending(x => x.Key).FirstOrDefault();
         }
 
@@ -86,22 +92,7 @@ namespace ApiApp.Controllers
             //TODO: update checked[] to done
         }
 
-        private IVechicleRepository repoVehicle;
-        private ICheckingRepository repoChecking;
-        private IFormRepository repoForm;
-
-        /// <summary>
-        /// api การตรวจรถ
-        /// </summary>
-        /// <param name="repoChecking"> repo การตรวจรถ</param>
-        /// <param name="repoVehicle">repo ข้อมูลรถ</param>
-        /// <param name="repoForm">repo ข้อมูลform</param>
-        public CheckedController(ICheckingRepository repoChecking, IVechicleRepository repoVehicle, IFormRepository repoForm)
-        {
-            this.repoVehicle = repoVehicle;
-            this.repoChecking = repoChecking;
-            this.repoForm = repoForm;
-        }
+       
 
         /// <summary>
         /// GetLastChecked
