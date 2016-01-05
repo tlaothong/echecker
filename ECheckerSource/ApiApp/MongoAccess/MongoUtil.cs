@@ -32,9 +32,17 @@ namespace ApiApp.MongoAccess
             //_checked = _database.GetCollection<Checked>("echecker.Checked");
             //_topic = _database.GetCollection<Topic>("echecker.Topic");
             //_users = _database.GetCollection<Users>("echecker.Users");
+
         }
 
-      
+        public static IMongoCollection<T> GetCollection<T>(string tableName)
+        {
+
+            return _database.GetCollection<T>(tableName);
+        }
+
+
+
 
 
     }

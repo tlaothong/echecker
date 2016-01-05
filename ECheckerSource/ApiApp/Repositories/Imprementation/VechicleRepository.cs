@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ApiApp.Models;
 using MongoDB.Driver;
+using ApiApp.MongoAccess;
 
 namespace ApiApp.Repositories.Imprementation
 {
@@ -12,13 +13,15 @@ namespace ApiApp.Repositories.Imprementation
     /// </summary>
     class VechicleRepository : IVechicleRepository
     {
+
+        private string tableVehicle = "echecker.Vehicles";
         /// <summary>
         /// เพิ่มรถ
         /// </summary>
         /// <param name="vehicle"></param>
         public void AddVehicle(Vehicle vehicle)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
             coltn.InsertOne(vehicle);
         }
 
@@ -29,7 +32,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public Vehicle GetVehicle(string id)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
             return coltn.Find(x => x.id == id).FirstOrDefault();
         }
 
@@ -40,7 +43,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public IEnumerable<Vehicle> GetVehicles(string id)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
             return coltn.Find(x => x.Email == id).ToList();
         }
 
@@ -49,16 +52,13 @@ namespace ApiApp.Repositories.Imprementation
         /// </summary>
         /// <param name="vehicle"></param>
         public void UpdateVehicle(Vehicle vehicle)
-        {
-            var filter = Builders<Vehicle>.Filter.Eq("Email", vehicle.Email);
-
+        {   
             var update = Builders<Vehicle>.Update
                     .Set(x => x.PlateNumber, vehicle.PlateNumber)
                     .Set(x => x.Province, vehicle.Province);
 
-
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Vehicle>("echecker.Vehicles");
-            coltn.UpdateOne(filter, update);
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
+            coltn.UpdateOne( v =>v.id == vehicle.id, update);
 
         }
     }
