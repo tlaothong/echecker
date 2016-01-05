@@ -36,7 +36,6 @@ namespace ApiApp.Repositories
         /// แก้ไขรถ ปล.แก้ได้เฉพาะ เลขทะเบียน กับ จังหวัด
         /// </summary>
         /// <param name="vehicle"></param>
-        void UpdateVehicle(Models.Vehicle vehicle);
-
+        void UpdateVehicle(Models.Vehicle vehicle);        
     }
 }
