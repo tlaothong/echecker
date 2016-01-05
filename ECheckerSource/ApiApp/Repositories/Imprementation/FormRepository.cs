@@ -16,7 +16,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableForm = "echecker.Topics";
+        private string tableName = "echecker.Topics";
 
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public IEnumerable<Topic> GetForm(int fromId)
         {
-            var coltn = MongoUtil.GetCollection<Topic>(tableForm);
+            var coltn = MongoUtil.GetCollection<Topic>(tableName);
             return coltn.Find(x => x.FromId == fromId).ToList();
         }
     }

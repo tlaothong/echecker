@@ -12,6 +12,7 @@ namespace ApiApp.Controllers
     /// <summary>
     /// api การตรวจรถ
     /// </summary>
+    [RoutePrefix("api/checked")]
     public class CheckedController : ApiController
     {
 
@@ -32,13 +33,14 @@ namespace ApiApp.Controllers
             this.repoForm = repoForm;
         }
 
-
         /// <summary>
         /// GetLastChecked
         /// </summary>
         /// <param name="id"> รหัส รถ</param>
         /// <returns></returns>
         /// GET /checked/{vehicle-id}
+        [HttpGet]
+        [Route("{id}")]
         public Checked Get(string id)
         {
             var qry = repoVehicle.GetVehicle(id);
@@ -96,14 +98,6 @@ namespace ApiApp.Controllers
         {
             repoChecking.UpdateChecked(check);
         }
-
-        /// <summary>
-        /// Delete a specific value.
-        /// </summary>
-        /// <param name="id">The ref id.</param>
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

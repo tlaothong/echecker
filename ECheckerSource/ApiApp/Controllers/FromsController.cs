@@ -14,15 +14,15 @@ namespace ApiApp.Controllers
     /// </summary>
     public class FromsController : ApiController
     {
-        private IFormRepository repo;
+        private IFormRepository repoRepository;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="repo"></param>
-        public FromsController(IFormRepository repo)
+        /// <param name="repoRepository"></param>
+        public FromsController(IFormRepository repoRepository)
         {
-            this.repo = repo;
+            this.repoRepository = repoRepository;
         }
 
         /// <summary>
@@ -33,46 +33,8 @@ namespace ApiApp.Controllers
         ///GET /forms/{form-id}
         public IEnumerable<Topic> Get(int id)
         {
-            return repo.GetForm(id);
+            return repoRepository.GetForm(id);
         }
-
-        /// <summary>
-        /// Get a specific value.
-        /// </summary>
-        /// <param name="id">The ref id.</param>
-        /// <returns></returns>
-        // GET api/values/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        /// <summary>
-        /// Post a new value.
-        /// </summary>
-        /// <param name="value">The new value.</param>
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        /// <summary>
-        /// Update the modified value.
-        /// </summary>
-        /// <param name="id">The ref id.</param>
-        /// <param name="value">The new value to be updated.</param>
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        /// <summary>
-        /// Delete a specific value.
-        /// </summary>
-        /// <param name="id">The ref id.</param>
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

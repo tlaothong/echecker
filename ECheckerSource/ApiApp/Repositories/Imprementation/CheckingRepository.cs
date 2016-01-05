@@ -16,7 +16,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableCheckeds = "echecker.Checkeds";
+        private const string tableName = "echecker.Checkeds";
 
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="check"> ข้อมูลการตรวจรถ</param>
         public void AddChecked(Checked check)
         {
-            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
+            var coltn = MongoUtil.GetCollection<Checked>(tableName);
             coltn.InsertOne(check);
         }
 
@@ -37,7 +37,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public Checked GetLastChecked(string vehicleId, DateTime lastCreateCheckDate)
         {
-            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
+            var coltn = MongoUtil.GetCollection<Checked>(tableName);
             return coltn.Find(x => x.VehicleId == vehicleId && x.CreateDate == lastCreateCheckDate).FirstOrDefault();
         }
 
@@ -50,7 +50,7 @@ namespace ApiApp.Repositories.Imprementation
             var update = Builders<Checked>.Update
                     .Set(x => x.CheckedTopics, check.CheckedTopics);
 
-            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
+            var coltn = MongoUtil.GetCollection<Checked>(tableName);
             coltn.UpdateOne(x => x.id == check.id, update);
         }
     }

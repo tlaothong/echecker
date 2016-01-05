@@ -16,7 +16,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableVehicle = "echecker.Vehicles";
+        private string tableName = "echecker.Vehicles";
 
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="vehicle"></param>
         public void AddVehicle(Vehicle vehicle)
         {
-            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.InsertOne(vehicle);
         }
 
@@ -36,7 +36,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public Vehicle GetVehicle(string vehicleId)
         {
-            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             return coltn.Find(x => x.id == vehicleId).FirstOrDefault();
         }
 
@@ -47,7 +47,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public IEnumerable<Vehicle> GetVehicles(string email)
         {
-            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             return coltn.Find(x => x.Email == email).ToList();
         }
 
@@ -61,7 +61,7 @@ namespace ApiApp.Repositories.Imprementation
                     .Set(x => x.PlateNumber, vehicle.PlateNumber)
                     .Set(x => x.Province, vehicle.Province);
 
-            var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.UpdateOne( v =>v.id == vehicle.id, update);
 
         }
