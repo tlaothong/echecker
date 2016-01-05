@@ -15,5 +15,26 @@ namespace ApiApp.Controllers
     /// </summary>
     public class FormController : ApiController
     {
+        private IFormRepository repoRepository;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repoRepository"></param>
+        public FormController(IFormRepository repoRepository)
+        {
+            this.repoRepository = repoRepository;
+        }
+
+        /// <summary>
+        /// List all values.
+        /// </summary>
+        /// <returns></returns>
+        // GET api/values
+        ///GET /forms/{form-id}
+        public IEnumerable<Topic> Get(int id)
+        {
+            return repoRepository.GetForm(id);
+        }
     }
 }
