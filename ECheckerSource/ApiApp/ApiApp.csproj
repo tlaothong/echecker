@@ -153,6 +153,7 @@
     <Compile Include="Controllers\FromsController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Controllers\VehicleStatusController.cs" />
     <Compile Include="DiConfig.cs" />
     <Compile Include="Global.asax.cs">

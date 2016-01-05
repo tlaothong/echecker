@@ -13,9 +13,9 @@ namespace ApiApp.Repositories
     public interface IFormRepository
     {
         /// <summary>
-        /// 
+        /// ดึงข้อมูล ฟอร์ม
         /// </summary>
-        /// <param name="fromId"></param>
+        /// <param name="fromId"> รหัส ฟอร์ม</param>
         /// <returns></returns>
         IEnumerable<Topic> GetForm(int fromId);
     }

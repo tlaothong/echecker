@@ -14,16 +14,16 @@ namespace ApiApp.Repositories
         /// <summary>
         /// ดึงข้อมูลรถทั้งหมดของผู้ใช้
         /// </summary>
-        /// <param name="id">email</param>
+        /// <param name="email">email</param>
         /// <returns></returns>
-        IEnumerable<Models.Vehicle> GetVehicles(string id);
+        IEnumerable<Models.Vehicle> GetVehicles(string email);
 
         /// <summary>
         /// ดึงข้อมูลรถของผู้ใช้
         /// </summary>
-        /// <param name="id">รหัส รถ</param>
+        /// <param name="vehicleId">รหัส รถ</param>
         /// <returns></returns>
-        Models.Vehicle GetVehicle(string id);
+        Models.Vehicle GetVehicle(string vehicleId);
 
         /// <summary>
         /// เพิ่มรถ

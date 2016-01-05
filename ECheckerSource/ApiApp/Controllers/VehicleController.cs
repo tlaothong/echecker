@@ -13,16 +13,15 @@ namespace ApiApp.Controllers
 {
 
     /// <summary>
-    /// 
+    /// Vehicle
     /// </summary>
-    [RoutePrefix("api")]
     public class VehicleController : ApiController
     {
         private IVechicleRepository repoVehicle;
         private ICheckingRepository repoChecking;
 
         /// <summary>
-        /// 
+        /// Vehicle
         /// </summary>
         /// <param name="repoVehicle"></param>
         /// <param name="repoChecking"></param>
@@ -33,76 +32,15 @@ namespace ApiApp.Controllers
         }
 
         /// <summary>
-        /// List vehicles by email.
-        /// </summary>
-        /// <param name="id">username email</param>
-        /// <returns>vehicles</returns>
-        ///GET /vehicles/{user-id}
-        [HttpGet]
-        [Route("vehicles/{id}")]
-        public IEnumerable<VehiclesDTO> Vehicles(string id)
-        {
-            //return null;
-
-            List<VehiclesDTO> _vehicleList = new List<VehiclesDTO>();
-            var vehicle = repoVehicle.GetVehicles(id);
-            if (vehicle.Count() > 0)
-            {
-                foreach (var item in vehicle)
-                {
-                    var vehicleDto = new VehiclesDTO
-                    {
-                        id = item.id,
-                        PlateNumber = item.PlateNumber,
-                        Province = item.Province,
-                        Email = item.Email,
-                        CreateDate = item.CreateDate,
-                        LatestCheckedDate = item.LatestCheckedDate,
-                        VehicleTypeId = item.VehicleTypeId,
-                        FormId = item.FormId,
-                    };
-
-                    var qry = repoChecking.GetLastChecked(item.id, item.LatestCheckedDate);
-
-                    if (qry != null)
-                    {
-                       
-
-                        if (qry.IsDone)
-                        {
-                            vehicleDto.StatusCode = 2;
-                        }
-                        else
-                        {
-                            //HACK * fix มี 20 รายการ ทำเป็น เปอเซน *5
-                            vehicleDto.VehicleProgress = qry.CheckedTopics.Where(x => x.IsPass.HasValue && x.IsPass.Value).Count() * 5;
-
-                            if (vehicleDto.VehicleProgress == 100)
-                                vehicleDto.StatusCode = 1;
-                            else
-                                vehicleDto.StatusCode = 0;
-                        }                       
-                    }
-                    _vehicleList.Add(vehicleDto);
-                }
-            }
-
-            return _vehicleList;
-
-        }
-
-        /// <summary>
         /// vehicles by vehicleid.
         /// </summary>
         /// <param name="id">username email</param>
         /// <returns>vehicles</returns>
-        ///GET /vehicles/{user-id}
-        [HttpGet]
-        [Route("vehicle/{id}")]
-        public Vehicle Vehicle(string id)
+        ///GET /vehicles/{user-id} 
+        public Vehicle Get(string id)
         {
             var qry = repoVehicle.GetVehicle(id);
-            return  qry;
+            return qry;
         }
 
         /// <summary>
@@ -110,8 +48,6 @@ namespace ApiApp.Controllers
         /// </summary>
         /// <param name="vehicle">The new vehicle.</param>
         ///POST /vehicles/add/
-        //[HttpPost]
-        //[Route("add/{vehicle}")]
         public void Post(Vehicle vehicle)
         {
             repoVehicle.AddVehicle(vehicle);
@@ -120,10 +56,8 @@ namespace ApiApp.Controllers
         /// <summary>
         /// UpdateVehicle
         /// </summary>
-        /// <param name="vehicle"></param>
-        /// PUT /vehicle/{vehicle-id}
-        //[HttpPut]
-        //[Route("{vehicle}")]
+        /// <param name="vehicle">updateInfo</param>
+        /// PUT /vehicle/{vehicle-id}   
         public void Put(Vehicle vehicle)
         {
             repoVehicle.UpdateVehicle(vehicle);

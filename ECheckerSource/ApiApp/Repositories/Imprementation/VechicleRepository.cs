@@ -13,8 +13,12 @@ namespace ApiApp.Repositories.Imprementation
     /// </summary>
     class VechicleRepository : IVechicleRepository
     {
-
+        /// <summary>
+        /// table name
+        /// </summary>
         private string tableVehicle = "echecker.Vehicles";
+
+
         /// <summary>
         /// เพิ่มรถ
         /// </summary>
@@ -28,23 +32,23 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// ดึงข้อมูลรถของผู้ใช้
         /// </summary>
-        /// <param name="id">รหัส รถ</param>
+        /// <param name="vehicleId">รหัส รถ</param>
         /// <returns></returns>
-        public Vehicle GetVehicle(string id)
+        public Vehicle GetVehicle(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
-            return coltn.Find(x => x.id == id).FirstOrDefault();
+            return coltn.Find(x => x.id == vehicleId).FirstOrDefault();
         }
 
         /// <summary>
-        /// ดึง
+        /// ดึงข้อมูลรถทั้งหมดของผู้ใช้
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="email">email</param>
         /// <returns></returns>
-        public IEnumerable<Vehicle> GetVehicles(string id)
+        public IEnumerable<Vehicle> GetVehicles(string email)
         {
             var coltn = MongoUtil.GetCollection<Vehicle>(tableVehicle);
-            return coltn.Find(x => x.Email == id).ToList();
+            return coltn.Find(x => x.Email == email).ToList();
         }
 
         /// <summary>

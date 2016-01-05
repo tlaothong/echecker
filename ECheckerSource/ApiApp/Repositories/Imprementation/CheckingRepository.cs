@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MongoDB.Driver;
+using ApiApp.MongoAccess;
 
 namespace ApiApp.Repositories.Imprementation
 {
@@ -13,24 +14,30 @@ namespace ApiApp.Repositories.Imprementation
     class CheckingRepository : ICheckingRepository
     {
         /// <summary>
+        /// table name
+        /// </summary>
+        private string tableCheckeds = "echecker.Checkeds";
+
+
+        /// <summary>
         /// สร้าง checked รถ
         /// </summary>
         /// <param name="check"> ข้อมูลการตรวจรถ</param>
         public void AddChecked(Checked check)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Checked>("echecker.Checkeds");
+            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
             coltn.InsertOne(check);
         }
 
         /// <summary>
-        /// 
+        /// ดึงข้อมูลการตรวจรถล่าสุด
         /// </summary>
-        /// <param name="vehicleId"></param>
-        /// <param name="lastCreateCheckDate"></param>
+        /// <param name="vehicleId">รหัสรถ</param>
+        /// <param name="lastCreateCheckDate">วันที่เชคล่าสุด</param>
         /// <returns></returns>
         public Checked GetLastChecked(string vehicleId, DateTime lastCreateCheckDate)
         {
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Checked>("echecker.Checkeds");
+            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
             return coltn.Find(x => x.VehicleId == vehicleId && x.CreateDate == lastCreateCheckDate).FirstOrDefault();
         }
 
@@ -40,12 +47,11 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="check">ข้อมูล การตรวจรถ</param>
         public void UpdateChecked(Checked check)
         {
-            var filter = Builders<Checked>.Filter.Eq("id", check.id);
             var update = Builders<Checked>.Update
-                    .Set(x => x.CheckedTopics, check.CheckedTopics);   
+                    .Set(x => x.CheckedTopics, check.CheckedTopics);
 
-            var coltn = MongoAccess.MongoUtil._database.GetCollection<Checked>("echecker.Checkeds");
-            coltn.UpdateOne(filter, update);
+            var coltn = MongoUtil.GetCollection<Checked>(tableCheckeds);
+            coltn.UpdateOne(x => x.id == check.id, update);
         }
     }
 }
