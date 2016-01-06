@@ -95,6 +95,14 @@ namespace ApiApp.Controllers
         public void PutDone(string id)
         {
             //TODO: verify all checked topics.IsPass are not null
+            var myLatestChecked = this.repoChecking.GetLastChecked(id);
+            if (myLatestChecked != null && myLatestChecked.CheckedTopics.All(x => x.IsPass != null))
+            { }
+            else
+            {
+                throw new Exception("found some checked topic that is not checking yet.");
+            }
+
             try
             {
                 //TODO: compute status
