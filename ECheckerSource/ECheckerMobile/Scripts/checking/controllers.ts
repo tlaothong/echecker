@@ -1,12 +1,22 @@
 ﻿module app.checking {
     'use strict';
+    
+    class TopicsController {
 
-    class MyController {
+        private PlateNumber: any;
+        private VehicleStatus: any;
 
-        //public model: any = null;
+        static $inject = ['data', 'app.shared.VehicleService'];
+        constructor(public data, private vehicleSvc: app.shared.VehicleService) {
+            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
+            this.VehicleStatus = vehicleSvc.VehiclesData.VehicleStatus;
+        }
 
-        static $inject = ['$scope'];
-        constructor(private $scope: ng.IScope) {
+        public IsPass(topic: any): boolean {
+            return topic.IsPass == "TRUE";
+        }
+        public IsFalse(topic: any): boolean {
+            return topic.IsPass == "FALSE";
         }
 
     }
@@ -20,6 +30,6 @@
 
     angular
         .module('app.checking')
-        .controller('app.checking.MyController', MyController)
+        .controller('app.checking.TopicsController', TopicsController)
         .controller('app.checking.CheckAmissController', CheckAmissController);
 }

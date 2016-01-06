@@ -46,25 +46,6 @@
         }
 
     }
-    class TopicsController {
-
-        private PlateNumber: any;
-        private VehicleStatus: any;
-
-        static $inject = ['data', 'app.shared.VehicleService'];
-        constructor(public data, private vehicleSvc: app.shared.VehicleService) {
-            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
-            this.VehicleStatus = vehicleSvc.VehiclesData.VehicleStatus;
-        }
-
-        public IsPass(topic: any): boolean {
-            return topic.IsPass == "TRUE";
-        }
-        public IsFalse(topic: any): boolean {
-            return topic.IsPass == "FALSE";
-        }
-
-    }
 
     angular
         .module('app.vehicles')
@@ -72,6 +53,5 @@
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
         .controller('app.vehicles.VehicleAddController', VehicleAddController)
         .controller('app.vehicles.VehicleStatusController', VehicleStatusController)
-        .controller('app.vehicles.TopicsController', TopicsController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

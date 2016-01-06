@@ -67,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 views: {
                     'vContent': {
                         templateUrl: 'templates/vehicle-status.html',
-                        controller: 'app.vehicles.TopicsController as cx',
+                        controller: 'app.checking.TopicsController as cx',
                         resolve: {
                             "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
                         }
@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkvehicle.html',
-                        controller: 'app.vehicles.TopicsController as cx',
+                        controller: 'app.checking.TopicsController as cx',
                         resolve: {
                             "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
                         }
@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkamiss.html',
-                        controller: 'app.vehicles.TopicsController as cx',
+                        controller: 'app.checking.TopicsController as cx',
                         resolve: {
                             "data": ["$stateParams", 'app.shared.MockTopics', (p, svc) => {
                                 return svc.get(p.tid);
@@ -110,7 +110,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                         templateUrl: 'templates/amisseddetail.html',
                         controller: 'app.amissed.AmissedDetailController as cx',
                         resolve: {
-                            "data": ['app.shared.MockAmissed', svc => { return svc.getAll(); }]
+                            "data": ['app.shared.MockAmissed', svc => { return svc.get('ef1d7bf5-c013-475f-9790-255dc97f8d6f'); }]
                         }
                     }
                 }
