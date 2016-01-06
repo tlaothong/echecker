@@ -15,6 +15,7 @@ namespace ApiApp.Controllers
     /// <summary>
     /// Vehicle
     /// </summary>
+    [RoutePrefix("api/vehicle")]
     public class VehicleController : ApiController
     {
         private IVechicleRepository repoVehicle;
@@ -36,7 +37,9 @@ namespace ApiApp.Controllers
         /// </summary>
         /// <param name="id">username email</param>
         /// <returns>vehicles</returns>
-        ///GET /vehicles/{user-id} 
+        ///GET /vehicles/{user-id}
+        [HttpGet]
+        [Route("{id}")]
         public Vehicle Get(string id)
         {
             var qry = repoVehicle.GetVehicle(id);
@@ -47,20 +50,47 @@ namespace ApiApp.Controllers
         /// add vehicle
         /// </summary>
         /// <param name="vehicle">The new vehicle.</param>
-        ///POST /vehicles/add/
+        ///POST /vehicles/add/    
+        [HttpPost]
+        [Route("add/")]
         public void Post(Vehicle vehicle)
         {
+            vehicle.PayDate = DateTime.Today;
+            vehicle.IsPayActive = false;
+            vehicle.PBRDate = DateTime.Today;
+            vehicle.IsPBRActive = false;
+            vehicle.CheckDate = DateTime.Today;
+            vehicle.IsCheckActive = false;
+            vehicle.DrivingLicenseDate = DateTime.Today;
+            vehicle.IsDrivingLicenseActive = false;
+            vehicle.TaxDate = DateTime.Today;
+            vehicle.IsTaxActive = false;            
+
             repoVehicle.AddVehicle(vehicle);
         }
 
         /// <summary>
-        /// UpdateVehicle
+        /// UpdateVehicle Info
         /// </summary>
+        /// <param name="id">รหัสรถ</param>
         /// <param name="vehicle">updateInfo</param>
         /// PUT /vehicle/{vehicle-id}   
-        public void Put(Vehicle vehicle)
+        [HttpPut]
+        [Route("{id}")]
+        public void UpdateInfo(string id, Vehicle vehicle)
         {
             repoVehicle.UpdateVehicle(vehicle);
+        }
+        /// <summary>
+        /// UpdateVehicle Noti
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vehicle">notiInfo</param>
+        [HttpPut]
+        [Route("{id}/noti/")]
+        public void UpdateNoti(string id, Vehicle vehicle)
+        {
+            repoVehicle.UpdateNotification(vehicle);
         }
     }
 }

@@ -164,9 +164,11 @@ namespace ApiApp.Controllers
         /// <summary>
         /// update checked
         /// </summary>
-        /// <param name="check"></param>
+        /// <param name="id">VehicleId</param>
+        /// <param name="check">CheckInfo</param>
         [HttpPut]
-        public void Put(Checked check)
+        [Route("{id}")]
+        public void Put(string id, Checked check)
         {
             repoChecking.UpdateChecked(check);
 

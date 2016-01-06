@@ -39,6 +39,12 @@ namespace ApiApp.Repositories
         void UpdateVehicle(Models.Vehicle vehicle);
 
         /// <summary>
+        /// แก้ไขการแจ้งเตือน
+        /// </summary>
+        /// <param name="vehicle"></param>
+        void UpdateNotification(Models.Vehicle vehicle);
+
+        /// <summary>
         /// update last checked
         /// </summary>
         /// <param name="vehicleId"> รหัสรถ</param>
