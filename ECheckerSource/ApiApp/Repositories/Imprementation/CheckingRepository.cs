@@ -114,6 +114,16 @@ namespace ApiApp.Repositories.Imprementation
         }
 
         /// <summary>
+        /// for test api
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReadyStatus> GetAllReadyStatus()
+        {
+            var coltn = MongoUtil.GetCollection<ReadyStatus>(tableNameReadyStatus);
+            return coltn.Find(x => true).ToList();
+        }
+
+        /// <summary>
         /// update checked to done
         /// </summary>
         /// <param name="vehicleId"></param>

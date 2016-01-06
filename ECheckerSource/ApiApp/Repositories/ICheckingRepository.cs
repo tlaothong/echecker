@@ -55,10 +55,16 @@ namespace ApiApp.Repositories
         ReadyStatus GetLatestReadyStatus(string vehicleId);
 
         /// <summary>
+        /// for test api
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ReadyStatus> GetAllReadyStatus();
+
+        /// <summary>
         /// create ready status
         /// </summary>
         /// <param name="readyStatus"></param>
-        void CreateReadyStatus(ReadyStatus readyStatus);
+        void CreateReadyStatus(ReadyStatus readyStatus);        
 
         /// <summary>
         /// update checked to done

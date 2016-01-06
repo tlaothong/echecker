@@ -58,6 +58,18 @@ namespace ApiApp.Controllers
         }
 
         /// <summary>
+        /// for test api
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("readystatus/getall")]
+        /*public*/ IEnumerable<ReadyStatus> GetAllReadStatus()
+        {
+            return this.repoChecking.GetAllReadyStatus();
+        }
+
+
+        /// <summary>
         /// get latest status (ready/not ready).
         /// </summary>
         /// <param name="id">Vehicle ID.</param>
@@ -67,7 +79,8 @@ namespace ApiApp.Controllers
         [Route("{id}/readystatus")]
         public string ReadyStatus(string id)
         {
-            return this.repoChecking.GetLatestReadyStatus(id).Status;
+            var result = this.repoChecking.GetLatestReadyStatus(id);
+            return  result == null ? "ไม่พร้อมใช้งาน" : result.Status;
         }
 
         /// <summary>
@@ -80,6 +93,8 @@ namespace ApiApp.Controllers
         [Route("{id}/done")]
         public void PutDone(string id)
         {
+            //TODO: verify all checked topics.IsPass are not null
+
             try
             {
                 //TODO: compute status
@@ -93,13 +108,15 @@ namespace ApiApp.Controllers
                 //sum calculate damage
                 else
                 {
-                    if (amissedList.Sum(x => x.DamagePercent) > 60)
+                    int avg = 0;
+                    avg = amissedList.Sum(x => x.DamagePercent);
+                    if (avg < 60)
                     {
-                        status.Status = "พร้อมใช้งาน";
+                        status.Status = string.Format("{0}% พร้อมใช้งาน", avg);
                     }
                     else
                     {
-                        status.Status = "ไม่พร้อมใช้งาน";
+                        status.Status = string.Format("{0}% ไม่พร้อมใช้งาน", avg);
                     }
                 }
                 //call repo to create
@@ -221,107 +238,124 @@ namespace ApiApp.Controllers
         /// <summary>
         /// for test api
         /// </summary>
-        /// <param name="amisseds"></param>
-        //[HttpPost]
-        //[Route("post")]
-        //public void CreateAmissed(string id)
-        //{
-        //    this.repoChecking.CreateAmissed(mockAmissdes());
-        //}
+        [HttpPost]
+        [Route("createReady")]
+        /*public*/ void createready()
+        {
+            ReadyStatus rd = new Models.ReadyStatus
+            {
+                id = Guid.NewGuid().ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                Status = "พร้อมใช้งาน",
+                CreateDateTime = DateTime.Now,
+            };
+            this.repoChecking.CreateReadyStatus(rd);
+        }
 
-        //public List<Amissed> mockAmissdes()
-        //{
-        //    Guid checkedId = Guid.NewGuid();
-        //    Guid checkedId2 = Guid.NewGuid();
-        //    Guid topicId = Guid.NewGuid();
-        //    return new List<Amissed>
-        //    {
-        //        new Amissed {
-        //        id = Guid.NewGuid().ToString(),
-        //        CheckedId = checkedId.ToString(),
-        //        VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        TopicId = topicId.ToString(),
-        //        Detail = "amissed 301",
-        //        DamagePercent = 15,
-        //        IsCritical = false,
-        //        SuggestTopic = "suggest 301",
-        //        SuggestDetail = "suggestdetail 301",
-        //        Comment = "comment 301",
-        //        PhotoUrl = "",
-        //        CreateDate = DateTime.Parse("1/5/2016"),
-        //        },
-        //        new Amissed {
-        //        id = Guid.NewGuid().ToString(),
-        //        CheckedId = checkedId.ToString(),
-        //        VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        TopicId = topicId.ToString(),
-        //        Detail = "amissed 302",
-        //        DamagePercent = 15,
-        //        IsCritical = true,
-        //        SuggestTopic = "suggest 302",
-        //        SuggestDetail = "suggestdetail 302",
-        //        Comment = "comment 302",
-        //        PhotoUrl = "",
-        //        CreateDate = DateTime.Parse("1/5/2016"),
-        //        },
-        //        new Amissed {
-        //        id = Guid.NewGuid().ToString(),
-        //        CheckedId = checkedId.ToString(),
-        //        VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        TopicId = topicId.ToString(),
-        //        Detail = "amissed 303",
-        //        DamagePercent = 15,
-        //        IsCritical = false,
-        //        SuggestTopic = "suggest 303",
-        //        SuggestDetail = "suggestdetail 303",
-        //        Comment = "comment 303",
-        //        PhotoUrl = "",
-        //        CreateDate = DateTime.Parse("1/5/2016"),
-        //        },
+        /// <summary>
+        /// for test api
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpPost]
+        [Route("post")]
+        /*public*/ void CreateAmissed(string id)
+        {
+            this.repoChecking.CreateAmissed(mockAmissdes());
+        }
 
-        //        //new Amissed {
-        //        //id = Guid.NewGuid().ToString(),
-        //        //CheckedId = checkedId2.ToString(),
-        //        //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        //TopicId = topicId.ToString(),
-        //        //Detail = "amissed 201",
-        //        //DamagePercent = 15,
-        //        //IsCritical = false,
-        //        //SuggestTopic = "suggest 201",
-        //        //SuggestDetail = "suggestdetail 201",
-        //        //Comment = "comment 201",
-        //        //PhotoUrl = "",
-        //        //CreateDate = DateTime.Parse("2016/1/3"),
-        //        //},
-        //        //new Amissed {
-        //        //id = Guid.NewGuid().ToString(),
-        //        //CheckedId = checkedId2.ToString(),
-        //        //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        //TopicId = topicId.ToString(),
-        //        //Detail = "amissed 202",
-        //        //DamagePercent = 15,
-        //        //IsCritical = true,
-        //        //SuggestTopic = "suggest 202",
-        //        //SuggestDetail = "suggestdetail 202",
-        //        //Comment = "comment 202",
-        //        //PhotoUrl = "",
-        //        //CreateDate = DateTime.Parse("2016/1/3"),
-        //        //},
-        //        //new Amissed {
-        //        //id = Guid.NewGuid().ToString(),
-        //        //CheckedId = checkedId2.ToString(),
-        //        //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
-        //        //TopicId = topicId.ToString(),
-        //        //Detail = "amissed 203",
-        //        //DamagePercent = 15,
-        //        //IsCritical = false,
-        //        //SuggestTopic = "suggest 203",
-        //        //SuggestDetail = "suggestdetail 203",
-        //        //Comment = "comment 203",
-        //        //PhotoUrl = "",
-        //        //CreateDate = DateTime.Parse("2016/1/3"),
-        //        //},
-        //    };
-        //}
+        List<Amissed> mockAmissdes()
+        {
+            Guid checkedId = Guid.NewGuid();
+            Guid checkedId2 = Guid.NewGuid();
+            Guid topicId = Guid.NewGuid();
+            return new List<Amissed>
+            {
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 301",
+                DamagePercent = 15,
+                IsCritical = false,
+                SuggestTopic = "suggest 301",
+                SuggestDetail = "suggestdetail 301",
+                Comment = "comment 301",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 302",
+                DamagePercent = 15,
+                IsCritical = true,
+                SuggestTopic = "suggest 302",
+                SuggestDetail = "suggestdetail 302",
+                Comment = "comment 302",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 303",
+                DamagePercent = 15,
+                IsCritical = false,
+                SuggestTopic = "suggest 303",
+                SuggestDetail = "suggestdetail 303",
+                Comment = "comment 303",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 201",
+                //DamagePercent = 15,
+                //IsCritical = false,
+                //SuggestTopic = "suggest 201",
+                //SuggestDetail = "suggestdetail 201",
+                //Comment = "comment 201",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 202",
+                //DamagePercent = 15,
+                //IsCritical = true,
+                //SuggestTopic = "suggest 202",
+                //SuggestDetail = "suggestdetail 202",
+                //Comment = "comment 202",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 203",
+                //DamagePercent = 15,
+                //IsCritical = false,
+                //SuggestTopic = "suggest 203",
+                //SuggestDetail = "suggestdetail 203",
+                //Comment = "comment 203",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+            };
+        }
     }
 }
