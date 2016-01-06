@@ -52,6 +52,16 @@ namespace ApiApp.Controllers
                         LatestCheckedDate = item.LatestCheckedDate,
                         VehicleTypeId = item.VehicleTypeId,
                         FormId = item.FormId,
+                        PayDate = item.PayDate,
+                        IsPayActive = item.IsPayActive,
+                        PBRDate = item.PBRDate,
+                        IsPBRActive = item.IsPBRActive,
+                        CheckDate = item.CheckDate,
+                        IsCheckActive = item.IsCheckActive,
+                        DrivingLicenseDate = item.DrivingLicenseDate,
+                        IsDrivingLicenseActive = item.IsDrivingLicenseActive,
+                        TaxDate = item.TaxDate,
+                        IsTaxActive = item.IsTaxActive,
                     };
 
                     var qry = repoChecking.GetLastChecked(item.id);
