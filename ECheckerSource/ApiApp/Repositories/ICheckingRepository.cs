@@ -37,5 +37,39 @@ namespace ApiApp.Repositories
         /// <param name="vehicleId"></param>
         /// <returns></returns>
         IEnumerable<Amissed> GetAmissedByVehicleId(string vehicleId);
+
+        IEnumerable<Amissed> GetAllAmissed();
+
+        /// <summary>
+        /// create amisseds after analyzed
+        /// </summary>
+        /// <param name="amisseds"></param>
+        void CreateAmissed(IEnumerable<Amissed> amisseds);
+
+        /// <summary>
+        /// get latest ready status by vehicle id
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <returns></returns>
+        ReadyStatus GetLatestReadyStatus(string vehicleId);
+
+        /// <summary>
+        /// for test api
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ReadyStatus> GetAllReadyStatus();
+
+        /// <summary>
+        /// create ready status
+        /// </summary>
+        /// <param name="readyStatus"></param>
+        void CreateReadyStatus(ReadyStatus readyStatus);        
+
+        /// <summary>
+        /// update checked to done
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <param name="latestCheckedDate"></param>
+        Checked CheckedDone(string vehicleId, DateTime latestCheckedDate);        
     }
 }

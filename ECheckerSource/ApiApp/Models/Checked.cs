@@ -50,6 +50,10 @@ namespace ApiApp.Models
         /// <summary>
         /// 
         /// </summary>
+        public string TopicId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public bool? IsPass { get; set; }
         /// <summary>
         /// 

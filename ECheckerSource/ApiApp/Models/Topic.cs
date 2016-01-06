@@ -30,6 +30,11 @@ namespace ApiApp.Models
         /// <summary>
         /// 
         /// </summary>
+        public bool IsCritical { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int DamagePercent { get; set; }
 
         /// <summary>

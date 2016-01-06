@@ -23,6 +23,11 @@ namespace ApiApp.Models
         public string SuggestDetail { get; set; }
         public string Comment { get; set; }
         public string PhotoUrl { get; set; }
+
+        /// <summary>
+        /// create date 
+        /// </summary>
+        //[BsonDateTimeOptions(DateOnly = true)] ***(only date do not put time into this property)***
         public DateTime CreateDate { get; set; }
     }
 }

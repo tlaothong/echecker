@@ -50,6 +50,5 @@ namespace ApiApp.Repositories
         /// <param name="vehicleId"> รหัสรถ</param>
         /// <param name="datetime"> last checked datetimec</param>
         void UpdateLastChecked(string vehicleId, DateTime datetime);
-
     }
 }

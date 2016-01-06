@@ -32,66 +32,146 @@ namespace ApiApp.Controllers
             this.repoForm = repoForm;
         }
 
+        /// <summary>
+        /// get latest amissed list
+        /// </summary>
+        /// <param name="id">vehicle id</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}/amissed")]
-        /// <summary>
-        /// Get a specific value.
-        /// </summary>
-        /// <param name="id">The ref id.</param>
-        /// <returns></returns>
-        // GET /checked/{vehicle-id}/amissed
-        public IEnumerable<Amissed> Get(string id)
+        public IEnumerable<Amissed> GetLatestAmisseds(string id)
         {
             var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
-            return amissedList.GroupBy(x => x.CreateDate.Date).OrderByDescending(x => x.Key).FirstOrDefault();
+            return amissedList;
         }
 
-        [HttpGet]
-        [Route("{vehicleid}/readystatus")]
         /// <summary>
-        /// Get a specific value.
+        /// for test api
         /// </summary>
-        /// <param name="vehicleid">The ref id.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("amissed")]
+        public IEnumerable<Amissed> GetAmissed()
+        {
+            var amissedList = this.repoChecking.GetAllAmissed();
+            return amissedList;
+        }
+
+        /// <summary>
+        /// for test api
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("readystatus/getall")]
+        /*public*/
+        IEnumerable<ReadyStatus> GetAllReadStatus()
+        {
+            return this.repoChecking.GetAllReadyStatus();
+        }
+
+
+        /// <summary>
+        /// get latest status (ready/not ready).
+        /// </summary>
+        /// <param name="id">Vehicle ID.</param>
         /// <returns></returns>
         // GET /checked/{vehicle-id}/readystatus
-        public string ReadyStatus(string vehicleid)
+        [HttpGet]
+        [Route("{id}/readystatus")]
+        public string ReadyStatus(string id)
         {
-            throw new NotImplementedException();
+            var result = this.repoChecking.GetLatestReadyStatus(id);
+            return result == null ? "ไม่พร้อมใช้งาน" : result.Status;
         }
 
-        [HttpPut]
-        [Route("{vehicleid}/done")]
         /// <summary>
         /// Update the modified value.
         /// </summary>
-        /// <param name="id">The ref id.</param>
+        /// <param name="id">vehicle id</param>
         /// <param name="value">The new value to be updated.</param>
         // PUT /checked/{vehicle-id}/done
-        public void PutDone(Checked currentChecked)
+        [HttpPut]
+        [Route("{id}/done")]
+        public void PutDone(string id)
         {
-            //TODO: compute status
-            //check critical first!!
-            //var amissedList = this._CheckingRepo.GetAmissedByVehicleId(vehicleid);
-            //if (amissedList.Any(x => x.IsCritical == true))
-            //{
-            //    return "ไม่พร้อมใช้งาน";
-            //}
-            ////sum calculate damage
-            //else
-            //{
-            //    if (amissedList.Sum(x => x.DamagePercent) > 60)
-            //    {
-            //        return "พร้อมใช้งาน";
-            //    }
-            //    else
-            //    {
-            //        return "ไม่พร้อมใช้งาน";
-            //    }
-            //}
+            //TODO: verify all checked topics.IsPass are not null
+            var myLatestChecked = this.repoChecking.GetLastChecked(id);
+            if (myLatestChecked != null && myLatestChecked.CheckedTopics.All(x => x.IsPass != null))
+            { }
+            else
+            {
+                throw new Exception("found some checked topic that is not checking yet.");
+            }
 
-            //TODO: update checked[] to done
+            try
+            {
+                //TODO: compute status
+                //check critical first!!
+                ReadyStatus status = new Models.ReadyStatus { VehicleId = id };
+                var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
+                if (amissedList.Any(x => x.IsCritical == true))
+                {
+                    status.Status = "ไม่พร้อมใช้งาน";
+                }
+                //sum calculate damage
+                else
+                {
+                    int avg = 0;
+                    avg = amissedList.Sum(x => x.DamagePercent);
+                    if (avg < 60)
+                    {
+                        status.Status = string.Format("{0}% พร้อมใช้งาน", avg);
+                    }
+                    else
+                    {
+                        status.Status = string.Format("{0}% ไม่พร้อมใช้งาน", avg);
+                    }
+                }
+                //call repo to create
+                this.repoChecking.CreateReadyStatus(status);
+
+                //TODO: update checked[] to done
+                var vehicle = this.repoVehicle.GetVehicle(id);
+                Checked myChecked = this.repoChecking.CheckedDone(id, vehicle.LatestCheckedDate);
+
+                //TODO: generate amissed
+                var form = this.repoForm.GetForm(vehicle.FormId);
+
+                List<Amissed> amisseds = new List<Amissed>();
+                foreach (var item in form)
+                {
+                    //linked form item to check topic
+                    var checkedTopic = myChecked.CheckedTopics.Where(x => x.TopicId == item.id).FirstOrDefault();
+
+                    Amissed data = new Amissed();
+
+                    //linked to topic
+                    data.id = Guid.NewGuid().ToString();
+                    data.CheckedId = myChecked.id;
+                    data.VehicleId = id;
+                    data.TopicId = item.id;
+                    data.Detail = item.Detail;
+                    data.SuggestTopic = item.SuggestTopic;
+                    data.SuggestDetail = item.SuggestDetail;
+                    data.DamagePercent = item.DamagePercent;
+                    data.IsCritical = item.IsCritical;
+
+                    //linked to checked topic
+                    data.Comment = checkedTopic.Comment;
+                    data.PhotoUrl = checkedTopic.PhotoURL;
+                    data.CreateDate = DateTime.Now;
+
+                    amisseds.Add(data);
+                }
+
+                //create amisseds
+                this.repoChecking.CreateAmissed(amisseds);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
 
         /// <summary>
         /// GetLastChecked
@@ -129,7 +209,7 @@ namespace ApiApp.Controllers
                     return null;
                 }
             }
-          
+
         }
 
         /// <summary>
@@ -140,12 +220,12 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public void Post(string id)
         {
-            var qry = repoVehicle.GetVehicle(id);       
+            var qry = repoVehicle.GetVehicle(id);
 
             if (qry != null)
             {
                 var now = DateTime.Now;
-                var newChecked = GetNewChecked(id,qry.FormId);
+                var newChecked = GetNewChecked(id, qry.FormId);
                 newChecked.CreateDate = now;
 
                 repoChecking.AddChecked(newChecked);
@@ -180,6 +260,35 @@ namespace ApiApp.Controllers
 
         }
 
+        /// <summary>
+        /// for test api
+        /// </summary>
+        [HttpPost]
+        [Route("createReady")]
+        /*public*/
+        void createready()
+        {
+            ReadyStatus rd = new Models.ReadyStatus
+            {
+                id = Guid.NewGuid().ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                Status = "พร้อมใช้งาน",
+                CreateDateTime = DateTime.Now,
+            };
+            this.repoChecking.CreateReadyStatus(rd);
+        }
+
+        /// <summary>
+        /// for test api
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpPost]
+        [Route("post")]
+        /*public*/
+        void CreateAmissed(string id)
+        {
+            this.repoChecking.CreateAmissed(mockAmissdes());
+        }
 
         Checked GetNewChecked(string vehicleId, int formId)
         {
@@ -214,7 +323,101 @@ namespace ApiApp.Controllers
 
             return check;
         }
-        
+
+        List<Amissed> mockAmissdes()
+        {
+            Guid checkedId = Guid.NewGuid();
+            Guid checkedId2 = Guid.NewGuid();
+            Guid topicId = Guid.NewGuid();
+            return new List<Amissed>
+            {
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 301",
+                DamagePercent = 15,
+                IsCritical = false,
+                SuggestTopic = "suggest 301",
+                SuggestDetail = "suggestdetail 301",
+                Comment = "comment 301",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 302",
+                DamagePercent = 15,
+                IsCritical = true,
+                SuggestTopic = "suggest 302",
+                SuggestDetail = "suggestdetail 302",
+                Comment = "comment 302",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+                new Amissed {
+                id = Guid.NewGuid().ToString(),
+                CheckedId = checkedId.ToString(),
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                TopicId = topicId.ToString(),
+                Detail = "amissed 303",
+                DamagePercent = 15,
+                IsCritical = false,
+                SuggestTopic = "suggest 303",
+                SuggestDetail = "suggestdetail 303",
+                Comment = "comment 303",
+                PhotoUrl = "",
+                CreateDate = DateTime.Parse("1/5/2016"),
+                },
+
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 201",
+                //DamagePercent = 15,
+                //IsCritical = false,
+                //SuggestTopic = "suggest 201",
+                //SuggestDetail = "suggestdetail 201",
+                //Comment = "comment 201",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 202",
+                //DamagePercent = 15,
+                //IsCritical = true,
+                //SuggestTopic = "suggest 202",
+                //SuggestDetail = "suggestdetail 202",
+                //Comment = "comment 202",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+                //new Amissed {
+                //id = Guid.NewGuid().ToString(),
+                //CheckedId = checkedId2.ToString(),
+                //VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
+                //TopicId = topicId.ToString(),
+                //Detail = "amissed 203",
+                //DamagePercent = 15,
+                //IsCritical = false,
+                //SuggestTopic = "suggest 203",
+                //SuggestDetail = "suggestdetail 203",
+                //Comment = "comment 203",
+                //PhotoUrl = "",
+                //CreateDate = DateTime.Parse("2016/1/3"),
+                //},
+            };
+        }
 
         Checked GetMock()
         {
@@ -234,8 +437,5 @@ namespace ApiApp.Controllers
                 },
             };
         }
-
     }
-
- 
 }

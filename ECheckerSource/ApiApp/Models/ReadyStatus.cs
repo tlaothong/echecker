@@ -19,7 +19,7 @@ namespace ApiApp.Models
         /// <summary>
         /// รหัส รถ
         /// </summary>
-        public int VehicleId { get; set; }
+        public string VehicleId { get; set; }
         /// <summary>
         /// สถานะความพร้อม
         /// </summary>
