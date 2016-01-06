@@ -63,7 +63,8 @@ namespace ApiApp.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("readystatus/getall")]
-        /*public*/ IEnumerable<ReadyStatus> GetAllReadStatus()
+        /*public*/
+        IEnumerable<ReadyStatus> GetAllReadStatus()
         {
             return this.repoChecking.GetAllReadyStatus();
         }
@@ -80,7 +81,7 @@ namespace ApiApp.Controllers
         public string ReadyStatus(string id)
         {
             var result = this.repoChecking.GetLatestReadyStatus(id);
-            return  result == null ? "ไม่พร้อมใช้งาน" : result.Status;
+            return result == null ? "ไม่พร้อมใช้งาน" : result.Status;
         }
 
         /// <summary>
@@ -94,7 +95,6 @@ namespace ApiApp.Controllers
         public void PutDone(string id)
         {
             //TODO: verify all checked topics.IsPass are not null
-
             try
             {
                 //TODO: compute status
@@ -175,64 +175,81 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public Checked GetCheckedByVehicleId(string id)
         {
-            var qry = repoVehicle.GetVehicle(id);
+            var check = repoChecking.GetLastChecked(id);
 
-            return repoChecking.GetLastChecked(id, qry.LatestCheckedDate);
+            if (check != null)
+            {
+                return check;
+            }
+            else
+            {
+                var qry = repoVehicle.GetVehicle(id);
+
+                if (qry != null)
+                {
+                    var now = DateTime.Now;
+                    var newChecked = GetNewChecked(id, qry.FormId);
+                    newChecked.CreateDate = now;
+
+                    repoChecking.AddChecked(newChecked);
+                    repoVehicle.UpdateLastChecked(id, now);
+
+                    return repoChecking.GetLastChecked(id);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
         }
 
         /// <summary>
         /// create Checked
         /// </summary>
         /// <param name="id">VehicleId</param>
-        //[HttpPost]
-        //[Route("post")]
-        //public void Post(string id)
-        //{
-        //    var qry = repoVehicle.GetVehicle(id);
+        [HttpPost]
+        [Route("{id}")]
+        public void Post(string id)
+        {
+            var qry = repoVehicle.GetVehicle(id);
 
-        //    if (qry != null)
-        //    {
-        //        var form = repoForm.GetForm(qry.FormId);
+            if (qry != null)
+            {
+                var now = DateTime.Now;
+                var newChecked = GetNewChecked(id, qry.FormId);
+                newChecked.CreateDate = now;
 
-        //        List<CheckTopics> _checkTopic = new List<CheckTopics>();
-        //        if (form.Count() > 0)
-        //        {
-        //            foreach (var item in form)
-        //            {
-        //                var checkTopic = new CheckTopics
-        //                {
-        //                    id = item.id,
-        //                    IsPass = null,
-        //                    Comment = string.Empty,
-        //                    PhotoURL = string.Empty,
-        //                };
+                repoChecking.AddChecked(newChecked);
+                repoVehicle.UpdateLastChecked(id, now);
+            }
 
-        //                _checkTopic.Add(checkTopic);
-        //            }
-        //        }
+            ////HACK : mock 
+            //var xx = GetMock();
+            //var now = DateTime.Now;
+            //xx.CreateDate = now;
+            //repoChecking.AddChecked(xx);
+            //repoVehicle.UpdateLastChecked(xx.VehicleId, now);
+        }
 
-        //        Checked check = new Checked
-        //        {
-        //            id = Guid.NewGuid().ToString(),
-        //            IsDone = false,
-        //            CreateDate = DateTime.Today,
-        //            VehicleId = id,
-        //            CheckedTopics = _checkTopic
-        //        };
-
-        //        repoChecking.AddChecked(check);
-        //    }
-        //}
 
         /// <summary>
         /// update checked
         /// </summary>
-        /// <param name="check"></param>
+        /// <param name="id">VehicleId</param>
+        /// <param name="check">CheckInfo</param>
         [HttpPut]
         [Route("{id}")]
-        public void Put(Checked check)
+        public void Put(string id, Checked check)
         {
             repoChecking.UpdateChecked(check);
+
+            //HACK Test
+            //var cc = GetMock();
+
+            //repoChecking.UpdateChecked(cc);
+
+
         }
 
         /// <summary>
@@ -240,7 +257,8 @@ namespace ApiApp.Controllers
         /// </summary>
         [HttpPost]
         [Route("createReady")]
-        /*public*/ void createready()
+        /*public*/
+        void createready()
         {
             ReadyStatus rd = new Models.ReadyStatus
             {
@@ -258,9 +276,44 @@ namespace ApiApp.Controllers
         /// <param name="id"></param>
         [HttpPost]
         [Route("post")]
-        /*public*/ void CreateAmissed(string id)
+        /*public*/
+        void CreateAmissed(string id)
         {
             this.repoChecking.CreateAmissed(mockAmissdes());
+        }
+
+        Checked GetNewChecked(string vehicleId, int formId)
+        {
+            var now = DateTime.Now;
+            var form = repoForm.GetForm(formId);
+
+            List<CheckTopics> _checkTopic = new List<CheckTopics>();
+            if (form.Count() > 0)
+            {
+                foreach (var item in form)
+                {
+                    var checkTopic = new CheckTopics
+                    {
+                        id = item.id,
+                        IsPass = null,
+                        Comment = string.Empty,
+                        PhotoURL = string.Empty,
+                    };
+
+                    _checkTopic.Add(checkTopic);
+                }
+            }
+
+            Checked check = new Checked
+            {
+                id = Guid.NewGuid().ToString(),
+                IsDone = false,
+                CreateDate = now,
+                VehicleId = vehicleId,
+                CheckedTopics = _checkTopic
+            };
+
+            return check;
         }
 
         List<Amissed> mockAmissdes()
@@ -355,6 +408,25 @@ namespace ApiApp.Controllers
                 //PhotoUrl = "",
                 //CreateDate = DateTime.Parse("2016/1/3"),
                 //},
+            };
+        }
+
+        Checked GetMock()
+        {
+            return new Checked
+            {
+                id = Guid.NewGuid().ToString(),
+                VehicleId = "C37EBF61 - 20E4 - 4612 - 9160 - A94A7281F2E4",
+                CreateDate = DateTime.Now,
+                IsDone = false,
+                CheckedTopics = new List<CheckTopics>
+                {
+                    new CheckTopics {  Comment = "ddddddd", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "seewr", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "wrtwret", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "45wrt6", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "wert", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                },
             };
         }
     }

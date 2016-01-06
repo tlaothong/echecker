@@ -16,11 +16,10 @@ namespace ApiApp.Repositories
         /// ดึงข้อมูลการตรวจรถล่าสุด
         /// </summary>
         /// <param name="vehicleId">รหัสรถ</param>
-        /// <param name="lastCreateCheckDate">วันที่เชคล่าสุด</param>
         /// <returns></returns>
-        Checked GetLastChecked(string vehicleId, DateTime lastCreateCheckDate);
+        Checked GetLastChecked(string vehicleId);
 
-        /// <summary>
+        /// <summary> 
         /// ตรวจรถ
         /// </summary>
         /// <param name="check">ข้อมูล การตรวจรถ</param>

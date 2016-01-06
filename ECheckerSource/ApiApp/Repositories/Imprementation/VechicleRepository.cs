@@ -17,7 +17,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableName = "echecker.Vehicles";
+        private const string tableName = "echecker.Vehicles";
 
 
         /// <summary>
@@ -53,17 +53,53 @@ namespace ApiApp.Repositories.Imprementation
         }
 
         /// <summary>
+        /// update last checked
+        /// </summary>
+        /// <param name="vehicleId"> รหัสรถ</param>
+        /// <param name="datetime"> last checked datetimec</param>
+        public void UpdateLastChecked(string vehicleId, DateTime datetime)
+        {
+            var update = Builders<Vehicle>.Update
+                   .Set(x => x.LatestCheckedDate, datetime);
+
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
+            coltn.UpdateOne(v => v.id == vehicleId, update);
+        }
+
+        /// <summary>
+        /// แก้ไขการแจ้งเตือน
+        /// </summary>
+        /// <param name="vehicle"></param>
+        public void UpdateNotification(Vehicle vehicle)
+        {
+            var update = Builders<Vehicle>.Update
+                  .Set(x => x.PBRDate, vehicle.PBRDate)
+                  .Set(x => x.IsPBRActive, vehicle.IsPBRActive)
+                  .Set(x => x.CheckDate, vehicle.CheckDate)
+                  .Set(x => x.IsCheckActive, vehicle.IsCheckActive)
+                  .Set(x => x.DrivingLicenseDate, vehicle.DrivingLicenseDate)
+                  .Set(x => x.IsDrivingLicenseActive, vehicle.IsDrivingLicenseActive)
+                  .Set(x => x.PayDate, vehicle.PayDate)
+                  .Set(x => x.IsPayActive, vehicle.IsPayActive)
+                  .Set(x => x.TaxDate, vehicle.TaxDate)
+                  .Set(x => x.IsTaxActive, vehicle.IsTaxActive);
+
+            var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
+            coltn.UpdateOne(v => v.id == vehicle.id, update);
+        }
+
+        /// <summary>
         /// แก้ไขรถ ปล.แก้ได้เฉพาะ เลขทะเบียน กับ จังหวัด
         /// </summary>
         /// <param name="vehicle"></param>
         public void UpdateVehicle(Vehicle vehicle)
-        {   
+        {
             var update = Builders<Vehicle>.Update
                     .Set(x => x.PlateNumber, vehicle.PlateNumber)
                     .Set(x => x.Province, vehicle.Province);
 
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
-            coltn.UpdateOne( v =>v.id == vehicle.id, update);
+            coltn.UpdateOne(v => v.id == vehicle.id, update);
 
         }
     }

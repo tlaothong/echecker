@@ -16,7 +16,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// table name
         /// </summary>
-        private string tableName = "echecker.Topics";
+        private const string tableName = "echecker.Topics";
 
         /// <summary>
         /// ดึงข้อมูล topic 

@@ -58,26 +58,29 @@ namespace ApiApp.Repositories.Imprementation
         /// <summary>
         /// ดึงข้อมูลการตรวจรถล่าสุด
         /// </summary>
-        /// <param name="vehicleId">รหัสรถ</param>
-        /// <param name="lastCreateCheckDate">วันที่เชคล่าสุด</param>
+        /// <param name="vehicleId">รหัสรถ</param>   
         /// <returns></returns>
-        public Checked GetLastChecked(string vehicleId, DateTime lastCreateCheckDate)
+        public Checked GetLastChecked(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Checked>(tableName);
-            return coltn.Find(x => x.VehicleId == vehicleId && x.CreateDate == lastCreateCheckDate).FirstOrDefault();
+            return coltn.Find(x => x.VehicleId == vehicleId).SortByDescending(x => x.CreateDate).FirstOrDefault();
         }
 
-        /// <summary>
+
+
+        /// <summary> 
         /// ตรวจรถ
         /// </summary>
-        /// <param name="check">ข้อมูล การตรวจรถ</param>
+        /// <param name="check">ข้อมูล การตรวจรถ</param>    
         public void UpdateChecked(Checked check)
         {
             var update = Builders<Checked>.Update
-                    .Set(x => x.CheckedTopics, check.CheckedTopics);
+                   .Set(x => x.CheckedTopics, check.CheckedTopics);
 
             var coltn = MongoUtil.GetCollection<Checked>(tableName);
-            coltn.UpdateOne(x => x.id == check.id, update);
+
+            var last = GetLastChecked(check.VehicleId);
+            coltn.UpdateOne(p => p.id == last.id, update);
         }
 
         /// <summary>
