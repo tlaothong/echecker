@@ -1,24 +1,33 @@
 ﻿<ion-view view-title="รถหมายเลขทะเบียน {{ cx.PlateNumber }}" cache-view="false">
     <ion-content>
-        <div class="item item-card">
-            <label><input type="checkbox" ng-checked="cx.PBRActive">พรบ</label>
-            <label><input type="date" class="item-note" value="{{ cx.PBRDate | date: 'longDate' }}" /></label>
-        </div>
-        <div class="item item-card">
-            <label><input type="checkbox" ng-checked="cx.DrivingLicenseActive">พรบ</label>
-            <label><input type="date" class="item-note" value="{{ cx.DrivingLicenseDate | date: 'longDate' }}" /></label>
-        </div>
-        <div class="item item-card">
-            <label><input type="checkbox" ng-checked="cx.CheckActive">พรบ</label>
-            <label><input type="date" class="item-note" value="{{ cx.CheckDate | date: 'longDate' }}" /></label>
-        </div>
-        <div class="item item-card">
-            <label><input type="checkbox" ng-checked="cx.TaxActive">พรบ</label>
-            <label><input type="date" class="item-note" value="{{ cx.TaxDate | date: 'longDate' }}" /></label>
-        </div>
-        <div class="item item-card">
-            <label><input type="checkbox" ng-checked="cx.PayActive">พรบ</label>
-            <label><input type="date" class="item-note" value="{{ cx.PayDate | date: 'longDate' }}" /></label>
-        </div>
+        <ion-list>
+            <ion-item class="row">
+                <label class="checkbox col col-10"><input type="checkbox" ng-checked="cx.PBRActive"></label>
+              <label class="col padding-top">พรบ</label>
+                <label class="col"><input type="date" ng-model="cx.PBRDate" /></label>
+            </ion-item>
+            <ion-item class="row">
+                <label class="checkbox col col-10"><input type="checkbox" ng-checked="cx.DrivingLicenseActive"></label>
+                <label class="col padding-top">ใบขับขี่หมดอายุ</label>
+                <label class="col"><input type="date" ng-model="cx.DrivingLicenseDate" /></label>
+            </ion-item>
+            <ion-item class="row">
+                <label class="checkbox col col-10"><input type="checkbox" ng-checked="cx.CheckActive"></label>
+                <label class="col padding-top">ตรวจสภาพ</label>
+                <label class="col"><input type="date" ng-model="cx.CheckDate" /></label>
+            </ion-item>
+            <ion-item class="row">
+                <label class="checkbox col col-10"><input type="checkbox" ng-checked="cx.TaxActive"></label>
+                <label class="col padding-top">ต่อภาษีคู่มือรถ</label>
+                <label class="col"><input type="date" ng-model="cx.TaxDate" /></label>
+            </ion-item>
+            <ion-item class="row">
+                <label class="checkbox col col-10"><input type="checkbox" ng-checked="cx.PayActive"></label>
+                <label class="col padding-top">จ่ายงวดรถ</label>
+                <label class="col"><input type="date" ng-model="cx.PayDate" /></label>
+            </ion-item>
+            
+            <button class="button button-block button-positive">บันทึก</button>
+        </ion-list>
     </ion-content>
 </ion-view>

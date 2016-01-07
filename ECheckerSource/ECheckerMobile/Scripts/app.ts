@@ -124,6 +124,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app.shared', 'app.am
                     }
                 }
             })
+            .state('app.vehicle.report', {
+                url: '/report',
+                views: {
+                    'vContent': {
+                        templateUrl: 'templates/vehiclereport.html',
+                        controller: 'app.amissed.ReportController as cx',
+                        resolve: {
+                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                        }
+                    }
+                }
+            })
 
             .state('app.manvehicles', {
                 url: '/manvehicles',
