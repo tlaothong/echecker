@@ -424,14 +424,14 @@ namespace ApiApp.Controllers
             return new Checked
             {
                 id = Guid.NewGuid().ToString(),
-                VehicleId = "C37EBF61 - 20E4 - 4612 - 9160 - A94A7281F2E4",
+                VehicleId = "69C90FD9-5F74-405B-BC24-5C54D3C14252",
                 CreateDate = DateTime.Now,
                 IsDone = false,
                 CheckedTopics = new List<CheckTopics>
                 {
                     new CheckTopics {  Comment = "ddddddd", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
-                    new CheckTopics {  Comment = "seewr", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
-                    new CheckTopics {  Comment = "wrtwret", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "seewr", id = Guid.NewGuid().ToString() , IsPass = true, PhotoURL = string.Empty},
+                    new CheckTopics {  Comment = "wrtwret", id = Guid.NewGuid().ToString() , IsPass = false, PhotoURL = string.Empty},
                     new CheckTopics {  Comment = "45wrt6", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
                     new CheckTopics {  Comment = "wert", id = Guid.NewGuid().ToString() , IsPass = null, PhotoURL = string.Empty},
                 },
