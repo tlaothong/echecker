@@ -12,12 +12,20 @@
                 <div class="col col-33 text-center"><h4 class="positive">ตรวจแล้ว</h4></div>
                 <div class="col col-33 text-center"><h4 class="positive">ส่งวิเคราะห์</h4></div>
             </div>
+
             <div>
                 <ion-list>
-                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 0 }" href="#/app/playlists/{{ item.VehicleId }}">
+                    <ion-item class="item-divider item item-light ic-selected ">
+                        <div class="row">
+                            <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
+                            <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
+                        </div>
+                    </ion-item>
+
+                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
                         <h2>
                             {{ item.PlateNumber }}
-                            <i class="item-note">{{ item.VehicleProgress }}</i>
+                            <i class="item-note">{{ item.VehicleProgress }}%</i>
                         </h2>
                     </ion-item>
                 </ion-list>
@@ -31,7 +39,7 @@
             </div>
             <div>
                 <ion-list>
-                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 1 }" href="#/app/playlists/{{ item.VehicleId }}">
+                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">รอส่งวิเคราะห์</i>
@@ -48,10 +56,10 @@
             </div>
             <div>
                 <ion-list>
-                    <ion-item class="item item-calm card" ng-repeat="item in cx.data | filter: { VehicleStatus: 2 }" href="#/app/playlists/{{ item.VehicleId }}">
+                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleCompleted()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
                         <h2>
                             {{ item.PlateNumber }}
-                            <i class="item-note">รอส่งวิเคราะห์</i>
+                            <i class="item-note">วิเคราะห์แล้ว</i>
                         </h2>
                     </ion-item>
                 </ion-list>
@@ -59,9 +67,9 @@
         </div>
 
     </ion-content>
-    <ion-footer-bar class="bar-balanced tabs">
+    <!--<ion-footer-bar class="bar-balanced tabs">
         <a class="tab-item col tab-item-active">
             <h4 class="light">ส่งวิเคราะห์ทั้งหมด</h4>
         </a>
-    </ion-footer-bar>
+    </ion-footer-bar>-->
 </ion-view>

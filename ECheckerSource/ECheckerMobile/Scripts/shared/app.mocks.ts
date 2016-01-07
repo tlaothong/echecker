@@ -75,10 +75,40 @@
 
     }
 
-	angular
-		.module('app.shared')
+    export class MockStatusVehicles extends MockTableDataServiceBase {
+
+        static $inject = ['$resource'];
+        constructor($resource: angular.resource.IResourceService) {
+            super("mas-appmob-Vehicles", $resource);
+        }
+
+    }
+
+    export class MockTopics extends MockTableDataServiceBase {
+
+        static $inject = ['$resource'];
+        constructor($resource: angular.resource.IResourceService) {
+            super("mas-appmob-Topics", $resource);
+        }
+
+    }
+
+    export class MockAmissed extends MockTableDataServiceBase {
+
+        static $inject = ['$resource'];
+        constructor($resource: angular.resource.IResourceService) {
+            super("mas-appmob-Amisseds", $resource);
+        }
+
+    }
+
+    angular
+        .module('app.shared')
         .service('app.shared.SampleDataService', SampleDataService)
         .service('app.shared.SampleUrlDataService', SampleUrlDataService)
         .service('app.shared.MockTableDataServiceBase', MockTableDataServiceBase)
-        .service('app.shared.MockVehicles', MockVehicles);
+        .service('app.shared.MockVehicles', MockVehicles)
+        .service('app.shared.MockStatusVehicles', MockStatusVehicles)
+        .service('app.shared.MockTopics', MockTopics)
+        .service('app.shared.MockAmissed', MockAmissed);
 }

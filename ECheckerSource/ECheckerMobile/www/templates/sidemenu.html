@@ -18,10 +18,10 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item class="item item-calm item-icon-right" menu-close ng-click="login()">
+        <ion-item class="item item-calm item-icon-right" menu-close href="#/app/vehicles">
             <h2>
-                ดาวน์โหลด คำแนะนำการตรวจ
-                <i class="icon ion-archive"></i>
+                ตรวจรถ
+                <i class="icon ion-clipboard"></i>
             </h2>
         </ion-item>
         <ion-item class="item item-calm item-icon-right" menu-close href="#/app/manvehicles">
@@ -36,6 +36,9 @@
                 <i class="icon ion-power"></i>
             </h2>
         </ion-item>
+          <ion-item menu-close ng-click="login()">
+              Login
+          </ion-item>
        
       </ion-list>
     </ion-content>
