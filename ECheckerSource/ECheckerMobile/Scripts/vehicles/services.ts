@@ -17,8 +17,8 @@
         private getVehiclesvc: IVehiclesResourceClass<any>;
         private addNewVehicleSvc: IAddNewVehiclesResourceClass<any>;
 
-        static $inject = ['appConfig', '$resource', 'app.shared.VehicleService'];
-        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private vehicle: app.shared.VehicleService) {
+        static $inject = ['appConfig', '$resource', 'app.shared.UserService'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private user: app.shared.UserService) {
 
             //Set service to get vehicle
             this.getVehiclesvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' }, {
@@ -33,10 +33,7 @@
 
         //Get vehicle datas
         public GetVehicles(): ng.IPromise<VehicleInformation[]> {
-            
-            //Hack: fix user email
-            var userId = 'aa@aa.com';
-            //var userId = this.vehicle.VehiclesData.Email;
+            var userId = this.user.UserData.Email;
             return this.getVehiclesvc.GetVehicles(new VehiclesRequest(userId)).$promise;
         }
 

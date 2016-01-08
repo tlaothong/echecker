@@ -18,15 +18,15 @@
         static $inject = ['app.shared.VehicleService'];
         constructor(private vehicleSvc: app.shared.VehicleService) {
             this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
-            this.PBRActive = vehicleSvc.VehiclesData.PBRActive;
+            this.PBRActive = vehicleSvc.VehiclesData.IsPBRActive;
             this.PBRDate = vehicleSvc.VehiclesData.PBRDate;
-            this.DrivingLicenseActive = vehicleSvc.VehiclesData.DrivingLicenseActive;
+            this.DrivingLicenseActive = vehicleSvc.VehiclesData.IsDrivingLicenseActive;
             this.DrivingLicenseDate = vehicleSvc.VehiclesData.DrivingLicenseDate;
-            this.CheckActive = vehicleSvc.VehiclesData.CheckActive;
+            this.CheckActive = vehicleSvc.VehiclesData.IsCheckActive;
             this.CheckDate = vehicleSvc.VehiclesData.CheckDate;
-            this.TaxActive = vehicleSvc.VehiclesData.TaxActive;
+            this.TaxActive = vehicleSvc.VehiclesData.IsTaxActive;
             this.TaxDate = vehicleSvc.VehiclesData.TaxDate;
-            this.PayActive = vehicleSvc.VehiclesData.PayActive;
+            this.PayActive = vehicleSvc.VehiclesData.IsPayActive;
             this.PayDate = vehicleSvc.VehiclesData.PayDate;
         }
 

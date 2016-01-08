@@ -28,12 +28,13 @@
 
         private newVehicle: VehicleInformation;
 
-        static $inject = ['$state', 'app.vehicles.VehiclesService']
-        constructor(private $state, private svc: app.vehicles.VehiclesService) {
+        static $inject = ['$state', 'app.vehicles.VehiclesService', 'app.shared.UserService']
+        constructor(private $state, private svc: app.vehicles.VehiclesService, private user: app.shared.UserService) {
         }
 
         //Send vehicle information to service and change page to manageVehicles
         private Submit(): void {
+            this.newVehicle.Email = this.user.UserData.Email;
             this.svc.AddVehicle(this.newVehicle);
             this.$state.go('app.manvehicles');
         }
