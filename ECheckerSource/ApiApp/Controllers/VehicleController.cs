@@ -55,6 +55,8 @@ namespace ApiApp.Controllers
         [Route("add/")]
         public void Post(Vehicle vehicle)
         {
+            vehicle.id = Guid.NewGuid().ToString();
+
             vehicle.PayDate = DateTime.Today;
             vehicle.IsPayActive = false;
             vehicle.PBRDate = DateTime.Today;
