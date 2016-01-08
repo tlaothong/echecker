@@ -9,8 +9,8 @@
         </div>
 
         <ion-list>
-            <ion-item class=" item item-calm card" ng-repeat="vehicle in cx.data" ui-sref="app.editvehicle({ vid: vehicle.id })">
-                <h2> {{ vehicle.PlateNumber }} </h2>
+            <ion-item class="item item-calm" collection-repeat="item in cx.data" href="" ui-sref="app.editvehicle({ vid: vehicle.id })">
+                <h2>{{ item.PlateNumber }}</h2>
             </ion-item>
         </ion-list>
 

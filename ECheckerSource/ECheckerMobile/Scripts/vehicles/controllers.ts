@@ -24,6 +24,21 @@
 
     }
 
+    class VehicleAddController {
+
+        private newVehicle: VehicleInformation;
+
+        static $inject = ['$state', 'app.vehicles.VehiclesService']
+        constructor(private $state, private svc: app.vehicles.VehiclesService) {
+        }
+
+        //Send vehicle information to service and change page to manageVehicles
+        private Submit(): void {
+            this.svc.AddVehicle(this.newVehicle);
+            this.$state.go('app.manvehicles');
+        }
+    }
+
     class VehicleEditController {
         static $inject = ['data', '$state']
         constructor(private data, private $state) {
@@ -35,19 +50,7 @@
             this.$state.go('app.manvehicles');
         }
     }
-
-    class VehicleAddController {
-        static $inject = ['$state']
-        constructor(private $state) {
-        }
-
-        private Submit(): void {
-        
-            //TODO: Process something...
-            this.$state.go('app.manvehicles');
-        }
-    }
-
+    
     class VehicleStatusController {
 
         static $inject = ['data', 'app.shared.VehicleService'];

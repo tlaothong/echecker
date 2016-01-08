@@ -41,7 +41,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         controller: 'app.vehicles.VehicleListController as cx',
                         resolve: {
                             //Call service getVehicles by send user id = aa@aa.com
-                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles('aa@aa.com') }]
+                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
                         }
                     }
                 }
@@ -145,7 +145,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/managevehicle.html',
                         controller: 'app.vehicles.ManageVehicleController as cx',
                         resolve: {
-                            "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                            //Call service getVehicles by send user id = aa@aa.com
+                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
                         }
                     }
                 }
