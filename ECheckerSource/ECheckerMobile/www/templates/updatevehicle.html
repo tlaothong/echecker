@@ -3,18 +3,15 @@
         <div class="list">
             <label class="item item-input">
                 <span class="input-label">ทะเบียนรถ</span>
-                <input class="text-center" type="text" value="{{ cx.data.PlateNumber }}">
+                <input class="text-center" type="text" ng-model="cx.vehicle.VehicleSelected.PlateNumber">
             </label>
             <label class="item item-input">
                 <span class="input-label">ประเภทรถยนต์</span>
-                <input class="text-center" type="text" disabled="disabled" value="{{ cx.data.VehicleTypeId }}">
+                <input class="text-center" type="text" disabled="disabled" ng-model="cx.vehicle.VehicleSelected.VehicleTypeId">
             </label>
             <label class="item item-input item-select">
-                <div class="input-label">
-                    จังหวัด
-                </div>
-                <select>
-                    <option selected>{{ cx.data.Province }}</option>
+                <span class="input-label">จังหวัด</span>
+                <select ng-model="cx.vehicle.VehicleSelected.Province">
                     <option>กรุงเทพฯ</option>
                     <option>อุดรธานี</option>
                     <option>ขอนแก่น</option>

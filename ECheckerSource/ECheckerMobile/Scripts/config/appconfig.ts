@@ -5,13 +5,15 @@
     export interface IAppConfig {
         VehiclesUrl: string;
         AddVehicleUrl: string;
+        VehicleUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
 
-        //Path name for call vehicle api
+        //Set path
         public VehiclesUrl: string;
         public AddVehicleUrl: string;
+        public VehicleUrl: string;
         
         //static $inject = ['defaulturl'];
         //constructor(defaulturl: string) {
@@ -23,6 +25,8 @@
 
             this.VehiclesUrl = apiurl + '/vehicles/:id';
             this.AddVehicleUrl = apiurl + '/vehicle/add';
+            this.VehicleUrl = apiurl + '/vehicle/:id';
+
         }
         
     }

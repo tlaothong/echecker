@@ -5,14 +5,15 @@
                 <span class="input-label">ทะเบียนรถ</span>
                 <input class="text-center" type="text" ng-model="cx.newVehicle.PlateNumber">
             </label>
-            <label class="item item-input">
+            <label class="item item-input item-select">
                 <span class="input-label">ประเภทรถยนต์</span>
-                <input class="text-center" type="number" ng-model="cx.newVehicle.VehicleTypeId">
+                <select ng-model="cx.newVehicle.VehicleTypeId">
+                    <option>11</option>
+                    <option>13</option>
+                </select>
             </label>
             <label class="item item-input item-select">
-                <div class="input-label">
-                    จังหวัด
-                </div>
+                <span class="input-label">จังหวัด</span>
                 <select ng-model="cx.newVehicle.Province">
                     <option>กรุงเทพฯ</option>
                     <option>อุดรธานี</option>

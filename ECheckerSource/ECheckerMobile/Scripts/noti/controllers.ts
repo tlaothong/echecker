@@ -17,17 +17,17 @@
 
         static $inject = ['app.shared.VehicleService'];
         constructor(private vehicleSvc: app.shared.VehicleService) {
-            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
-            this.PBRActive = vehicleSvc.VehiclesData.IsPBRActive;
-            this.PBRDate = vehicleSvc.VehiclesData.PBRDate;
-            this.DrivingLicenseActive = vehicleSvc.VehiclesData.IsDrivingLicenseActive;
-            this.DrivingLicenseDate = vehicleSvc.VehiclesData.DrivingLicenseDate;
-            this.CheckActive = vehicleSvc.VehiclesData.IsCheckActive;
-            this.CheckDate = vehicleSvc.VehiclesData.CheckDate;
-            this.TaxActive = vehicleSvc.VehiclesData.IsTaxActive;
-            this.TaxDate = vehicleSvc.VehiclesData.TaxDate;
-            this.PayActive = vehicleSvc.VehiclesData.IsPayActive;
-            this.PayDate = vehicleSvc.VehiclesData.PayDate;
+            this.PlateNumber = vehicleSvc.VehicleSelected.PlateNumber;
+            this.PBRActive = vehicleSvc.VehicleSelected.IsPBRActive;
+            this.PBRDate = vehicleSvc.VehicleSelected.PBRDate;
+            this.DrivingLicenseActive = vehicleSvc.VehicleSelected.IsDrivingLicenseActive;
+            this.DrivingLicenseDate = vehicleSvc.VehicleSelected.DrivingLicenseDate;
+            this.CheckActive = vehicleSvc.VehicleSelected.IsCheckActive;
+            this.CheckDate = vehicleSvc.VehicleSelected.CheckDate;
+            this.TaxActive = vehicleSvc.VehicleSelected.IsTaxActive;
+            this.TaxDate = vehicleSvc.VehicleSelected.TaxDate;
+            this.PayActive = vehicleSvc.VehicleSelected.IsPayActive;
+            this.PayDate = vehicleSvc.VehicleSelected.PayDate;
         }
 
     }

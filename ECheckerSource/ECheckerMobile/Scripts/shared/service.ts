@@ -2,8 +2,7 @@
     'use strict';
 
     export class VehicleService {
-
-        public VehiclesData = new VehicleInformation();
+        public VehicleSelected = new VehicleInformation();
     }
 
     export class UserService {

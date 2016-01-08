@@ -9,7 +9,7 @@
         </div>
 
         <ion-list>
-            <ion-item class="item item-calm" collection-repeat="item in cx.data" href="" ui-sref="app.editvehicle({ vid: vehicle.id })">
+            <ion-item class="item item-calm" collection-repeat="item in cx.data" href="" ui-sref="app.editvehicle" ng-click="cx.SelectVehicle(item)">
                 <h2>{{ item.PlateNumber }}</h2>
             </ion-item>
         </ion-list>
