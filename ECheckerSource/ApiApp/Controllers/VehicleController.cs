@@ -56,6 +56,19 @@ namespace ApiApp.Controllers
         public void Post(Vehicle vehicle)
         {
             vehicle.id = Guid.NewGuid().ToString();
+            vehicle.LatestCheckedDate = DateTime.Now;
+            vehicle.CreateDate = DateTime.Now;
+
+            if (vehicle.VehicleTypeId ==11)
+            {
+                //vehicle.FormId = 11;
+                vehicle.FormId = 1;
+            }
+            else if (vehicle.VehicleTypeId == 13)
+            {
+                //vehicle.FormId = 13;
+                vehicle.FormId = 1;
+            }
 
             vehicle.PayDate = DateTime.Today;
             vehicle.IsPayActive = false;
@@ -66,9 +79,18 @@ namespace ApiApp.Controllers
             vehicle.DrivingLicenseDate = DateTime.Today;
             vehicle.IsDrivingLicenseActive = false;
             vehicle.TaxDate = DateTime.Today;
-            vehicle.IsTaxActive = false;            
+            vehicle.IsTaxActive = false;
 
-            repoVehicle.AddVehicle(vehicle);
+            try
+            {
+                repoVehicle.AddVehicle(vehicle);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+           
         }
 
         /// <summary>
