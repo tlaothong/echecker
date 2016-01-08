@@ -3,8 +3,8 @@
 
     class VehicleListController {
 
-        static $inject = ['data']
-        constructor(private data: VehicleInformation[]) {
+        static $inject = ['data', 'app.shared.VehicleService']
+        constructor(private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
@@ -20,6 +20,11 @@
         //Get vehicle analysis comepleted (วิเคราะห์แล้ว)
         private DisplayVehichleCompleted(): VehicleInformation[] {
             return this.data.filter(it=> it.StatusCode == 2);
+        }
+        
+        //Set select vehicle to service
+        private SelectVehicle(vehicleSelected: VehicleInformation) {
+            this.vehicle.VehicleSelected = vehicleSelected;
         }
 
     }
@@ -51,7 +56,7 @@
             this.$state.go('app.manvehicles');
         }
     }
-    
+
     class VehicleStatusController {
 
         static $inject = ['data', 'app.shared.VehicleService'];
@@ -59,13 +64,14 @@
             vehicleSvc.VehicleSelected = data;
         }
     }
-
+    
     class ManageVehicleController {
 
         static $inject = ['data', 'app.shared.VehicleService'];
         constructor(private data, private vehicle: app.shared.VehicleService) {
         }
 
+        //Set select vehicle to service
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
         }
@@ -76,6 +82,5 @@
         .controller('app.vehicles.VehicleListController', VehicleListController)
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
         .controller('app.vehicles.VehicleAddController', VehicleAddController)
-        .controller('app.vehicles.VehicleStatusController', VehicleStatusController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

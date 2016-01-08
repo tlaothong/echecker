@@ -6,6 +6,7 @@
         VehiclesUrl: string;
         AddVehicleUrl: string;
         VehicleUrl: string;
+        FormsUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
@@ -14,10 +15,8 @@
         public VehiclesUrl: string;
         public AddVehicleUrl: string;
         public VehicleUrl: string;
+        public FormsUrl: string;
         
-        //static $inject = ['defaulturl'];
-        //constructor(defaulturl: string) {
-
         //Create full path each url
         constructor() {
             var defaulturl = 'http://echecker-vanlek.azurewebsites.net';
@@ -26,7 +25,7 @@
             this.VehiclesUrl = apiurl + '/vehicles/:id';
             this.AddVehicleUrl = apiurl + '/vehicle/add';
             this.VehicleUrl = apiurl + '/vehicle/:id';
-
+            this.FormsUrl = apiurl + '/form/:id';
         }
         
     }

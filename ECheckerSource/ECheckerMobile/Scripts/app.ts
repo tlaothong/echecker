@@ -37,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 url: '/vehicles',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/vehicleList.html',
+                        templateUrl: 'templates/vehiclelist.html',
                         controller: 'app.vehicles.VehicleListController as cx',
                         resolve: {
                             "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
@@ -52,12 +52,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/vehicle.html',
-                        controller: 'app.vehicles.VehicleStatusController as cx',
-                        resolve: {
-                            "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
-                                return svc.get(p.vid);
-                            }]
-                        }
+                        //controller: 'app.vehicles.VehicleStatusController as cx',
+                        //resolve: {
+                        //    "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
+                        //        return svc.get(p.vid);
+                        //    }]
+                        //}
                     }
                 }
             })
@@ -66,8 +66,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 url: '/status',
                 views: {
                     'vContent': {
-                        templateUrl: 'templates/vehicle-status.html',
+                        templateUrl: 'templates/vehiclestatus.html',
                         controller: 'app.checking.TopicsController as cx',
+                        resolve: {
+                            "data": ['app.checking.FormsService', svc => { return svc.GetForms(); }]
+                        }
                     }
                 }
             })

@@ -1,25 +1,36 @@
 ﻿module app.checking {
 	'use strict';
 
-	export interface IMyService {
-		method(): void;
-	}
+    //Interface form api
+    interface IFormResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetForms(data: T): T;
+    }
+    
+    //Topics service api
+    export class FormsService {
 
-	export class MyService implements IMyService {
+        private svc: IFormResourceClass<any>;
 
-		static $inject = ['$resource'];
-		constructor(private $resource: angular.resource.IResourceService) {
-			// TODO: initialize service
-			
-		}
+        static $inject = ['appConfig', '$resource'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService) {
 
-		public method(): void {
-			// TODO: Implement or remove a method
-		}
+            //Set service to get forms
+            this.svc = <IFormResourceClass<any>>$resource(appConfig.FormsUrl, { 'id': '@id' }, {
+                GetForms: { method: 'Get', isArray: true },
+            });
+            
+        }
 
-	}
+        //Get form datas
+        public GetForms(): ng.IPromise<FormInformation[]> {
+            //Hack: fixed form id
+            var formId = 1;
+            return this.svc.GetForms(new FormRequest(formId)).$promise;
+        }
+        
+    }
 
 	angular
 		.module('app.checking')
-		.service('app.checking.MyService', MyService);
+        .service('app.checking.FormsService', FormsService);
 }

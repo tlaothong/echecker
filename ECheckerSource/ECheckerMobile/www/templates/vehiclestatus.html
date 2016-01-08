@@ -1,4 +1,4 @@
-﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.PlateNumber}}" cache-view="false">
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.vehicle.VehicleSelected.PlateNumber}}" cache-view="false">
     <ion-content>
         <div class="calm-bg padding">
             <div class="text-center">
@@ -10,7 +10,7 @@
                         </button>
                     </div>
                     <div class="col col-50">
-                        <button class="button col button-balanced" ng-disabled="cx.VehicleStatus != 1">
+                        <button class="button col button-balanced" ng-disabled="cx.vehicle.VehicleSelected.StatusCode != 1">
                             วิเคราะห์
                         </button>
                     </div>

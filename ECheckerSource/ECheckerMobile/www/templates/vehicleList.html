@@ -22,7 +22,7 @@
                         </div>
                     </ion-item>
 
-                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">{{ item.VehicleProgress }}%</i>

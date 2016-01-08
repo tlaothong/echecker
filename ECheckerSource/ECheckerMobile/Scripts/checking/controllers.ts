@@ -3,19 +3,20 @@
     
     class TopicsController {
 
-        private PlateNumber: any;
-        private VehicleStatus: any;
-
         static $inject = ['data', 'app.shared.VehicleService'];
-        constructor(private data, private vehicleSvc: app.shared.VehicleService) {
-            this.PlateNumber = vehicleSvc.VehicleSelected.PlateNumber;
-            this.VehicleStatus = vehicleSvc.VehicleSelected.StatusCode;
+        constructor(private data: any, private vehicle: app.shared.VehicleService) {
         }
 
         private IsPass(topic: any): boolean {
             return topic.IsPass == "TRUE";
         }
         private IsFalse(topic: any): boolean {
+
+            //Hack: get true for ispass is null
+            if (topic.IsPass == null) {
+                return true;
+            }
+
             return topic.IsPass == "FALSE";
         }
 
