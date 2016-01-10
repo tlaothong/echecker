@@ -56,14 +56,6 @@
             this.$state.go('app.manvehicles');
         }
     }
-
-    class VehicleStatusController {
-
-        static $inject = ['data', 'app.shared.VehicleService'];
-        constructor(private data, private vehicleSvc: app.shared.VehicleService) {
-            vehicleSvc.VehicleSelected = data;
-        }
-    }
     
     class ManageVehicleController {
 

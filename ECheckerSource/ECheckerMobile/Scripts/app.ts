@@ -51,13 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 abstract: true,
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/vehicle.html',
-                        //controller: 'app.vehicles.VehicleStatusController as cx',
-                        //resolve: {
-                        //    "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
-                        //        return svc.get(p.vid);
-                        //    }]
-                        //}
+                        templateUrl: 'templates/vehicle.html'
                     }
                 }
             })
@@ -80,9 +74,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkvehicle.html',
-                        controller: 'app.checking.TopicsController as cx',
+                        controller: 'app.checking.CheckedController as cx',
                         resolve: {
-                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                            "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
+                            "checkeds": ['app.checking.FormsService', svc => { return svc.GetCheckeds(); }]
                         }
                     }
                 }

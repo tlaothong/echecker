@@ -6,20 +6,33 @@
         static $inject = ['data', 'app.shared.VehicleService'];
         constructor(private data: any, private vehicle: app.shared.VehicleService) {
         }
+        
+        //private IsPass(checkTopic: CheckTopicInformation): boolean {
+        //    return checkTopic.IsPass == true;
+        //}
+        //private IsFalse(checkTopic: CheckTopicInformation): boolean {
+        //    return checkTopic.IsPass == false;
+        //}
 
-        private IsPass(topic: any): boolean {
-            return topic.IsPass == "TRUE";
+    }
+
+    class CheckedController {
+        static $inject = ['topics', 'checkeds', 'app.shared.VehicleService'];
+        constructor(private topics: TopicInformation[], private checkeds: CheckedInformation, private vehicle: app.shared.VehicleService) {
         }
-        private IsFalse(topic: any): boolean {
-
-            //Hack: get true for ispass is null
-            if (topic.IsPass == null) {
-                return true;
-            }
-
-            return topic.IsPass == "FALSE";
+        
+        private IsPass(checkTopic: TopicInformation): boolean {
+            var intialIndex = 0;
+            var checkTopicInfo = this.checkeds.CheckedTopics.filter(it=> it.TopicId == checkTopic.id)[intialIndex]
+            if (checkTopicInfo.IsPass == null) return null;
+            return checkTopicInfo.IsPass == true;
         }
-
+        private IsFalse(checkTopic: TopicInformation): boolean {
+            var intialIndex = 0;
+            var checkTopicInfo = this.checkeds.CheckedTopics.filter(it=> it.TopicId == checkTopic.id)[intialIndex]
+            if (checkTopicInfo.IsPass == null) return null;
+            return checkTopicInfo.IsPass == false;
+        }
     }
 
     class CheckAmissController {
@@ -32,5 +45,6 @@
     angular
         .module('app.checking')
         .controller('app.checking.TopicsController', TopicsController)
+        .controller('app.checking.CheckedController', CheckedController)
         .controller('app.checking.CheckAmissController', CheckAmissController);
 }

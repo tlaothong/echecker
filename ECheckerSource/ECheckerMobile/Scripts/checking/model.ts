@@ -1,7 +1,7 @@
 ﻿module app.checking {
     'use strict';    
 
-    export class FormInformation {
+    export class TopicInformation {
         id: string;
         VehicleTypeId: number;
         Detail: string;
@@ -18,6 +18,28 @@
     export class FormRequest {
         constructor(public id: number) { };
     }
+
+    export class CheckedInformation {
+        id: string;
+        CheckedTopics: CheckTopicInformation[];
+        IsDone: boolean;
+        CreateDate: Date;
+        VehicleId: string;
+    }
+
+    export class CheckTopicInformation {
+        id: string;
+        TopicId: string;
+        IsPass: boolean;
+        Comment: string;
+        PhotoURL: string;
+    }
+
+    export class CheckedRequest {
+        constructor(public id: string) { };
+    }
+
+
 
     export class Checkeds {
 

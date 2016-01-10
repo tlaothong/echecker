@@ -29,16 +29,12 @@
             //Set service to get vehicles
             this.vehiclesSvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' }, {
                 GetVehicles: { method: 'Get', isArray: true },
+                UpdateVehicle: { method: 'Put' }
             });
 
             //Set service to send new vehicle
             this.addNewVehicleSvc = <IAddNewVehiclesResourceClass<any>>$resource(appConfig.AddVehicleUrl, {}, {
                 AddVehicle: { method: 'Post' }
-            });
-
-            //Set service to get vehicle
-            this.vehicleSvc = <IVehicleResourceClass<any>>$resource(appConfig.VehicleUrl, { 'id': '@id' }, {
-                UpdateVehicle: { method: 'Put' }
             });
             
         }
