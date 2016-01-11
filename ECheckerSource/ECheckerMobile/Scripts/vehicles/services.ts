@@ -28,21 +28,24 @@
 
             //Set service to get vehicles
             this.vehiclesSvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' }, {
-                GetVehicles: { method: 'Get', isArray: true },
-                UpdateVehicle: { method: 'Put' }
+                GetVehicles: { method: 'Get', isArray: true }
             });
 
             //Set service to send new vehicle
             this.addNewVehicleSvc = <IAddNewVehiclesResourceClass<any>>$resource(appConfig.AddVehicleUrl, {}, {
                 AddVehicle: { method: 'Post' }
             });
-            
+
+            //Set service to update vehicle
+            this.vehicleSvc = <IVehicleResourceClass<any>>$resource(appConfig.VehicleUrl, { 'id': '@id' }, {
+                UpdateVehicle: { method: 'Put' }
+            });
         }
 
         //Get vehicle datas
         public GetVehicles(): ng.IPromise<VehicleInformation[]> {
             var userId = this.user.UserData.Email;
-            return this.vehiclesSvc.GetVehicles(new VehiclesRequest(userId)).$promise;
+            return this.vehiclesSvc.GetVehicles(new GetVehiclesRequest(userId)).$promise;
         }
         
         //Add new vehicle datas

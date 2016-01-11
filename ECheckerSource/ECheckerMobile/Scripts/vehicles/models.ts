@@ -26,7 +26,7 @@
     }
     
     //Service requirment to call api
-    export class VehiclesRequest {
+    export class GetVehiclesRequest {
         constructor(public id: string) { };
     }
 }
