@@ -9,12 +9,18 @@
     interface ICheckedResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetCheckeds(data: T): T;
     }
-    
+   
+    //Interface vehicle api
+    interface IStatusResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetReadyStatus(data: T): T;
+    }
+
     //Topics service api
     export class FormsService {
 
         private formSvc: IFormResourceClass<any>;
         private checkedSvc: ICheckedResourceClass<any>;
+        private readyStatusSvc: IStatusResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.VehicleService'];
         constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private vehicle: app.shared.VehicleService) {
@@ -28,7 +34,11 @@
             this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@id' }, {
                 GetCheckeds: { method: 'Get' },
             });
-
+            
+            //Set service to get ready status
+            this.readyStatusSvc = <IStatusResourceClass<any>>$resource(appConfig.ReadyStatusUrl, { 'id': '@id' }, {
+                GetReadyStatus: { method: 'Get' }
+            });
         }
 
         //Get form datas
@@ -44,6 +54,11 @@
             var vehicleId = '69C90FD9-5F74-405B-BC24-5C54D3C14252';
             //var vehicleId = this.vehicle.VehicleSelected.id;
             return this.checkedSvc.GetCheckeds(new CheckedRequest(vehicleId)).$promise;
+        }
+        
+        public GetReadyStatus(): ng.IPromise<string> {
+            var vehicleId = this.vehicle.VehicleSelected.id
+            return this.readyStatusSvc.GetReadyStatus(new GetReadyStatusRequest(vehicleId)).$promise;
         }
     }
 

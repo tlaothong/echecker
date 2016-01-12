@@ -9,6 +9,7 @@
         FormsUrl: string;
         CheckedUrl: string;
         NotificationUrl: string;
+        ReadyStatusUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
@@ -20,6 +21,7 @@
         public FormsUrl: string;
         public CheckedUrl: string;
         public NotificationUrl: string;
+        public ReadyStatusUrl: string;
         
         //Create full path each url
         constructor() {
@@ -32,6 +34,7 @@
             this.FormsUrl = apiurl + '/form/:id';
             this.CheckedUrl = apiurl + '/checked/:id';
             this.NotificationUrl = apiurl + '/vehicle/:id/noti';
+            this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
         }
         
     }

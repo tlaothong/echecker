@@ -13,8 +13,13 @@
         }
     }
 
+    export class FormService {
+        public TopicInfos: TopicInformation[];
+    }
+
     angular
         .module('app.shared')
         .service('app.shared.VehicleService', VehicleService)
-        .service('app.shared.UserService', UserService);
+        .service('app.shared.UserService', UserService)
+        .service('app.shared.FormService', FormService);
 }

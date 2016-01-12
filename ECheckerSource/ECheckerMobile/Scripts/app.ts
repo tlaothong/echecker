@@ -63,7 +63,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/vehiclestatus.html',
                         controller: 'app.checking.TopicsController as cx',
                         resolve: {
-                            "data": ['app.checking.FormsService', svc => { return svc.GetForms(); }]
+                            "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
+                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }]
                         }
                     }
                 }
@@ -76,8 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/checkvehicle.html',
                         controller: 'app.checking.CheckedController as cx',
                         resolve: {
-                            "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
-                            "checkeds": ['app.checking.FormsService', svc => { return svc.GetCheckeds(); }]
+                            "data": ['app.checking.FormsService', svc => { return svc.GetCheckeds(); }]
                         }
                     }
                 }

@@ -1,19 +1,5 @@
 ﻿module app.checking {
     'use strict';    
-
-    export class TopicInformation {
-        id: string;
-        VehicleTypeId: number;
-        Detail: string;
-        IsCritical: boolean;
-        DamagePercent: number;
-        How2Topic: string;
-        How2Url: string;
-        SuggestTopic: string;
-        SuggestDetail: string;
-        CreateDate: Date;
-        FormId: number;
-    }
     
     export class FormRequest {
         constructor(public id: number) { };
@@ -34,8 +20,14 @@
         Comment: string;
         PhotoURL: string;
     }
-
+    
+    //Service requirment to call api
     export class CheckedRequest {
+        constructor(public id: string) { };
+    }
+    
+    //Service requirment to call api
+    export class GetReadyStatusRequest {
         constructor(public id: string) { };
     }
 
