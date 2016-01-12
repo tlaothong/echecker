@@ -20,8 +20,6 @@
     class CheckedController {
         static $inject = ['data', 'app.shared.VehicleService', 'app.checking.FormsService', 'app.shared.FormService'];
         constructor(private data: CheckedInformation, private vehicle: app.shared.VehicleService, private svc: app.checking.FormsService, private topics: app.shared.FormService) {
-
-            topics.TopicInfos = null; data = null;
         
             //Reload topics when topics is null
             var isTopicsNull = topics.TopicInfos == null ? true : false;
