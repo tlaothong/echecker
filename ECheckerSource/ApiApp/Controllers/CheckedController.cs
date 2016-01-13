@@ -78,10 +78,14 @@ namespace ApiApp.Controllers
         // GET /checked/{vehicle-id}/readystatus
         [HttpGet]
         [Route("{id}/readystatus")]
-        public string ReadyStatus(string id)
+        public object ReadyStatus(string id)
         {
             var result = this.repoChecking.GetLatestReadyStatus(id);
-            return result == null ? "ไม่พร้อมใช้งาน" : result.Status;
+            if (result == null)
+            {
+                result.Status = "พร้อมใช้งาน";
+            }
+            return new { ReadyStatus = result.Status };
         }
 
         /// <summary>
@@ -151,7 +155,7 @@ namespace ApiApp.Controllers
                     data.VehicleId = id;
                     data.TopicId = item.id;
                     data.Detail = item.Detail;
-                    data.SuggestTopic = item.SuggestTopic;
+                    //data.SuggestTopic = item.SuggestTopic;
                     data.SuggestDetail = item.SuggestDetail;
                     data.DamagePercent = item.DamagePercent;
                     data.IsCritical = item.IsCritical;
@@ -339,7 +343,7 @@ namespace ApiApp.Controllers
                 Detail = "amissed 301",
                 DamagePercent = 15,
                 IsCritical = false,
-                SuggestTopic = "suggest 301",
+                //SuggestTopic = "suggest 301",
                 SuggestDetail = "suggestdetail 301",
                 Comment = "comment 301",
                 PhotoUrl = "",
@@ -353,7 +357,7 @@ namespace ApiApp.Controllers
                 Detail = "amissed 302",
                 DamagePercent = 15,
                 IsCritical = true,
-                SuggestTopic = "suggest 302",
+                //SuggestTopic = "suggest 302",
                 SuggestDetail = "suggestdetail 302",
                 Comment = "comment 302",
                 PhotoUrl = "",
@@ -367,7 +371,7 @@ namespace ApiApp.Controllers
                 Detail = "amissed 303",
                 DamagePercent = 15,
                 IsCritical = false,
-                SuggestTopic = "suggest 303",
+                //SuggestTopic = "suggest 303",
                 SuggestDetail = "suggestdetail 303",
                 Comment = "comment 303",
                 PhotoUrl = "",
