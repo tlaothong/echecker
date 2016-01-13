@@ -185,11 +185,7 @@ namespace ApiApp.Controllers
         {
             var check = repoChecking.GetLastChecked(id);
 
-            if (check != null)
-            {
-                return check;
-            }
-            else
+            if (check == null)
             {
                 var qry = repoVehicle.GetVehicle(id);
 
@@ -207,7 +203,11 @@ namespace ApiApp.Controllers
                 else
                 {
                     return null;
-                }
+                }                
+            }
+            else
+            {
+                return check;
             }
 
         }
