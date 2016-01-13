@@ -1,11 +1,10 @@
 ﻿<ion-view view-title="รถหมายเลขทะเบียน {{ cx.PlateNumber }}" cache-view="false">
     <ion-content class="padding">
         <h4><i class="icon ion-arrow-right-b"></i> {{cx.data.Detail}}</h4>
-        <button class="button button-block button-balanced">
-            ไม่พบสิ่งผิดปกติ
-        </button>
         <ion-list>
-            <ion-checkbox>พบสิ่งผิดปกติอื่นๆ</ion-checkbox>
+            <ion-radio ng-model="choice" class="card" ng-value="'A'">ไม่พบพบสิ่งผิดปกติ</ion-radio>
+            <ion-radio ng-model="choice" class="card  balanced-bg" ng-value="'B'">พบสิ่งผิดปกติอื่นๆ</ion-radio>
+            
         </ion-list>
         <h4>บันทึกเพิ่มเติม</h4>
         <label class="item item-input">

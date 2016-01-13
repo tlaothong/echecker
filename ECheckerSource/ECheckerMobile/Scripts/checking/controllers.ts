@@ -59,9 +59,9 @@
     }
 
     class CheckAmissController {
-        static $inject = ['data'];
-        constructor(private data) {
-        }
+        //static $inject = ['data'];
+        //constructor(private data) {
+        //}
 
     }
 
