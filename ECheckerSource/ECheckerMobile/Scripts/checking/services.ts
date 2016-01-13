@@ -43,12 +43,15 @@
 
         //Get form datas
         public GetForms(): ng.IPromise<TopicInformation[]> {
-            var formId = this.vehicle.VehicleSelected.VehicleTypeId;
-            var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
-            if (!IsFormIdMatch) {
-                //Hack: mock form id
-                formId = 11;
-            }
+            //Hack: fixed formId
+            var formId = 1;
+
+            //var formId = this.vehicle.VehicleSelected.VehicleTypeId;
+            //var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
+            //if (!IsFormIdMatch) {
+            //    //Hack: mock form id
+            //    formId = 11;
+            //}
             return this.formSvc.GetForms(new FormRequest(formId)).$promise;
         }
         

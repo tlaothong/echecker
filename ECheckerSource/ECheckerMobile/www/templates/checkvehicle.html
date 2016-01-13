@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="รถหมายเลขทะเบียน {{ cx.vehicle.VehicleSelected.PlateNumber }}" cache-view="false">
     <ion-content>
         <ion-list>
-            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.topics.TopicInfos" href="" ui-sref="app.vehicle.checkamiss({ tid: item.id })">
+            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.topics.TopicInfos" href="" ui-sref="app.vehicle.checkamiss({ id: item.id })">
                 <h2>
                     {{ item.Detail }}
                     <i class="icon ion-model-s" ng-class="{'balanced':  cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>

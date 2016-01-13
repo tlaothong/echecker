@@ -3,8 +3,16 @@
 
     class TopicsController {
 
-        static $inject = ['topics', 'status', 'app.shared.VehicleService', 'app.shared.FormService'];
-        constructor(private topics: any, private status: any, private vehicle: app.shared.VehicleService, private topicsService: app.shared.FormService) {
+        static $inject = [
+            'topics',
+            'status',
+            'app.shared.VehicleService',
+            'app.shared.FormService'];
+        constructor(
+            private topics: any,
+            private status: any,
+            private vehicle: app.shared.VehicleService,
+            private topicsService: app.shared.FormService) {
             topicsService.TopicInfos = topics;
         }
         
@@ -18,9 +26,19 @@
     }
 
     class CheckedController {
-        static $inject = ['data', 'app.shared.VehicleService', 'app.checking.FormsService', 'app.shared.FormService'];
-        constructor(private data: CheckedInformation, private vehicle: app.shared.VehicleService, private svc: app.checking.FormsService, private topics: app.shared.FormService) {
-        
+        static $inject = [
+            'data',
+            'app.shared.VehicleService',
+            'app.checking.FormsService',
+            'app.shared.FormService',
+            'app.shared.CheckedsService'];
+        constructor(
+            private data: CheckedInformation,
+            private vehicle: app.shared.VehicleService,
+            private svc: app.checking.FormsService,
+            private topics: app.shared.FormService,
+            private checkeds: app.shared.CheckedsService) {
+
             //Reload topics when topics is null
             var isTopicsNull = topics.TopicInfos == null ? true : false;
             if (isTopicsNull) {
@@ -41,7 +59,7 @@
                     console.log('Donwload checkeds completed!');
                 });
             }
-
+            checkeds.CheckedsInfos = data;
         }
 
         private IsPass(checkTopic: TopicInformation): boolean {
@@ -59,10 +77,30 @@
     }
 
     class CheckAmissController {
-        static $inject = ['data'];
-        constructor(private data) {
+
+        private Detail: string;
+    
+        static $inject = [
+            '$state',
+            'data',
+            'app.shared.VehicleService',
+            'app.shared.FormService'];
+        constructor(
+            private $state: any,
+            private data: CheckTopicInformation,
+            private vehicle: app.shared.VehicleService,
+            private topics: app.shared.FormService) {
+
+            var intialIndex = 0;
+            this.Detail = topics.TopicInfos.filter(it=> it.id == data.TopicId)[intialIndex].Detail;
         }
 
+        private IsPass(isPass: boolean): void {
+            this.data.IsPass = isPass;
+
+            //TODO: Update service
+            this.$state.go('app.vehicle.checklists');
+        }
     }
 
     angular
