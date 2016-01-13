@@ -41,6 +41,13 @@ namespace ApiApp.Repositories
         IEnumerable<Amissed> GetAllAmissed();
 
         /// <summary>
+        /// get all amissed
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <returns></returns>
+        IEnumerable<Amissed> GetAllAmissedByVehicleId(string vehicleId);
+
+        /// <summary>
         /// create amisseds after analyzed
         /// </summary>
         /// <param name="amisseds"></param>

@@ -56,6 +56,18 @@ namespace ApiApp.Repositories.Imprementation
         }
 
         /// <summary>
+        /// get all amissed
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <returns></returns>
+        public IEnumerable<Amissed> GetAllAmissedByVehicleId(string vehicleId)
+        {
+            var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
+            var result = coltn.Find(x => x.VehicleId == vehicleId).ToList();
+            return result;
+        }
+
+        /// <summary>
         /// ดึงข้อมูลการตรวจรถล่าสุด
         /// </summary>
         /// <param name="vehicleId">รหัสรถ</param>   
@@ -143,5 +155,6 @@ namespace ApiApp.Repositories.Imprementation
             coltn.UpdateOne(filter, updater);
             return coltn.Find(filter).FirstOrDefault();
         }
+
     }
 }

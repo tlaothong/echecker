@@ -151,14 +151,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CheckedController.cs" />
     <Compile Include="Controllers\FormController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
-    <Compile Include="Controllers\VehicleStatusController.cs" />
     <Compile Include="DiConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AmissedReportDTO.cs" />
     <Compile Include="Models\Amissed.cs" />
     <Compile Include="Models\Checked.cs" />
     <Compile Include="Models\ReadyStatus.cs" />
