@@ -78,14 +78,14 @@ namespace ApiApp.Controllers
         // GET /checked/{vehicle-id}/readystatus
         [HttpGet]
         [Route("{id}/readystatus")]
-        public object ReadyStatus(string id)
+        public ReadyStatus ReadyStatus(string id)
         {
             var result = this.repoChecking.GetLatestReadyStatus(id);
             if (result == null)
             {
                 result.Status = "พร้อมใช้งาน";
             }
-            return new { ReadyStatus = result.Status };
+            return result;
         }
 
         /// <summary>
