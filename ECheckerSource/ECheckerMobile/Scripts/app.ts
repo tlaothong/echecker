@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 abstract: true,
 
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'starter.controllers.AppCtrl'
+                controller: 'AppCtrl'
             })
 
             .state('app.vehicles', {
@@ -88,12 +88,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkamiss.html',
-                        controller: 'app.checking.CheckAmissController as cx',
-                        //resolve: {
-                        //    "data": ["$stateParams", 'app.shared.MockTopics', (p, svc) => {
-                        //        return svc.get(p.tid);
-                        //    }]
-                        //}
+                        controller: 'app.checking.TopicsController as cx',
+                        resolve: {
+                            "data": ["$stateParams", 'app.shared.MockTopics', (p, svc) => {
+                                return svc.get(p.tid);
+                            }]
+                        }
                     }
                 }
             })
@@ -105,9 +105,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/amisseddetail.html',
                         controller: 'app.amissed.AmissedDetailController as cx',
                         resolve: {
-                            //"data": ['app.shared.MockAmissed', svc => { return svc.get('ef1d7bf5-c013-475f-9790-255dc97f8d6f'); }]
-                            
-                            "data": ['app.shared.MockAmissed', svc => { return svc.get(''); }]
+                            "data": ['app.shared.MockAmissed', svc => { return svc.get('ef1d7bf5-c013-475f-9790-255dc97f8d6f'); }]
                         }
                     }
                 }
@@ -181,7 +179,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 url: '/browse',
                 views: {
                     'menuContent': {
-                        templateUrl: 'https://examdeploy.blob.core.windows.net/echecker/browse2.html'
+                        templateUrl: 'templates/browse.html'
                     }
                 }
             })
