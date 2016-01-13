@@ -34,7 +34,16 @@ namespace ApiApp.Controllers
         ///GET /forms/{form-id}
         public IEnumerable<Topic> Get(int id)
         {
-            return repoRepository.GetForm(id);
+            var data = repoRepository.GetForm(id);
+
+            foreach (var item in data)
+            {
+                Uri uri1 = new Uri("https://examdeploy.blob.core.windows.net/echecker/" + item.How2Url);
+                item.How2Topic = item.Detail;
+                item.SuggestTopic = item.Detail;
+                item.How2Url = uri1.ToString();
+            }
+            return data;
         }
 
         /// <summary>
