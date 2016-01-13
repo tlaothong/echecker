@@ -129,7 +129,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/vehiclereport.html',
                         controller: 'app.amissed.ReportController as cx',
                         resolve: {
-                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                            "data": ['app.checking.FormsService', svc => { return svc.GetReport(); }]
                         }
                     }
                 }

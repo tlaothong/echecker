@@ -120,9 +120,16 @@
         }
     }
 
+    class ReportController {
+        static $inject = ['data', 'app.shared.VehicleService']
+        constructor(private data, private vehicle: app.shared.VehicleService) {
+        }
+    }
+
     angular
         .module('app.checking')
         .controller('app.checking.TopicsController', TopicsController)
         .controller('app.checking.CheckedController', CheckedController)
-        .controller('app.checking.CheckAmissController', CheckAmissController);
+        .controller('app.checking.CheckAmissController', CheckAmissController)
+        .controller('app.checking.ReportController', ReportController);
 }

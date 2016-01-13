@@ -1,7 +1,7 @@
 ﻿module app {
     'use strict';
 
-    //Data information for vehicle
+    //Data information for Amissed
     export class AmissedInformation {
         id: string;
         CheckedId: string;

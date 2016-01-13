@@ -11,6 +11,7 @@
         NotificationUrl: string;
         ReadyStatusUrl: string;
         AmissedUrl: string;
+        ReportUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
@@ -24,6 +25,7 @@
         public NotificationUrl: string;
         public ReadyStatusUrl: string;
         public AmissedUrl: string;
+        public ReportUrl: string;
         
         //Create full path each url
         constructor() {
@@ -37,6 +39,7 @@
             this.CheckedUrl = apiurl + '/checked/:id';
             this.NotificationUrl = apiurl + '/vehicle/:id/noti';
             this.AmissedUrl = apiurl + '/checked/:id/amissed';
+            this.ReportUrl = apiurl + '/Report/:id';
             
             //this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
             //Hack: Fixed url
