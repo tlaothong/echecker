@@ -38,7 +38,8 @@ namespace ApiApp.Repositories.Imprementation
         public Vehicle GetVehicle(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
-            return coltn.Find(x => x.id == vehicleId).FirstOrDefault();
+            var result = coltn.Find(x => x.id == vehicleId);
+            return result != null ? result.FirstOrDefault() : null;
         }
 
         /// <summary>
@@ -100,7 +101,6 @@ namespace ApiApp.Repositories.Imprementation
 
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.UpdateOne(v => v.id == vehicle.id, update);
-
         }
     }
 }

@@ -18,7 +18,7 @@ namespace ApiApp.Repositories.Imprementation
         /// </summary>
         private const string tableName = "echecker.Checkeds";
         private const string tableNameAmissed = "echecker.Amisseds";
-        private const string tableNameReadyStatus = "echecker.ReadyStatuss";    
+        private const string tableNameReadyStatus = "echecker.ReadyStatuss";
 
         /// <summary>
         /// สร้าง checked รถ
@@ -38,11 +38,11 @@ namespace ApiApp.Repositories.Imprementation
         public IEnumerable<Amissed> GetAmissedByVehicleId(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
-            var data = coltn.Find(x=> x.VehicleId == vehicleId).ToList()
-                .GroupBy(x=>x.CreateDate.Date).OrderByDescending(y=>y.Key)
-                .FirstOrDefault().Select(z=>z);
+            var data = coltn.Find(x => x.VehicleId == vehicleId).ToList()
+                .GroupBy(x => x.CreateDate.Date).OrderByDescending(y => y.Key)
+                .FirstOrDefault();
 
-            return data;
+            return data != null ? data.Select(x => x) : new List<Amissed>();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <returns></returns>
         public IEnumerable<Amissed> GetAllAmissed()
         {
-            var result = MongoUtil.GetCollection<Amissed>(tableNameAmissed).Find(x => true).ToList();            
+            var result = MongoUtil.GetCollection<Amissed>(tableNameAmissed).Find(x => true).ToList();
             return result != null ? result : new List<Amissed>();
         }
 
@@ -64,7 +64,7 @@ namespace ApiApp.Repositories.Imprementation
         {
             var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
             var result = coltn.Find(x => x.VehicleId == vehicleId).ToList();
-            return result;
+            return result != null ? result : new List<Amissed>();
         }
 
         /// <summary>
@@ -75,7 +75,8 @@ namespace ApiApp.Repositories.Imprementation
         public Checked GetLastChecked(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Checked>(tableName);
-            return coltn.Find(x => x.VehicleId == vehicleId).SortByDescending(x => x.CreateDate).FirstOrDefault();
+            var result = coltn.Find(x => x.VehicleId == vehicleId).SortByDescending(x => x.CreateDate);
+            return result != null ? result.FirstOrDefault() : null;
         }
 
 
@@ -113,8 +114,8 @@ namespace ApiApp.Repositories.Imprementation
         public ReadyStatus GetLatestReadyStatus(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<ReadyStatus>(tableNameReadyStatus);
-            var result = coltn.Find(x => x.VehicleId == vehicleId).ToList().OrderByDescending(y => y.CreateDateTime).FirstOrDefault();
-            return result;
+            var result = coltn.Find(x => x.VehicleId == vehicleId).ToList().OrderByDescending(y => y.CreateDateTime);
+            return result != null ? result.FirstOrDefault() : null;
         }
 
         /// <summary>
@@ -155,6 +156,5 @@ namespace ApiApp.Repositories.Imprementation
             coltn.UpdateOne(filter, updater);
             return coltn.Find(filter).FirstOrDefault();
         }
-
     }
 }
