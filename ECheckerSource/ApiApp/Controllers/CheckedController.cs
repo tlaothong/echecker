@@ -250,6 +250,15 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public void Put(string id, Checked check)
         {
+            //var data = repoChecking.GetLastChecked("02bf2517-c90f-4963-bc4c-7d942fdc20d5");
+
+            //foreach (var item in data.CheckedTopics)
+            //{
+            //    item.IsPass = true;
+            //}
+
+            //repoChecking.UpdateChecked(data);
+
             repoChecking.UpdateChecked(check);
 
             //HACK Test

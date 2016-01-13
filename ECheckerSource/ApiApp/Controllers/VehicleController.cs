@@ -35,7 +35,7 @@ namespace ApiApp.Controllers
         /// <summary>
         /// vehicles by vehicleid.
         /// </summary>
-        /// <param name="id">username email</param>
+        /// <param name="id">vehicleid</param>
         /// <returns>vehicles</returns>
         ///GET /vehicles/{user-id}
         [HttpGet]
@@ -108,7 +108,7 @@ namespace ApiApp.Controllers
         /// <summary>
         /// UpdateVehicle Noti
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">รหัสรถ</param>
         /// <param name="vehicle">notiInfo</param>
         [HttpPut]
         [Route("{id}/noti/")]
