@@ -35,13 +35,15 @@ namespace ApiApp.Controllers
         /// <returns>vehicles</returns>
         ///GET /vehicles/{user-id}
         public IEnumerable<VehiclesDTO> Get(string id)
-        {     
+        {
             List<VehiclesDTO> _vehicleList = new List<VehiclesDTO>();
             var vehicle = repoVehicle.GetVehicles(id);
             if (vehicle.Count() > 0)
             {
                 foreach (var item in vehicle)
                 {
+                    var now = DateTime.Now;
+
                     var vehicleDto = new VehiclesDTO
                     {
                         id = item.id,
@@ -52,15 +54,15 @@ namespace ApiApp.Controllers
                         LatestCheckedDate = item.LatestCheckedDate,
                         VehicleTypeId = item.VehicleTypeId,
                         FormId = item.FormId,
-                        PayDate = item.PayDate,
+                        PayDate = item.IsPayActive ? item.PayDate : now,
                         IsPayActive = item.IsPayActive,
-                        PBRDate = item.PBRDate,
+                        PBRDate = item.IsPBRActive ? item.PBRDate : now,
                         IsPBRActive = item.IsPBRActive,
-                        CheckDate = item.CheckDate,
+                        CheckDate = item.IsCheckActive ? item.CheckDate : now,
                         IsCheckActive = item.IsCheckActive,
-                        DrivingLicenseDate = item.DrivingLicenseDate,
+                        DrivingLicenseDate = item.IsDrivingLicenseActive ? item.DrivingLicenseDate : now,
                         IsDrivingLicenseActive = item.IsDrivingLicenseActive,
-                        TaxDate = item.TaxDate,
+                        TaxDate = item.IsTaxActive ? item.TaxDate : now,
                         IsTaxActive = item.IsTaxActive,
                     };
 

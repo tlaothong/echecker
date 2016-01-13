@@ -72,16 +72,18 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="vehicle"></param>
         public void UpdateNotification(Vehicle vehicle)
         {
+            var now = DateTime.Now;
+
             var update = Builders<Vehicle>.Update
-                  .Set(x => x.PBRDate, vehicle.PBRDate)
+                  .Set(x => x.PBRDate, vehicle.IsPBRActive ? vehicle.PBRDate : now)
                   .Set(x => x.IsPBRActive, vehicle.IsPBRActive)
-                  .Set(x => x.CheckDate, vehicle.CheckDate)
+                  .Set(x => x.CheckDate, vehicle.IsCheckActive ? vehicle.CheckDate : now)
                   .Set(x => x.IsCheckActive, vehicle.IsCheckActive)
-                  .Set(x => x.DrivingLicenseDate, vehicle.DrivingLicenseDate)
+                  .Set(x => x.DrivingLicenseDate, vehicle.IsDrivingLicenseActive ? vehicle.DrivingLicenseDate : now)
                   .Set(x => x.IsDrivingLicenseActive, vehicle.IsDrivingLicenseActive)
-                  .Set(x => x.PayDate, vehicle.PayDate)
+                  .Set(x => x.PayDate, vehicle.IsPayActive ? vehicle.PayDate : now)
                   .Set(x => x.IsPayActive, vehicle.IsPayActive)
-                  .Set(x => x.TaxDate, vehicle.TaxDate)
+                  .Set(x => x.TaxDate, vehicle.IsTaxActive ? vehicle.TaxDate : now)
                   .Set(x => x.IsTaxActive, vehicle.IsTaxActive);
 
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
