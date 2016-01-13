@@ -43,12 +43,12 @@ namespace ApiApp.Models
     public class CheckTopics
     {
         /// <summary>
-        /// 
+        /// id = TopicId
         /// </summary>
         [BsonId]      
         public string id { get; set; }
         /// <summary>
-        /// 
+        ///  id = TopicId
         /// </summary>
         public string TopicId { get; set; }
         /// <summary>

@@ -303,6 +303,8 @@ namespace ApiApp.Controllers
                     var checkTopic = new CheckTopics
                     {
                         id = item.id,
+                        // คือตัวนี้กัน id = ToppicId ใส่ให้เทสได้้ก่อนเฉยๆ
+                        TopicId = item.id,
                         IsPass = null,
                         Comment = string.Empty,
                         PhotoURL = string.Empty,
