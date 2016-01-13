@@ -43,7 +43,7 @@
         //Get form datas
         public GetForms(): ng.IPromise<any> {
             var formId = this.vehicle.VehicleSelected.VehicleTypeId;
-            var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
+            var IsFormIdMatch = ((formId == 11) || (formId == 13));
             if (!IsFormIdMatch) {
                 //Hack: mock form id
                 formId = 11;

@@ -45,7 +45,7 @@
             private checkeds: app.shared.CheckedsService) {
 
             //Reload topics when topics is null
-            var isTopicsNull = topics.TopicInfos == null ? true : false;
+            var isTopicsNull = topics.TopicInfos == null;
             if (isTopicsNull) {
                 console.log('Topics is missing.');
                 console.log('Retry download topics again.');
@@ -55,7 +55,7 @@
                 });
             }
             //Reload checkeds when checkeds is null
-            var isCheckedsNull = data == null ? true : false;
+            var isCheckedsNull = data == null;
             if (isCheckedsNull) {
                 console.log('Checkeds is missing.');
                 console.log('Retry download checkeds again.');
