@@ -6,23 +6,28 @@
         static $inject = [
             'topics',
             'status',
+            'amisseds',
             'app.shared.VehicleService',
             'app.shared.FormService'];
         constructor(
             private topics: any,
             private status: any,
+            private amisseds: any,
             private vehicle: app.shared.VehicleService,
             private topicsService: app.shared.FormService) {
             topicsService.TopicInfos = topics;
         }
-        
-        //private IsPass(checkTopic: CheckTopicInformation): boolean {
-        //    return checkTopic.IsPass == true;
-        //}
-        //private IsFalse(checkTopic: CheckTopicInformation): boolean {
-        //    return checkTopic.IsPass == false;
-        //}
 
+        private IsDisableToAnalysis(): boolean {
+            var ReadyToAnalysisStatusCode = 1;
+            return this.vehicle.VehicleSelected.StatusCode != ReadyToAnalysisStatusCode;
+        }
+
+        private Analysis(): void {
+            //Hack: Processing something here....
+            console.log('Being analysis.');
+        }
+    
     }
 
     class CheckedController {

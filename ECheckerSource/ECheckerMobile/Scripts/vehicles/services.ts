@@ -34,18 +34,18 @@
             });
         }
 
-        //Get vehicle datas
+        //Get vehicles datas
         public GetVehicles(): ng.IPromise<any> {
             var userId = this.user.UserData.Email;
             return this.vehiclesSvc.query({ id: userId }).$promise;
         }
         
-        //Add new vehicle datas
+        //Add new vehicle data
         public AddVehicle(vehicle: VehicleInformation): void {
             this.addNewVehicleSvc.save(vehicle);
         }
 
-        //Update vehicle datas
+        //Update vehicle data
         public UpdateVehicle(vehicle: VehicleInformation): void {
             this.vehicleSvc.UpdateVehicle(vehicle);
         }

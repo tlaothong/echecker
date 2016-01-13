@@ -64,7 +64,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         controller: 'app.checking.TopicsController as cx',
                         resolve: {
                             "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
-                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }]
+                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }],
+                            "amisseds": ['app.amissed.AmissedService', svc => { return svc.GetAmisseds(); }]
                         }
                     }
                 }

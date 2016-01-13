@@ -4,11 +4,12 @@
     //Interface form api
     interface IFormResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {}
 
+    //Interface checkeds api
     interface ICheckedResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         UpdateCheckeds(data: T): T;
     }
    
-    //Interface vehicle api
+    //Interface status api
     interface IStatusResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {}
 
     //Topics service api
@@ -24,7 +25,7 @@
             //Set service to get forms
             this.formSvc = <IFormResourceClass<any>>$resource(appConfig.FormsUrl, { 'id': '@id' });
             
-            //Set service to get checkes
+            //Set service to get checkeds
             this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@VehicleId' }, {
                 UpdateCheckeds: { method: 'PUT' }
             });
@@ -44,17 +45,19 @@
             return this.formSvc.query({ id: formId }).$promise;
         }
         
-        //Get checked datas
+        //Get checkeds datas
         public GetCheckeds(): ng.IPromise<CheckedInformation> {
             var vehicleId = this.vehicle.VehicleSelected.id;
             return this.checkedSvc.get({ id: vehicleId }).$promise;
         }
 
+        //Update checkeds datas
         public UpdateCheckeds(checkeds: CheckedInformation): void {
             this.checkedSvc.UpdateCheckeds(checkeds);
         }
 
-        public GetReadyStatus(): ng.IPromise<Object> {
+        //Get ready status data
+        public GetReadyStatus(): ng.IPromise<any> {
             var vehicleId = this.vehicle.VehicleSelected.id
             return this.readyStatusSvc.get({ id: vehicleId }).$promise;
         }

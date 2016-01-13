@@ -10,7 +10,7 @@
                         </button>
                     </div>
                     <div class="col col-50">
-                        <button class="button col button-balanced" ng-disabled="cx.vehicle.VehicleSelected.StatusCode != 1">
+                        <button class="button col button-balanced" ng-disabled="cx.IsDisableToAnalysis()" ng-click="cx.Analysis()">
                             วิเคราะห์
                         </button>
                     </div>
@@ -19,10 +19,10 @@
         </div>
 
         <ion-list>
-            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.topics" href="" ui-sref="app.vehicle.amisseddetail">
+            <ion-item class="item item-calm item-icon-right" ng-repeat="item in cx.amisseds" href="" ui-sref="app.vehicle.amisseddetail">
                 <h2>
                     {{ item.Detail }}
-                    <i class="icon ion-model-s" ng-class="{'balanced': cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>
+                    <i class="icon ion-model-s assertive"></i>
                 </h2>
             </ion-item>
         </ion-list>
