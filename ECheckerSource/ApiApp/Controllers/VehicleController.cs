@@ -61,13 +61,13 @@ namespace ApiApp.Controllers
 
             if (vehicle.VehicleTypeId ==11)
             {
-                //vehicle.FormId = 11;
-                vehicle.FormId = 1;
+                vehicle.FormId = 11;
+                //vehicle.FormId = 1;
             }
             else if (vehicle.VehicleTypeId == 13)
             {
-                //vehicle.FormId = 13;
-                vehicle.FormId = 1;
+                vehicle.FormId = 13;
+                //vehicle.FormId = 1;
             }
 
             vehicle.PayDate = DateTime.Today;
