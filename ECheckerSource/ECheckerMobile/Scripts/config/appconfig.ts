@@ -34,7 +34,11 @@
             this.FormsUrl = apiurl + '/form/:id';
             this.CheckedUrl = apiurl + '/checked/:id';
             this.NotificationUrl = apiurl + '/vehicle/:id/noti';
-            this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
+            
+            //this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
+            //Hack: Fixed url
+            this.ReadyStatusUrl = 'http://echecker-ohae.azurewebsites.net/api/checked/:id/readystatus';
+            
         }
         
     }

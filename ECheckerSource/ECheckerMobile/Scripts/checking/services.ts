@@ -43,8 +43,12 @@
 
         //Get form datas
         public GetForms(): ng.IPromise<TopicInformation[]> {
-            //Hack: fixed form id
-            var formId = 1;
+            var formId = this.vehicle.VehicleSelected.VehicleTypeId;
+            var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
+            if (!IsFormIdMatch) {
+                //Hack: mock form id
+                formId = 11;
+            }
             return this.formSvc.GetForms(new FormRequest(formId)).$promise;
         }
         
@@ -55,8 +59,8 @@
             //var vehicleId = this.vehicle.VehicleSelected.id;
             return this.checkedSvc.GetCheckeds(new CheckedRequest(vehicleId)).$promise;
         }
-        
-        public GetReadyStatus(): ng.IPromise<string> {
+
+        public GetReadyStatus(): ng.IPromise<Object> {
             var vehicleId = this.vehicle.VehicleSelected.id
             return this.readyStatusSvc.GetReadyStatus(new GetReadyStatusRequest(vehicleId)).$promise;
         }
