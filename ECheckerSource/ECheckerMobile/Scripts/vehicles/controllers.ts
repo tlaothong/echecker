@@ -3,8 +3,8 @@
 
     class VehicleListController {
 
-        static $inject = ['data']
-        constructor(private data: VehicleInformation[]) {
+        static $inject = ['data', 'app.shared.VehicleService']
+        constructor(private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
@@ -21,47 +21,52 @@
         private DisplayVehichleCompleted(): VehicleInformation[] {
             return this.data.filter(it=> it.StatusCode == 2);
         }
-
-    }
-
-    class VehicleEditController {
-        static $inject = ['data', '$state']
-        constructor(private data, private $state) {
-        }
-
-        private Submit(): void {
         
-            //TODO: Process something...
-            this.$state.go('app.manvehicles');
+        //Set select vehicle to service
+        private SelectVehicle(vehicleSelected: VehicleInformation) {
+            this.vehicle.VehicleSelected = vehicleSelected;
         }
+
     }
 
     class VehicleAddController {
-        static $inject = ['$state']
-        constructor(private $state) {
+
+        private newVehicle: VehicleInformation;
+
+        static $inject = ['$state', 'app.vehicles.VehiclesService', 'app.shared.UserService']
+        constructor(private $state, private svc: app.vehicles.VehiclesService, private user: app.shared.UserService) {
         }
 
+        //Send vehicle information to server
         private Submit(): void {
-        
-            //TODO: Process something...
+            this.newVehicle.Email = this.user.UserData.Email;
+            this.svc.AddVehicle(this.newVehicle);
             this.$state.go('app.manvehicles');
         }
     }
 
-    class VehicleStatusController {
+    class VehicleEditController {
+        static $inject = ['$state', 'app.vehicles.VehiclesService', 'app.shared.VehicleService']
+        constructor(private $state, private svc: app.vehicles.VehiclesService, private vehicle: app.shared.VehicleService) {
+        }
 
-        static $inject = ['data', 'app.shared.VehicleService'];
-        constructor(private data, private vehicleSvc: app.shared.VehicleService) {
-            vehicleSvc.VehiclesData = data;
+        //Send vehicle information to server
+        private Submit(): void {
+            this.svc.UpdateVehicle(this.vehicle.VehicleSelected);
+            this.$state.go('app.manvehicles');
         }
     }
-
+    
     class ManageVehicleController {
 
-        static $inject = ['data'];
-        constructor(private data) {
+        static $inject = ['data', 'app.shared.VehicleService'];
+        constructor(private data, private vehicle: app.shared.VehicleService) {
         }
 
+        //Set select vehicle to service
+        private SelectVehicle(vehicleSelected: VehicleInformation) {
+            this.vehicle.VehicleSelected = vehicleSelected;
+        }
     }
 
     angular
@@ -69,6 +74,5 @@
         .controller('app.vehicles.VehicleListController', VehicleListController)
         .controller('app.vehicles.VehicleEditController', VehicleEditController)
         .controller('app.vehicles.VehicleAddController', VehicleAddController)
-        .controller('app.vehicles.VehicleStatusController', VehicleStatusController)
         .controller('app.vehicles.ManageVehicleController', ManageVehicleController);
 }

@@ -1,17 +1,15 @@
 ﻿module app {
     'use strict';
-
-    //Data information for vehicle
-    export class VehicleInformation {
+    
+    //Data information for vehicleNotification
+    export class VehicleNotificationInformation {
         id: string;
         PlateNumber: string;
         Province: string;
         CreateDate: Date;
         Email: string;
-        VehicleProgress: number;
-        StatusCode: number;
-        VehicleTypeId: number;
         LatestCheckedDate: Date;
+        VehicleTypeId: number;
         FormId: number;
         PBRDate: Date;
         IsPBRActive: boolean;
@@ -23,10 +21,5 @@
         IsTaxActive: boolean;
         PayDate: Date;
         IsPayActive: boolean;
-    }
-    
-    //Service requirment to call api
-    export class GetVehiclesRequest {
-        constructor(public id: string) { };
     }
 }

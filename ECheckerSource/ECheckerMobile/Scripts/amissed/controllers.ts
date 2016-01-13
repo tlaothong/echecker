@@ -7,7 +7,7 @@
 
         static $inject = ['data', 'app.shared.VehicleService'];
         constructor(private data, private vehicleSvc: app.shared.VehicleService) {
-            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
+            this.PlateNumber = vehicleSvc.VehicleSelected.PlateNumber;
         }
 
     }
@@ -18,7 +18,7 @@
         
         static $inject = ['data', 'app.shared.VehicleService'];
         constructor(private data, private vehicleSvc: app.shared.VehicleService) {
-            this.PlateNumber = vehicleSvc.VehiclesData.PlateNumber;
+            this.PlateNumber = vehicleSvc.VehicleSelected.PlateNumber;
         }
 
         private IsPass(topic: any): boolean {

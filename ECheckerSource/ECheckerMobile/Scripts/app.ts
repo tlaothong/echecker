@@ -37,11 +37,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 url: '/vehicles',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/vehicleList.html',
+                        templateUrl: 'templates/vehiclelist.html',
                         controller: 'app.vehicles.VehicleListController as cx',
                         resolve: {
-                            //Call service getVehicles by send user id = aa@aa.com
-                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles('aa@aa.com') }]
+                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
                         }
                     }
                 }
@@ -52,13 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 abstract: true,
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/vehicle.html',
-                        controller: 'app.vehicles.VehicleStatusController as cx',
-                        resolve: {
-                            "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
-                                return svc.get(p.vid);
-                            }]
-                        }
+                        templateUrl: 'templates/vehicle.html'
                     }
                 }
             })
@@ -67,10 +60,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 url: '/status',
                 views: {
                     'vContent': {
-                        templateUrl: 'templates/vehicle-status.html',
+                        templateUrl: 'templates/vehiclestatus.html',
                         controller: 'app.checking.TopicsController as cx',
                         resolve: {
-                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                            "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
+                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }]
                         }
                     }
                 }
@@ -81,9 +75,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkvehicle.html',
-                        controller: 'app.checking.TopicsController as cx',
+                        controller: 'app.checking.CheckedController as cx',
                         resolve: {
-                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                            "data": ['app.checking.FormsService', svc => { return svc.GetCheckeds(); }]
                         }
                     }
                 }
@@ -145,7 +139,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/managevehicle.html',
                         controller: 'app.vehicles.ManageVehicleController as cx',
                         resolve: {
-                            "data": ['app.shared.MockVehicles', svc => { return svc.getAll(); }]
+                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
                         }
                     }
                 }
@@ -162,16 +156,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
             })
 
             .state('app.editvehicle', {
-                url: '/editvehicle/:vid',
+                url: '/editvehicle',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/updatevehicle.html',
                         controller: 'app.vehicles.VehicleEditController as cx',
-                        resolve: {
-                            "data": ["$stateParams", 'app.shared.MockVehicles', (p, svc) => {
-                                return svc.get(p.vid);
-                            }]
-                        }
                     }
                 }
             })

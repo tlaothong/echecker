@@ -1,25 +1,32 @@
 ﻿module app.noti {
-	'use strict';
+    'use strict';
 
-	export interface IMyService {
-		method(): void;
-	}
 
-	export class MyService implements IMyService {
+    //Interface vehicles api
+    interface INotificationResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        UpdateNotification(data: T): T;
+    }
 
-		static $inject = ['$resource'];
-		constructor(private $resource: angular.resource.IResourceService) {
-			// TODO: initialize service
-			
-		}
+    //Vehicle service api
+    export class NotificationService {
 
-		public method(): void {
-			// TODO: Implement or remove a method
-		}
+        private svc: INotificationResourceClass<any>;
 
-	}
+        static $inject = ['appConfig', '$resource', 'app.shared.UserService'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private user: app.shared.UserService) {
 
-	angular
-		.module('app.noti')
-		.service('app.noti.MyService', MyService);
+            //Set service to get vehicles
+            this.svc = <INotificationResourceClass<any>>$resource(appConfig.NotificationUrl, { 'id': '@id' }, {
+                UpdateNotification: { method: 'Put' },
+            });
+        }
+
+        public UpdateNotification(vehicle: VehicleNotificationInformation): void {
+            this.svc.UpdateNotification(vehicle);
+        }
+    }
+
+    angular
+        .module('app.noti')
+        .service('app.noti.NotificationService', NotificationService);
 }

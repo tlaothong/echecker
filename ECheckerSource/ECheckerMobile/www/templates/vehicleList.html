@@ -1,4 +1,4 @@
-﻿<ion-view view-title="DLT Checker">
+﻿<ion-view view-title="DLT Checker" cache-view="false">
     <ion-content>
         <div class="calm-bg padding">
             <label class="item item-light item-input">
@@ -15,14 +15,14 @@
 
             <div>
                 <ion-list>
-                    <ion-item class="item-divider item item-light ic-selected ">
+                    <ion-item class="item-divider item item-light ic-selected">
                         <div class="row">
                             <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
                             <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
                         </div>
                     </ion-item>
 
-                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">{{ item.VehicleProgress }}%</i>
@@ -39,7 +39,7 @@
             </div>
             <div>
                 <ion-list>
-                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleReady()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">รอส่งวิเคราะห์</i>
@@ -56,7 +56,7 @@
             </div>
             <div>
                 <ion-list>
-                    <ion-item class="item item-calm " ng-repeat="item in cx.DisplayVehichleCompleted()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleCompleted()" href="" ui-sref="app.vehicle.status({ vid: item.id })">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">วิเคราะห์แล้ว</i>
