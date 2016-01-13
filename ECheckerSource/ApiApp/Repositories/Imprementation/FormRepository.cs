@@ -39,5 +39,17 @@ namespace ApiApp.Repositories.Imprementation
             var coltn = MongoUtil.GetCollection<Topic>(tableName);
             return coltn.Find(x => x.FormId == fromId).ToList();
         }
+  
+
+        /// <summary>
+        /// สร้าง ฟอร์ม  -- ใช้ชั่วคราวสร้างฟอร์มตั้งต้น
+        /// </summary>
+        /// <param name="topic"></param>
+        public void CreateForm(IEnumerable<Topic> topic)
+        {
+            var coltn = MongoUtil.GetCollection<Topic>(tableName);
+
+            coltn.InsertMany(topic);
+        }
     }
 }

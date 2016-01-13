@@ -151,7 +151,7 @@ namespace ApiApp.Controllers
                     data.VehicleId = id;
                     data.TopicId = item.id;
                     data.Detail = item.Detail;
-                    data.SuggestTopic = item.SuggestTopic;
+                    //data.SuggestTopic = item.SuggestTopic;
                     data.SuggestDetail = item.SuggestDetail;
                     data.DamagePercent = item.DamagePercent;
                     data.IsCritical = item.IsCritical;

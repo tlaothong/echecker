@@ -41,7 +41,7 @@ namespace ApiApp.Models
         /// 
         /// </summary>
         public string How2Topic { get; set; }
-        
+
         /// <summary>
         /// 
         /// </summary>

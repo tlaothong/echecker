@@ -18,5 +18,11 @@ namespace ApiApp.Repositories
         /// <param name="fromId"> รหัส ฟอร์ม</param>
         /// <returns></returns>
         IEnumerable<Topic> GetForm(int fromId);
+
+        /// <summary>
+        /// สร้าง ฟอร์ม  -- ใช้ชั่วคราวสร้างฟอร์มตั้งต้น
+        /// </summary>
+        /// <param name="topic"></param>
+        void CreateForm(IEnumerable<Topic> topic);
     }
 }
