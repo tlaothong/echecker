@@ -8,6 +8,7 @@
 
     interface ICheckedResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetCheckeds(data: T): T;
+        UpdateCheckeds(data: T): T;
     }
    
     //Interface vehicle api
@@ -27,12 +28,13 @@
 
             //Set service to get forms
             this.formSvc = <IFormResourceClass<any>>$resource(appConfig.FormsUrl, { 'id': '@id' }, {
-                GetForms: { method: 'Get', isArray: true },
+                GetForms: { method: 'Get', isArray: true }
             });
             
             //Set service to get checkes
-            this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@id' }, {
+            this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@VehicleId' }, {
                 GetCheckeds: { method: 'Get' },
+                UpdateCheckeds: { method: 'PUT' }
             });
             
             //Set service to get ready status
@@ -43,24 +45,24 @@
 
         //Get form datas
         public GetForms(): ng.IPromise<TopicInformation[]> {
-            //Hack: fixed formId
-            var formId = 1;
-
-            //var formId = this.vehicle.VehicleSelected.VehicleTypeId;
-            //var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
-            //if (!IsFormIdMatch) {
-            //    //Hack: mock form id
-            //    formId = 11;
-            //}
+            var formId = this.vehicle.VehicleSelected.VehicleTypeId;
+            var IsFormIdMatch = ((formId == 11) || (formId == 13)) ? true : false;
+            if (!IsFormIdMatch) {
+                //Hack: mock form id
+                formId = 11;
+            }
             return this.formSvc.GetForms(new FormRequest(formId)).$promise;
         }
         
         //Get checked datas
         public GetCheckeds(): ng.IPromise<CheckedInformation> {
-            //Hack: fixed vehicle id
-            var vehicleId = '69C90FD9-5F74-405B-BC24-5C54D3C14252';
-            //var vehicleId = this.vehicle.VehicleSelected.id;
-            return this.checkedSvc.GetCheckeds(new CheckedRequest(vehicleId)).$promise;
+            var vehicleId = this.vehicle.VehicleSelected.id;
+            var result = this.checkedSvc.get({ id: vehicleId }).$promise;
+            return result;
+        }
+
+        public UpdateCheckeds(checkeds: CheckedInformation): void {
+            this.checkedSvc.UpdateCheckeds(checkeds);
         }
 
         public GetReadyStatus(): ng.IPromise<Object> {

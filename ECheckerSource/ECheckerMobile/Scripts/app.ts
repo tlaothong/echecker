@@ -90,9 +90,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/checkamiss.html',
                         controller: 'app.checking.CheckAmissController as cx',
                         resolve: {
-                            "data": ["$stateParams", 'app.shared.CheckedsService', (id, svc) => {
+                            "data": ["$stateParams", 'app.shared.CheckedsService', (p, svc) => {
                                 var intialIndex = 0;
-                                return svc.CheckedsInfos.CheckedTopics.filter(it=> it.TopicId == id.id)[intialIndex];
+                                return svc.CheckedsInfos.CheckedTopics.filter(it=> it.id == p.id)[intialIndex];
+                                
                             }]
                         }
                     }

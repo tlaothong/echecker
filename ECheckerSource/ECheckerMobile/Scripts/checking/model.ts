@@ -6,15 +6,20 @@
     }
     
     //Service requirment to call api
-    export class CheckedRequest {
+    export class GetCheckedRequest {
         constructor(public id: string) { };
     }
     
     //Service requirment to call api
+    export class UpdateCheckedRequest {
+        constructor(public id: string, public data: CheckedInformation) { };
+    }
+
+    //Service requirment to call api
     export class GetReadyStatusRequest {
         constructor(public id: string) { };
     }
-
+    
 
 
     export class Checkeds {
