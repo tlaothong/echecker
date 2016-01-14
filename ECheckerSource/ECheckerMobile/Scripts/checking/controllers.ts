@@ -88,6 +88,7 @@
     
         static $inject = [
             '$state',
+            '$cordovaCamera',
             'data',
             'app.shared.VehicleService',
             'app.shared.FormService',
@@ -96,6 +97,7 @@
         ];
         constructor(
             private $state: any,
+            private $cordovaCamera,
             private data: CheckTopicInformation,
             private vehicle: app.shared.VehicleService,
             private topics: app.shared.FormService,
@@ -117,6 +119,32 @@
             this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == this.data.id)[intialIndex] = this.data;
             this.svc.UpdateCheckeds(this.checkeds.CheckedsInfos);
             this.$state.go('app.vehicle.checklists');
+        }
+
+        private Capture(): void {
+
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 100,
+                targetHeight: 100,
+                saveToPhotoAlbum: false,
+                correctOrientation: true
+            };
+
+            this.$cordovaCamera.getPicture(options).then(function (imageData) {
+
+                alert('Can capture.');
+                //var image = <HTMLImageElement>document.getElementById('myImage');
+                //image.src = "data:image/jpeg;base64," + imageData;
+            }, function (err) {
+                alert('Capture failed.');
+                // error
+            });
+
         }
     }
 

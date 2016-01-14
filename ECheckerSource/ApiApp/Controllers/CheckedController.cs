@@ -94,7 +94,6 @@ namespace ApiApp.Controllers
         /// Update the modified value.
         /// </summary>
         /// <param name="id">vehicle id</param>
-        /// <param name="value">The new value to be updated.</param>
         // PUT /checked/{vehicle-id}/done
         [HttpPut]
         [Route("{id}/done")]

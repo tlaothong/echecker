@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApiApp.Repositories
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IAccountRepository
     {
     }

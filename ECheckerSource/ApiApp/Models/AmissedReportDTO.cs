@@ -11,7 +11,13 @@ namespace ApiApp.Models
     /// </summary>
     public class AmissedReportDTO
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public IEnumerable<Amissed> Amisseds { get; set; }
     }
 }

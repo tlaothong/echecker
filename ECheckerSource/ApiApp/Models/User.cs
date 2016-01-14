@@ -11,10 +11,11 @@ namespace ApiApp.Models
     /// </summary>
     public class User
     {
-        [BsonId]
+
         /// <summary>
         /// 
         /// </summary>
+        [BsonId]
         public string id { get; set; }
     }
 }

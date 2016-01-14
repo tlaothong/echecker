@@ -11,12 +11,13 @@ namespace ApiApp.Models
     /// </summary>
     public class Topic
     {
-        [BsonId]
+
         /// <summary>
         /// รหัส topic id
         /// </summary>
+        [BsonId]
         public string id { get; set; }
-        
+
         /// <summary>
         /// รหัสประเภทรถที่ใช้ topic 
         /// </summary>

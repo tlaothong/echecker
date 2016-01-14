@@ -38,6 +38,10 @@ namespace ApiApp.Repositories
         /// <returns></returns>
         IEnumerable<Amissed> GetAmissedByVehicleId(string vehicleId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<Amissed> GetAllAmissed();
 
         /// <summary>
