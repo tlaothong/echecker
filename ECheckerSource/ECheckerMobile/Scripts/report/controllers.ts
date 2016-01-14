@@ -2,8 +2,12 @@
     'use strict';
 
     class ReportController {
-        static $inject = ['data', 'app.shared.VehicleService']
-        constructor(private data, private vehicle: app.shared.VehicleService) {
+        static $inject = ['data', 'app.shared.VehicleService', 'app.shared.AmissDetailService']
+        constructor(private data, private vehicle: app.shared.VehicleService, private amissed: app.shared.AmissDetailService) {
+        }
+        
+        private SelectAmissedDeatil(amissed: AmissedInformation) {
+            this.amissed.AmissedInfo = amissed;
         }
     }
 
