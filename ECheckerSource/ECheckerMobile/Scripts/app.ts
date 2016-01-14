@@ -64,7 +64,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         controller: 'app.checking.TopicsController as cx',
                         resolve: {
                             "topics": ['app.checking.FormsService', svc => { return svc.GetForms(); }],
-                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }]
+                            "status": ['app.checking.FormsService', svc => { return svc.GetReadyStatus(); }],
+                            "amisseds": ['app.amissed.AmissedService', svc => { return svc.GetAmisseds(); }]
                         }
                     }
                 }
@@ -84,14 +85,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
             })
 
             .state('app.vehicle.checkamiss', {
-                url: '/checkamiss/:tid',
+                url: '/checkamiss/:id',
                 views: {
                     'vContent': {
                         templateUrl: 'templates/checkamiss.html',
-                        controller: 'app.checking.TopicsController as cx',
+                        controller: 'app.checking.CheckAmissController as cx',
                         resolve: {
-                            "data": ["$stateParams", 'app.shared.MockTopics', (p, svc) => {
-                                return svc.get(p.tid);
+                            "data": ["$stateParams", 'app.shared.CheckedsService', (p, svc) => {
+                                var intialIndex = 0;
+                                return svc.CheckedsInfos.CheckedTopics.filter(it=> it.id == p.id)[intialIndex];
+                                
                             }]
                         }
                     }
@@ -126,7 +129,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                         templateUrl: 'templates/vehiclereport.html',
                         controller: 'app.amissed.ReportController as cx',
                         resolve: {
-                            "data": ['app.shared.MockTopics', svc => { return svc.getAll(); }]
+                            "data": ['app.checking.FormsService', svc => { return svc.GetReport(); }]
                         }
                     }
                 }

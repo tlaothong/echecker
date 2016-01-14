@@ -10,6 +10,8 @@
         CheckedUrl: string;
         NotificationUrl: string;
         ReadyStatusUrl: string;
+        AmissedUrl: string;
+        ReportUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
@@ -22,6 +24,8 @@
         public CheckedUrl: string;
         public NotificationUrl: string;
         public ReadyStatusUrl: string;
+        public AmissedUrl: string;
+        public ReportUrl: string;
         
         //Create full path each url
         constructor() {
@@ -34,7 +38,13 @@
             this.FormsUrl = apiurl + '/form/:id';
             this.CheckedUrl = apiurl + '/checked/:id';
             this.NotificationUrl = apiurl + '/vehicle/:id/noti';
-            this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
+            this.AmissedUrl = apiurl + '/checked/:id/amissed';
+            this.ReportUrl = apiurl + '/Report/:id';
+            
+            //this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
+            //Hack: Fixed url
+            this.ReadyStatusUrl = 'http://echecker-ohae.azurewebsites.net/api/checked/:id/readystatus';
+            
         }
         
     }

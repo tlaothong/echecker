@@ -2,14 +2,10 @@
     'use strict';
     
     //Interface vehicles api
-    interface IVehiclesResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-        GetVehicles(data: T): T;
-    }
+    interface IVehiclesResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {}
 
     //Interface add new vehicle api
-    interface IAddNewVehiclesResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-        AddVehicle(data: T): T;
-    }
+    interface IAddNewVehiclesResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {}
 
     //Interface vehicle api
     interface IVehicleResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
@@ -27,14 +23,10 @@
         constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private user: app.shared.UserService) {
 
             //Set service to get vehicles
-            this.vehiclesSvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' }, {
-                GetVehicles: { method: 'Get', isArray: true }
-            });
+            this.vehiclesSvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' });
 
             //Set service to send new vehicle
-            this.addNewVehicleSvc = <IAddNewVehiclesResourceClass<any>>$resource(appConfig.AddVehicleUrl, {}, {
-                AddVehicle: { method: 'Post' }
-            });
+            this.addNewVehicleSvc = <IAddNewVehiclesResourceClass<any>>$resource(appConfig.AddVehicleUrl);
 
             //Set service to update vehicle
             this.vehicleSvc = <IVehicleResourceClass<any>>$resource(appConfig.VehicleUrl, { 'id': '@id' }, {
@@ -42,18 +34,18 @@
             });
         }
 
-        //Get vehicle datas
-        public GetVehicles(): ng.IPromise<VehicleInformation[]> {
+        //Get vehicles datas
+        public GetVehicles(): ng.IPromise<any> {
             var userId = this.user.UserData.Email;
-            return this.vehiclesSvc.GetVehicles(new GetVehiclesRequest(userId)).$promise;
+            return this.vehiclesSvc.query({ id: userId }).$promise;
         }
         
-        //Add new vehicle datas
+        //Add new vehicle data
         public AddVehicle(vehicle: VehicleInformation): void {
-            this.addNewVehicleSvc.AddVehicle(vehicle);
+            this.addNewVehicleSvc.save(vehicle);
         }
 
-        //Update vehicle datas
+        //Update vehicle data
         public UpdateVehicle(vehicle: VehicleInformation): void {
             this.vehicleSvc.UpdateVehicle(vehicle);
         }

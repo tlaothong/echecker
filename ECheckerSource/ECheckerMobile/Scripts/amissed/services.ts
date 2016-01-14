@@ -1,25 +1,32 @@
 ﻿module app.amissed {
-	'use strict';
+    'use strict';
 
-	export interface IMyService {
-		method(): void;
-	}
+    //Interface amissedService api
+    interface IAmissedResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> { }
+    
+    //AmissedService service api
+    export class AmissedService {
 
-	export class MyService implements IMyService {
+        private svc: IAmissedResourceClass<any>;
 
-		static $inject = ['$resource'];
-		constructor(private $resource: angular.resource.IResourceService) {
-			// TODO: initialize service
-			
-		}
+        static $inject = ['appConfig', '$resource', 'app.shared.VehicleService'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private vehicle: app.shared.VehicleService) {
 
-		public method(): void {
-			// TODO: Implement or remove a method
-		}
+            //Set service to get vehicles
+            this.svc = <IAmissedResourceClass<any>>$resource(appConfig.AmissedUrl, { 'id': '@id' });
+        }
 
-	}
+        //Get amissed datas
+        public GetAmisseds(): ng.IPromise<any> {
 
-	angular
-		.module('app.amissed')
-		.service('app.amissed.MyService', MyService);
+            //Hack: fix vehicle id
+            var vehicleId = '69C90FD9-5F74-405B-BC24-5C54D3C14252';
+            //var vehicleId = this.vehicle.VehicleSelected.id;
+            return this.svc.query({ id: vehicleId }).$promise;
+        }
+    }
+
+    angular
+        .module('app.amissed')
+        .service('app.amissed.AmissedService', AmissedService);
 }

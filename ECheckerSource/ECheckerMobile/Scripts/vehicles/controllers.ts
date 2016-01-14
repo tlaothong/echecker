@@ -3,8 +3,15 @@
 
     class VehicleListController {
 
-        static $inject = ['data', 'app.shared.VehicleService']
-        constructor(private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
+        static $inject = ['$state', 'data', 'app.shared.VehicleService']
+        constructor(private $state, private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
+        
+            var IsDataEmpty = data.length < 1;
+            if (IsDataEmpty) {
+                console.log('User is not has any vehicle.');
+                console.log('Go to manage vehicle page for add vehicle.');
+                $state.go('app.manvehicles')
+            }
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)

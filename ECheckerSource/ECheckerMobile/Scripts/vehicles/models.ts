@@ -24,9 +24,4 @@
         PayDate: Date;
         IsPayActive: boolean;
     }
-    
-    //Service requirment to call api
-    export class GetVehiclesRequest {
-        constructor(public id: string) { };
-    }
 }
