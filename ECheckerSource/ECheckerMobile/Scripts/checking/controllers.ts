@@ -10,6 +10,7 @@
             'amisseds',
             'app.shared.VehicleService',
             'app.shared.FormService',
+            'app.shared.CheckedsService',
             'app.shared.AmissDetailService',
             'app.checking.FormsService'];
         constructor(
@@ -19,14 +20,21 @@
             private amisseds: any,
             private vehicle: app.shared.VehicleService,
             private topicsService: app.shared.FormService,
+            private checkeds: app.shared.CheckedsService,
             private amissed: app.shared.AmissDetailService,
             private svc: app.checking.FormsService) {
             topicsService.TopicInfos = topics;
         }
 
         private IsDisableToAnalysis(): boolean {
-            var ReadyToAnalysisStatusCode = 1;
-            return this.vehicle.VehicleSelected.StatusCode != ReadyToAnalysisStatusCode;
+            var ReadyToAnalysisCode = 1;
+            var IsReadyToAnalysis = this.vehicle.VehicleSelected.StatusCode == ReadyToAnalysisCode;
+            var IsCheckedsHaveValue = ((this.checkeds.CheckedsInfos != null) && (this.checkeds.CheckedsInfos.CheckedTopics != null));
+
+            return !(
+                ((IsCheckedsHaveValue) && (this.checkeds.CheckedsInfos.CheckedTopics.every(it=> it.IsPass != null))) ||
+                (IsReadyToAnalysis)
+            );
         }
 
         private Analysis(): void {
@@ -38,7 +46,7 @@
         private SelectAmissedDeatil(amissed: AmissedInformation) {
             this.amissed.AmissedInfo = amissed;
         }
-    
+
     }
 
     class CheckedController {
@@ -93,10 +101,10 @@
     }
 
     class CheckAmissController {
-    
+
         private Detail: string;
         private AmissIsPass: boolean;
-    
+
         static $inject = [
             '$state',
             'data',
@@ -112,7 +120,7 @@
             private topics: app.shared.FormService,
             private checkeds: app.shared.CheckedsService,
             private svc: app.checking.FormsService) {
-            
+
             var intialIndex = 0;
             this.Detail = topics.TopicInfos.filter(it=> it.id == data.id)[intialIndex].Detail;
             this.AmissIsPass = data.IsPass;
@@ -121,7 +129,7 @@
         private IsDisableToSubmit(): boolean {
             return this.AmissIsPass == null;
         }
-        
+
         private Submit(): void {
             this.data.IsPass = this.AmissIsPass;
             var intialIndex = 0;
@@ -130,7 +138,7 @@
             this.$state.go('app.vehicle.checklists');
         }
     }
-    
+
     angular
         .module('app.checking')
         .controller('app.checking.TopicsController', TopicsController)
