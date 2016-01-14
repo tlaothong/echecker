@@ -91,16 +91,15 @@ namespace ApiApp.Controllers
         }
 
         /// <summary>
-        /// Update the modified value.
+        /// Update latest checked to done and generate ready status and amissed checked.
         /// </summary>
         /// <param name="id">vehicle id</param>
-        /// <param name="value">The new value to be updated.</param>
         // PUT /checked/{vehicle-id}/done
         [HttpPut]
         [Route("{id}/done")]
         public void PutDone(string id)
         {
-            //TODO: verify all checked topics.IsPass are not null
+            //verify all checked topics.IsPass are not null
             var myLatestChecked = this.repoChecking.GetLastChecked(id);
             if (myLatestChecked != null && myLatestChecked.CheckedTopics.All(x => x.IsPass != null))
             { }
@@ -111,7 +110,7 @@ namespace ApiApp.Controllers
 
             try
             {
-                //TODO: compute status
+                //compute status
                 //check critical first!!
                 ReadyStatus status = new Models.ReadyStatus { VehicleId = id };
                 var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
@@ -136,11 +135,11 @@ namespace ApiApp.Controllers
                 //call repo to create
                 this.repoChecking.CreateReadyStatus(status);
 
-                //TODO: update checked[] to done
+                //update checked[] to done
                 var vehicle = this.repoVehicle.GetVehicle(id);
                 Checked myChecked = this.repoChecking.CheckedDone(id, vehicle.LatestCheckedDate);
 
-                //TODO: generate amissed
+                //generate amissed
                 var form = this.repoForm.GetForm(vehicle.FormId);
 
                 List<Amissed> amisseds = new List<Amissed>();
@@ -157,7 +156,7 @@ namespace ApiApp.Controllers
                     data.VehicleId = id;
                     data.TopicId = item.id;
                     data.Detail = item.Detail;
-                    //data.SuggestTopic = item.SuggestTopic;
+                    data.SuggestTopic = item.SuggestTopic;
                     data.SuggestDetail = item.SuggestDetail;
                     data.DamagePercent = item.DamagePercent;
                     data.IsCritical = item.IsCritical;

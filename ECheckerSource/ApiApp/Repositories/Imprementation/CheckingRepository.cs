@@ -26,8 +26,15 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="check"> ข้อมูลการตรวจรถ</param>
         public void AddChecked(Checked check)
         {
-            var coltn = MongoUtil.GetCollection<Checked>(tableName);
-            coltn.InsertOne(check);
+            if (check != null || check.CheckedTopics != null)
+            {
+                var coltn = MongoUtil.GetCollection<Checked>(tableName);
+                coltn.InsertOne(check);
+            }
+            else
+            {
+                throw new ArgumentNullException("null input from AddChecked repo");
+            }
         }
 
         /// <summary>
@@ -87,13 +94,20 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="check">ข้อมูล การตรวจรถ</param>    
         public void UpdateChecked(Checked check)
         {
-            var update = Builders<Checked>.Update
-                   .Set(x => x.CheckedTopics, check.CheckedTopics);
+            if (check != null || check.CheckedTopics != null)
+            {
+                var update = Builders<Checked>.Update
+               .Set(x => x.CheckedTopics, check.CheckedTopics);
 
-            var coltn = MongoUtil.GetCollection<Checked>(tableName);
+                var coltn = MongoUtil.GetCollection<Checked>(tableName);
 
-            var last = GetLastChecked(check.VehicleId);
-            coltn.UpdateOne(p => p.id == last.id, update);
+                var last = GetLastChecked(check.VehicleId);
+                coltn.UpdateOne(p => p.id == last.id, update);
+            }
+            else
+            {
+                throw new ArgumentNullException("null input from UpdateChecked repo");
+            }
         }
 
         /// <summary>
@@ -102,8 +116,16 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="amisseds"></param>
         public void CreateAmissed(IEnumerable<Amissed> amisseds)
         {
-            var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
-            coltn.InsertMany(amisseds);
+            //verify input data that must not null and value more than zero.
+            if (amisseds != null || amisseds.Count() > 0)
+            {
+                var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
+                coltn.InsertMany(amisseds);
+            }
+            else
+            {
+                throw new ArgumentNullException("null input from CreateAmissed repo");
+            }
         }
 
         /// <summary>
@@ -124,9 +146,16 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="readyStatus"></param>
         public void CreateReadyStatus(ReadyStatus readyStatus)
         {
-            var coltn = MongoUtil.GetCollection<ReadyStatus>(tableNameReadyStatus);
-            readyStatus.id = Guid.NewGuid().ToString();
-            coltn.InsertOne(readyStatus);
+            if (readyStatus != null)
+            {
+                var coltn = MongoUtil.GetCollection<ReadyStatus>(tableNameReadyStatus);
+                readyStatus.id = Guid.NewGuid().ToString();
+                coltn.InsertOne(readyStatus);
+            }
+            else
+            {
+                throw new ArgumentNullException("null inpu from CreateReadyStatus repo");
+            }
         }
 
         /// <summary>
@@ -146,15 +175,23 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="latestCheckedDate"></param>
         public Checked CheckedDone(string vehicleId, DateTime latestCheckedDate)
         {
-            var coltn = MongoUtil.GetCollection<Checked>(tableName);
-            var updater = Builders<Checked>.Update
-                .Set(x => x.IsDone, true);
+            try
+            {
+                var coltn = MongoUtil.GetCollection<Checked>(tableName);
+                var updater = Builders<Checked>.Update
+                    .Set(x => x.IsDone, true);
 
-            var filter = Builders<Checked>.Filter
-                .Where((x => x.VehicleId == vehicleId && x.CreateDate == latestCheckedDate));
+                var filter = Builders<Checked>.Filter
+                    .Where((x => x.VehicleId == vehicleId && x.CreateDate == latestCheckedDate));
 
-            coltn.UpdateOne(filter, updater);
-            return coltn.Find(filter).FirstOrDefault();
+                coltn.UpdateOne(filter, updater);
+                var result = coltn.Find(filter);
+                return result.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
