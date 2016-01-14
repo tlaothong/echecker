@@ -191,7 +191,8 @@ namespace ApiApp.Controllers
         {
             var check = repoChecking.GetLastChecked(id);
 
-            if (check == null)
+            //ถ้า ไม่มี checked หรือ checked ล่าสุดตรวจไปแล้ว ให้สร้าง checked ใหม่
+            if (check == null || check.IsDone)
             {
                 var qry = repoVehicle.GetVehicle(id);
 
@@ -283,7 +284,7 @@ namespace ApiApp.Controllers
 
                 throw e;
             }
-   
+
 
             //HACK Test
             //var cc = GetMock();
