@@ -2,7 +2,7 @@
     <ion-content>
         <ion-list ng-repeat="item in cx.data">
             <ion-item class="item-divider item item-royal ic-selected ">{{ item.CreateDate | date: 'longDate' }}</ion-item>
-            <ion-item class="item item-calm item-icon-right" ng-repeat="report in item.Amisseds" href="" ui-sref="app.vehicle.amisseddetail">
+            <ion-item class="item item-calm item-icon-right" ng-repeat="report in item.Amisseds" href="" ui-sref="app.vehicle.amisseddetail" ng-click="cx.SelectAmissedDeatil(report)">
                 <h2>
                     {{ report.Detail }}
                     <i class="icon ion-model-s assertive"></i>

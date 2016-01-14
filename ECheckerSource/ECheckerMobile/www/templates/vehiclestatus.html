@@ -19,7 +19,7 @@
         </div>
 
         <ion-list>
-            <ion-item class="item item-calm item-icon-right" collection-repeat="item in cx.amisseds" href="" ui-sref="app.vehicle.amisseddetail">
+            <ion-item class="item item-calm item-icon-right" collection-repeat="item in cx.amisseds" href="" ui-sref="app.vehicle.amisseddetail" ng-click="cx.SelectAmissedDeatil(item)">
                 <h2>
                     {{ item.Detail }}
                     <i class="icon ion-model-s assertive"></i>

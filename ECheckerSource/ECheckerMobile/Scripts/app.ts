@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.vehicles'])
+angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                 abstract: true,
 
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl'
+                controller: 'AppCtrl as cx'
             })
 
             .state('app.vehicles', {
@@ -107,9 +107,7 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     'vContent': {
                         templateUrl: 'templates/amisseddetail.html',
                         controller: 'app.amissed.AmissedDetailController as cx',
-                        resolve: {
-                            "data": ['app.shared.MockAmissed', svc => { return svc.get('ef1d7bf5-c013-475f-9790-255dc97f8d6f'); }]
-                        }
+                       
                     }
                 }
             })
@@ -127,9 +125,9 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                 views: {
                     'vContent': {
                         templateUrl: 'templates/vehiclereport.html',
-                        controller: 'app.amissed.ReportController as cx',
+                        controller: 'app.report.ReportController as cx',
                         resolve: {
-                            "data": ['app.checking.FormsService', svc => { return svc.GetReport(); }]
+                            "data": ['app.report.ReportService', svc => { return svc.GetReport(); }]
                         }
                     }
                 }
@@ -166,63 +164,7 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                         controller: 'app.vehicles.VehicleEditController as cx',
                     }
                 }
-            })
-
-
-            .state('app.search', {
-                url: '/search',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/search.html'
-                    }
-                }
-            })
-
-            .state('app.browse', {
-                url: '/browse',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/browse.html'
-                    }
-                }
-            })
-            .state('app.playlists', {
-                url: '/playlists',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/playlists.html',
-                        controller: 'PlaylistsCtrl'
-                    }
-                }
-            })
-
-            .state('app.single', {
-                url: '/playlists/:playlistId',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/playlist.html',
-                        controller: 'PlaylistCtrl'
-                    }
-                }
-            })
-
-            .state('app.more', {
-                url: '/more',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/more.html'
-                    }
-                }
-            })
-            .state('app.more.child', {
-                url: '/child/:id',
-                views: {
-                    'tabContent': {
-                        templateUrl: 'templates/mchild.html'
-                    }
-                }
-            })
-            ;
+            });
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/vehicles');
     });

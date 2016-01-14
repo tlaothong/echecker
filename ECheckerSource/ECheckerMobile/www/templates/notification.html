@@ -2,31 +2,31 @@
     <ion-content>
         <ion-list>
             <ion-item class="row">
-                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.vehicle.VehicleSelected.IsPBRActive"></label>
-              <label class="col padding-top">พรบ</label>
-                <label class="col"><input type="date" ng-model="cx.vehicle.VehicleSelected.PBRDate" /></label>
+                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.notiVehicle.IsPBRActive"></label>
+                <label class="col padding-top">พรบ</label>
+                <label class="col"><input type="date" ng-model="cx.notiVehicle.PBRDate" ng-disabled="!cx.notiVehicle.IsPBRActive" value="{{ cx.notiVehicle.PBRDate | date: 'yyyy-MM-dd' }}" /></label>
             </ion-item>
             <ion-item class="row">
-                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.vehicle.VehicleSelected.IsDrivingLicenseActive"></label>
+                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.notiVehicle.IsDrivingLicenseActive"></label>
                 <label class="col padding-top">ใบขับขี่หมดอายุ</label>
-                <label class="col"><input type="date" ng-model="cx.vehicle.VehicleSelected.DrivingLicenseDate" /></label>
+                <label class="col"><input type="date" ng-model="cx.notiVehicle.DrivingLicenseDate" ng-disabled="!cx.notiVehicle.IsDrivingLicenseActive" value="{{ cx.notiVehicle.DrivingLicenseDate | date: 'yyyy-MM-dd' }}" /></label>
             </ion-item>
             <ion-item class="row">
-                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.vehicle.VehicleSelected.IsCheckActive"></label>
+                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.notiVehicle.IsCheckActive"></label>
                 <label class="col padding-top">ตรวจสภาพ</label>
-                <label class="col"><input type="date" ng-model="cx.vehicle.VehicleSelected.IsCheckDate" /></label>
+                <label class="col"><input type="date" ng-model="cx.notiVehicle.CheckDate" ng-disabled="!cx.notiVehicle.IsCheckActive" value="{{ cx.notiVehicle.CheckDate | date: 'yyyy-MM-dd' }}" /></label>
             </ion-item>
             <ion-item class="row">
-                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.vehicle.VehicleSelected.IsTaxActive"></label>
+                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.notiVehicle.IsTaxActive"></label>
                 <label class="col padding-top">ต่อภาษีคู่มือรถ</label>
-                <label class="col"><input type="date" ng-model="cx.vehicle.VehicleSelected.IsTaxDate" /></label>
+                <label class="col"><input type="date" ng-model="cx.notiVehicle.TaxDate" ng-disabled="!cx.notiVehicle.IsTaxActive" value="{{ cx.notiVehicle.TaxDate | date: 'yyyy-MM-dd' }}" /></label>
             </ion-item>
             <ion-item class="row">
-                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.vehicle.VehicleSelected.IsPayActive"></label>
+                <label class="checkbox col col-10"><input type="checkbox" ng-model="cx.notiVehicle.IsPayActive"></label>
                 <label class="col padding-top">จ่ายงวดรถ</label>
-                <label class="col"><input type="date" ng-model="cx.vehicle.VehicleSelected.PayDate" /></label>
+                <label class="col"><input type="date" ng-model="cx.notiVehicle.PayDate" ng-disabled="!cx.notiVehicle.IsPayActive" value="{{ cx.notiVehicle.PayDate | date: 'yyyy-MM-dd' }}" /></label>
             </ion-item>
-            
+
             <button class="button button-block button-positive" ng-click="cx.Submit()">บันทึก</button>
         </ion-list>
     </ion-content>

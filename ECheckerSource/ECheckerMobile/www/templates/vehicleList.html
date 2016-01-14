@@ -39,6 +39,12 @@
             </div>
             <div>
                 <ion-list>
+                    <ion-item class="item-divider item item-light ic-selected">
+                        <div class="row">
+                            <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
+                            <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
+                        </div>
+                    </ion-item>
                     <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleReady()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
@@ -56,6 +62,12 @@
             </div>
             <div>
                 <ion-list>
+                    <ion-item class="item-divider item item-light ic-selected">
+                        <div class="row">
+                            <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
+                            <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
+                        </div>
+                    </ion-item>
                     <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleCompleted()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}

@@ -11,17 +11,18 @@
    
     //Interface status api
     interface IStatusResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> { }
-    
-    //Interface status api
-    interface IReportResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> { }
 
+    interface IAnalysisVehicleResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        AnalysisVehicle(data: T): T;
+    }
+    
     //Topics service api
     export class FormsService {
 
         private formSvc: IFormResourceClass<any>;
         private checkedSvc: ICheckedResourceClass<any>;
         private readyStatusSvc: IStatusResourceClass<any>;
-        private reportSvc: IReportResourceClass<any>;
+        private analysisVehicleSvc: IAnalysisVehicleResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.VehicleService'];
         constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private vehicle: app.shared.VehicleService) {
@@ -29,7 +30,7 @@
             //Set service to get forms
             this.formSvc = <IFormResourceClass<any>>$resource(appConfig.FormsUrl, { 'id': '@id' });
             
-            //Set service to get checkeds
+            //Set service to put checkeds
             this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@VehicleId' }, {
                 UpdateCheckeds: { method: 'PUT' }
             });
@@ -37,7 +38,10 @@
             //Set service to get ready status
             this.readyStatusSvc = <IStatusResourceClass<any>>$resource(appConfig.ReadyStatusUrl, { 'id': '@id' });
 
-            this.reportSvc = <IStatusResourceClass<any>>$resource(appConfig.ReportUrl, { 'id': '@id' });
+            //Set service to analysis vehicle
+            this.analysisVehicleSvc = <IAnalysisVehicleResourceClass<any>>$resource(appConfig.AnalysisVehicleUrl, { 'id': '@id' }, {
+                AnalysisVehicle: { method: 'PUT' }
+            });
         }
 
         //Get form datas
@@ -68,12 +72,9 @@
             return this.readyStatusSvc.get({ id: vehicleId }).$promise;
         }
 
-        //Get report datas
-        public GetReport(): ng.IPromise<any> {
-            //Hack: fix vehicle id
-            var vehicleId = '69C90FD9-5F74-405B-BC24-5C54D3C14252';
-            //var vehicleId = this.vehicle.VehicleSelected.id;
-            return this.reportSvc.query({ id: vehicleId }).$promise;
+        //Analysis vehicle
+        public AnalysisVehicle(vehicle: VehicleInformation): void {
+            this.analysisVehicleSvc.AnalysisVehicle(vehicle);
         }
     }
 
