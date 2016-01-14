@@ -173,7 +173,7 @@ namespace ApiApp.Repositories.Imprementation
         /// </summary>
         /// <param name="vehicleId"></param>
         /// <param name="latestCheckedDate"></param>
-        public Checked CheckedDone(string vehicleId, DateTime latestCheckedDate)
+        public /*Checked*/void CheckedDone(string vehicleId, DateTime latestCheckedDate)
         {
             try
             {
@@ -185,8 +185,8 @@ namespace ApiApp.Repositories.Imprementation
                     .Where((x => x.VehicleId == vehicleId && x.CreateDate == latestCheckedDate));
 
                 coltn.UpdateOne(filter, updater);
-                var result = coltn.Find(filter);
-                return result.FirstOrDefault();
+                //var result = coltn.Find(filter);
+                //return result.FirstOrDefault();
             }
             catch (Exception ex)
             {

@@ -102,79 +102,77 @@ namespace ApiApp.Controllers
             //verify all checked topics.IsPass are not null
             var myLatestChecked = this.repoChecking.GetLastChecked(id);
             if (myLatestChecked != null && myLatestChecked.CheckedTopics.All(x => x.IsPass != null))
-            { }
-            else
             {
-                throw new Exception("found some checked topic that is not checking yet.");
-            }
+                try
+                {
+                    //generate amissed
+                    var vehicle = this.repoVehicle.GetVehicle(id);
+                    var form = this.repoForm.GetForm(vehicle.FormId);
 
-            try
-            {
-                //compute status
-                //check critical first!!
-                ReadyStatus status = new Models.ReadyStatus { VehicleId = id };
-                var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
-                if (amissedList.Any(x => x.IsCritical == true))
-                {
-                    status.Status = "ไม่พร้อมใช้งาน";
-                }
-                //sum calculate damage
-                else
-                {
-                    int avg = 0;
-                    avg = amissedList.Sum(x => x.DamagePercent);
-                    if (avg < 60)
+                    List<Amissed> amisseds = new List<Amissed>();
+                    var failCheckedTopic = myLatestChecked.CheckedTopics.Where(x => x.IsPass == false);
+                    foreach (var item in failCheckedTopic)
                     {
-                        status.Status = string.Format("{0}% พร้อมใช้งาน", avg);
+                        //linked form item to check topic
+                        var checkedTopic = myLatestChecked.CheckedTopics.Where(x => x.id == item.id).FirstOrDefault();
+
+                        Amissed data = new Amissed();
+
+                        //linked to topic
+                        data.id = Guid.NewGuid().ToString();
+                        data.CheckedId = myLatestChecked.id;
+                        data.VehicleId = id;
+                        data.TopicId = item.id;
+                        data.Detail = form.Where(x=>x.id == item.id).FirstOrDefault().Detail;
+                        data.SuggestTopic = form.Where(x => x.id == item.id).FirstOrDefault().SuggestTopic;
+                        data.SuggestDetail = form.Where(x => x.id == item.id).FirstOrDefault().SuggestDetail;
+                        data.DamagePercent = form.Where(x => x.id == item.id).FirstOrDefault().DamagePercent;
+                        data.IsCritical = form.Where(x => x.id == item.id).FirstOrDefault().IsCritical;
+
+                        //linked to checked topic
+                        data.Comment = checkedTopic.Comment;
+                        data.PhotoUrl = checkedTopic.PhotoURL;
+                        data.CreateDate = DateTime.Now;
+
+                        amisseds.Add(data);
+                    }
+
+                    //compute status
+                    //check critical first!!
+                    ReadyStatus status = new Models.ReadyStatus { VehicleId = id };
+                    //var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
+
+                    //sum calculate damage
+                    int avg = 0;
+                    avg = amisseds.Sum(x => x.DamagePercent);
+
+                    if (amisseds.Any(x => x.IsCritical == true) || avg < 60)
+                    {
+                        status.Status = string.Format("{0}% ไม่พร้อมใช้งาน", 100 - avg);
                     }
                     else
                     {
-                        status.Status = string.Format("{0}% ไม่พร้อมใช้งาน", avg);
+                        status.Status = string.Format("{0}% พร้อมใช้งาน", 100 - avg);
                     }
+
+                    //update checked[] to done
+                    /*Checked myChecked = */
+                    this.repoChecking.CheckedDone(id, vehicle.LatestCheckedDate);
+
+                    //call repo to create
+                    this.repoChecking.CreateReadyStatus(status);
+
+                    //create amisseds
+                    this.repoChecking.CreateAmissed(amisseds);
                 }
-                //call repo to create
-                this.repoChecking.CreateReadyStatus(status);
-
-                //update checked[] to done
-                var vehicle = this.repoVehicle.GetVehicle(id);
-                Checked myChecked = this.repoChecking.CheckedDone(id, vehicle.LatestCheckedDate);
-
-                //generate amissed
-                var form = this.repoForm.GetForm(vehicle.FormId);
-
-                List<Amissed> amisseds = new List<Amissed>();
-                foreach (var item in form)
+                catch (Exception ex)
                 {
-                    //linked form item to check topic
-                    var checkedTopic = myChecked.CheckedTopics.Where(x => x.id == item.id).FirstOrDefault();
-
-                    Amissed data = new Amissed();
-
-                    //linked to topic
-                    data.id = Guid.NewGuid().ToString();
-                    data.CheckedId = myChecked.id;
-                    data.VehicleId = id;
-                    data.TopicId = item.id;
-                    data.Detail = item.Detail;
-                    data.SuggestTopic = item.SuggestTopic;
-                    data.SuggestDetail = item.SuggestDetail;
-                    data.DamagePercent = item.DamagePercent;
-                    data.IsCritical = item.IsCritical;
-
-                    //linked to checked topic
-                    data.Comment = checkedTopic.Comment;
-                    data.PhotoUrl = checkedTopic.PhotoURL;
-                    data.CreateDate = DateTime.Now;
-
-                    amisseds.Add(data);
+                    throw ex;
                 }
-
-                //create amisseds
-                this.repoChecking.CreateAmissed(amisseds);
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                throw new Exception("found some checked topic that is not checking yet.");
             }
         }
 
