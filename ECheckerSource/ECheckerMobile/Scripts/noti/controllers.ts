@@ -12,26 +12,19 @@
 
         private Submit(): void {
             
-            //Update vehicle checked
+            //Update local-vehicle checked
             this.vehicle.VehicleSelected.IsPBRActive = this.notiVehicle.IsPBRActive;
             this.vehicle.VehicleSelected.IsDrivingLicenseActive = this.notiVehicle.IsDrivingLicenseActive;
             this.vehicle.VehicleSelected.IsCheckActive = this.notiVehicle.IsCheckActive;
             this.vehicle.VehicleSelected.IsTaxActive = this.notiVehicle.IsTaxActive;
             this.vehicle.VehicleSelected.IsPayActive = this.notiVehicle.IsPayActive;
 
-            //Update vehicle date
-            var date: number = this.notiVehicle.PBRDate.getDate();
+            //Update local-vehicle date
             this.vehicle.VehicleSelected.PBRDate = this.notiVehicle.PBRDate;
             this.vehicle.VehicleSelected.DrivingLicenseDate = this.notiVehicle.DrivingLicenseDate;
             this.vehicle.VehicleSelected.CheckDate = this.notiVehicle.CheckDate;
             this.vehicle.VehicleSelected.TaxDate = this.notiVehicle.TaxDate;
             this.vehicle.VehicleSelected.PayDate = this.notiVehicle.PayDate;
-
-            console.log('PBRDate: ' + this.vehicle.VehicleSelected.PBRDate);
-            console.log('DrivingLicenseDate: ' + this.vehicle.VehicleSelected.DrivingLicenseDate);
-            console.log('CheckDate: ' + this.vehicle.VehicleSelected.CheckDate);
-            console.log('TaxDate: ' + this.vehicle.VehicleSelected.TaxDate);
-            console.log('PayDate: ' + this.vehicle.VehicleSelected.PayDate);
 
             this.svc.UpdateNotification(this.vehicle.VehicleSelected);
             this.$state.go('app.vehicle.status');
