@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.vehicles'])
+angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -127,9 +127,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 views: {
                     'vContent': {
                         templateUrl: 'templates/vehiclereport.html',
-                        controller: 'app.amissed.ReportController as cx',
+                        controller: 'app.report.ReportController as cx',
                         resolve: {
-                            "data": ['app.checking.FormsService', svc => { return svc.GetReport(); }]
+                            "data": ['app.report.ReportService', svc => { return svc.GetReport(); }]
                         }
                     }
                 }
