@@ -141,7 +141,7 @@ namespace ApiApp.Controllers
                 foreach (var item in form)
                 {
                     //linked form item to check topic
-                    var checkedTopic = myChecked.CheckedTopics.Where(x => x.TopicId == item.id).FirstOrDefault();
+                    var checkedTopic = myChecked.CheckedTopics.Where(x => x.id == item.id).FirstOrDefault();
 
                     Amissed data = new Amissed();
 
@@ -176,7 +176,7 @@ namespace ApiApp.Controllers
         /// <summary>
         /// GetLastChecked
         /// </summary>
-        /// <param name="id"> รหัส รถ</param>
+        /// <param name="id"> vehicle id</param>
         /// <returns></returns>
         /// GET /checked/{vehicle-id}
         [HttpGet]
@@ -203,7 +203,7 @@ namespace ApiApp.Controllers
                 else
                 {
                     return null;
-                }                
+                }
             }
             else
             {
@@ -228,8 +228,17 @@ namespace ApiApp.Controllers
                 var newChecked = GetNewChecked(id, qry.FormId);
                 newChecked.CreateDate = now;
 
-                repoChecking.AddChecked(newChecked);
-                repoVehicle.UpdateLastChecked(id, now);
+                try
+                {
+                    repoChecking.AddChecked(newChecked);
+                    repoVehicle.UpdateLastChecked(id, now);
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+
             }
 
             ////HACK : mock 
@@ -259,7 +268,16 @@ namespace ApiApp.Controllers
 
             //repoChecking.UpdateChecked(data);
 
-            repoChecking.UpdateChecked(check);
+            try
+            {
+                repoChecking.UpdateChecked(check);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+   
 
             //HACK Test
             //var cc = GetMock();
@@ -299,6 +317,7 @@ namespace ApiApp.Controllers
             this.repoChecking.CreateAmissed(mockAmissdes());
         }
 
+        // for create New CheckedInfo
         Checked GetNewChecked(string vehicleId, int formId)
         {
             var now = DateTime.Now;

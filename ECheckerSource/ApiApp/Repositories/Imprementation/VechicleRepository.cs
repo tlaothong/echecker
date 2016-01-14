@@ -26,6 +26,32 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="vehicle"></param>
         public void AddVehicle(Vehicle vehicle)
         {
+            var now = DateTime.Now;         
+
+            if (vehicle.VehicleTypeId == 11)
+            {
+                vehicle.FormId = 11;
+            }
+            else if (vehicle.VehicleTypeId == 13)
+            {
+                vehicle.FormId = 13;
+            }
+
+            vehicle.PayDate = now;
+            vehicle.IsPayActive = false;
+            vehicle.PBRDate = now;
+            vehicle.IsPBRActive = false;
+            vehicle.CheckDate = now;
+            vehicle.IsCheckActive = false;
+            vehicle.DrivingLicenseDate = now;
+            vehicle.IsDrivingLicenseActive = false;
+            vehicle.TaxDate = now;
+            vehicle.IsTaxActive = false;
+
+            vehicle.id = Guid.NewGuid().ToString();
+            vehicle.LatestCheckedDate = now;
+            vehicle.CreateDate = now;
+
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.InsertOne(vehicle);
         }
@@ -103,6 +129,8 @@ namespace ApiApp.Repositories.Imprementation
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.UpdateOne(v => v.id == vehicle.id, update);
 
+
+           
         }
     }
 }

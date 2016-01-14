@@ -42,7 +42,8 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public Vehicle Get(string id)
         {
-            var qry = repoVehicle.GetVehicle(id);
+            var qry = repoVehicle.GetVehicle(id);            
+
             return qry;
         }
 
@@ -54,33 +55,7 @@ namespace ApiApp.Controllers
         [HttpPost]
         [Route("add/")]
         public void Post(Vehicle vehicle)
-        {
-            vehicle.id = Guid.NewGuid().ToString();
-            vehicle.LatestCheckedDate = DateTime.Now;
-            vehicle.CreateDate = DateTime.Now;
-
-            if (vehicle.VehicleTypeId ==11)
-            {
-                vehicle.FormId = 11;
-                //vehicle.FormId = 1;
-            }
-            else if (vehicle.VehicleTypeId == 13)
-            {
-                vehicle.FormId = 13;
-                //vehicle.FormId = 1;
-            }
-
-            vehicle.PayDate = DateTime.Today;
-            vehicle.IsPayActive = false;
-            vehicle.PBRDate = DateTime.Today;
-            vehicle.IsPBRActive = false;
-            vehicle.CheckDate = DateTime.Today;
-            vehicle.IsCheckActive = false;
-            vehicle.DrivingLicenseDate = DateTime.Today;
-            vehicle.IsDrivingLicenseActive = false;
-            vehicle.TaxDate = DateTime.Today;
-            vehicle.IsTaxActive = false;
-
+        {  
             try
             {
                 repoVehicle.AddVehicle(vehicle);
@@ -103,7 +78,16 @@ namespace ApiApp.Controllers
         [Route("{id}")]
         public void UpdateInfo(string id, Vehicle vehicle)
         {
-            repoVehicle.UpdateVehicle(vehicle);
+            try
+            {
+                repoVehicle.UpdateVehicle(vehicle);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
         /// <summary>
         /// UpdateVehicle Noti
@@ -114,7 +98,16 @@ namespace ApiApp.Controllers
         [Route("{id}/noti/")]
         public void UpdateNoti(string id, Vehicle vehicle)
         {
-            repoVehicle.UpdateNotification(vehicle);
+            try
+            {
+                repoVehicle.UpdateNotification(vehicle);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+           
         }
     }
 }

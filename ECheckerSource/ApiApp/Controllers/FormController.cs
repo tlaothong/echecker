@@ -27,11 +27,10 @@ namespace ApiApp.Controllers
         }
 
         /// <summary>
-        /// List all values.
+        /// GetFormlist by fromID
         /// </summary>
+        /// <param name="id"> form id</param>
         /// <returns></returns>
-        // GET api/values
-        ///GET /forms/{form-id}
         public IEnumerable<Topic> Get(int id)
         {
             var data = repoRepository.GetForm(id);
@@ -47,13 +46,14 @@ namespace ApiApp.Controllers
         }
 
         /// <summary>
-        /// 
+        /// For Test Create Form
         /// </summary>
         public void Post()
         {
             //repoRepository.CreateForm(GetForm());
         }
 
+        //From 
         IEnumerable<Topic> GetForm()
         {
             var now = DateTime.Now;
