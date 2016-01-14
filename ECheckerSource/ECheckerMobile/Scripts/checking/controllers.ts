@@ -4,19 +4,23 @@
     class TopicsController {
 
         static $inject = [
+            '$state',
             'topics',
             'status',
             'amisseds',
             'app.shared.VehicleService',
             'app.shared.FormService',
-            'app.shared.AmissDetailService'];
+            'app.shared.AmissDetailService',
+            'app.checking.FormsService'];
         constructor(
+            private $state,
             private topics: any,
             private status: any,
             private amisseds: any,
             private vehicle: app.shared.VehicleService,
             private topicsService: app.shared.FormService,
-            private amissed: app.shared.AmissDetailService) {
+            private amissed: app.shared.AmissDetailService,
+            private svc: app.checking.FormsService) {
             topicsService.TopicInfos = topics;
         }
 
@@ -26,8 +30,9 @@
         }
 
         private Analysis(): void {
-            //Hack: Processing something here....
-            console.log('Being analysis.');
+            this.svc.AnalysisVehicle(this.vehicle.VehicleSelected);
+            console.log('Analysis is done, Back to vehilce list.');
+            this.$state.go('app.vehicles');
         }
 
         private SelectAmissedDeatil(amissed: AmissedInformation) {

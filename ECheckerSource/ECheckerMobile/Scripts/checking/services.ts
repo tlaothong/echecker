@@ -11,6 +11,10 @@
    
     //Interface status api
     interface IStatusResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> { }
+
+    interface IAnalysisVehicleResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        AnalysisVehicle(data: T): T;
+    }
     
     //Topics service api
     export class FormsService {
@@ -18,6 +22,7 @@
         private formSvc: IFormResourceClass<any>;
         private checkedSvc: ICheckedResourceClass<any>;
         private readyStatusSvc: IStatusResourceClass<any>;
+        private analysisVehicleSvc: IAnalysisVehicleResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.VehicleService'];
         constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private vehicle: app.shared.VehicleService) {
@@ -25,13 +30,18 @@
             //Set service to get forms
             this.formSvc = <IFormResourceClass<any>>$resource(appConfig.FormsUrl, { 'id': '@id' });
             
-            //Set service to get checkeds
+            //Set service to put checkeds
             this.checkedSvc = <ICheckedResourceClass<any>>$resource(appConfig.CheckedUrl, { 'id': '@VehicleId' }, {
                 UpdateCheckeds: { method: 'PUT' }
             });
             
             //Set service to get ready status
             this.readyStatusSvc = <IStatusResourceClass<any>>$resource(appConfig.ReadyStatusUrl, { 'id': '@id' });
+
+            //Set service to analysis vehicle
+            this.analysisVehicleSvc = <IAnalysisVehicleResourceClass<any>>$resource(appConfig.AnalysisVehicleUrl, { 'id': '@id' }, {
+                AnalysisVehicle: { method: 'PUT' }
+            });
         }
 
         //Get form datas
@@ -60,6 +70,11 @@
         public GetReadyStatus(): ng.IPromise<any> {
             var vehicleId = this.vehicle.VehicleSelected.id
             return this.readyStatusSvc.get({ id: vehicleId }).$promise;
+        }
+
+        //Analysis vehicle
+        public AnalysisVehicle(vehicle: VehicleInformation): void {
+            this.analysisVehicleSvc.AnalysisVehicle(vehicle);
         }
     }
 
