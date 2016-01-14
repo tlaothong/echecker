@@ -39,6 +39,7 @@
 
         private Analysis(): void {
             this.svc.AnalysisVehicle(this.vehicle.VehicleSelected);
+            this.checkeds.CheckedsInfos = null;
             console.log('Analysis is done, Back to vehilce list.');
             this.$state.go('app.vehicles');
         }
