@@ -1,13 +1,13 @@
-﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.PlateNumber}}" cache-view="false">
+﻿<ion-view view-title="รถหมายเลขทะเบียน {{cx.vehicle.VehicleSelected.PlateNumber}}" cache-view="false">
     <ion-content class="padding">
-        <h4><i class="icon ion-arrow-right-b"></i> {{cx.data.Detail}}</h4>
-        <h5>{{ cx.data.SuggestTopic }}</h5>
-        <h5>{{ cx.data.SuggestDetail }}</h5>
+        <h4><i class="icon ion-arrow-right-b"></i> {{cx.amissed.AmissedInfo.Detail}}</h4>
+        <h5>{{ cx.amissed.AmissedInfo.SuggestTopic }}</h5>
+        <h5>{{ cx.amissed.AmissedInfo.SuggestDetail }}</h5>
         <h4>บันทึกเพิ่มเติม</h4>
         <label class="item item-input">
-            <textarea rows="8" cols="10" ng-model="cx.data.Comment"></textarea>
+            <textarea rows="8" cols="10" ng-model="cx.amissed.Amissed.Comment"></textarea>
         </label>
-        <img class="col" src="cx.data.PhotoUrl" />
+        <img class="col" src="cx.amissed.Amissed.PhotoUrl" />
     </ion-content>
    
 </ion-view>
