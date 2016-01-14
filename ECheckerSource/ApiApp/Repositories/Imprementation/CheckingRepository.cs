@@ -46,7 +46,7 @@ namespace ApiApp.Repositories.Imprementation
         {
             var coltn = MongoUtil.GetCollection<Amissed>(tableNameAmissed);
             var data = coltn.Find(x => x.VehicleId == vehicleId).ToList()
-                .GroupBy(x => x.CreateDate.Date).OrderByDescending(y => y.Key)
+                .GroupBy(x => x.CreateDate).OrderByDescending(y => y.Key)
                 .FirstOrDefault();
 
             return data != null ? data.Select(x => x) : new List<Amissed>();
