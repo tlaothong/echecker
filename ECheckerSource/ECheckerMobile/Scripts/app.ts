@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 abstract: true,
 
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl'
+                controller: 'AppCtrl as cx'
             })
 
             .state('app.vehicles', {
@@ -107,9 +107,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                     'vContent': {
                         templateUrl: 'templates/amisseddetail.html',
                         controller: 'app.amissed.AmissedDetailController as cx',
-                        resolve: {
-                            "data": ['app.shared.MockAmissed', svc => { return svc.get('ef1d7bf5-c013-475f-9790-255dc97f8d6f'); }]
-                        }
+                       
                     }
                 }
             })

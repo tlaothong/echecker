@@ -8,13 +8,15 @@
             'status',
             'amisseds',
             'app.shared.VehicleService',
-            'app.shared.FormService'];
+            'app.shared.FormService',
+            'app.shared.AmissDetailService'];
         constructor(
             private topics: any,
             private status: any,
             private amisseds: any,
             private vehicle: app.shared.VehicleService,
-            private topicsService: app.shared.FormService) {
+            private topicsService: app.shared.FormService,
+            private amissed: app.shared.AmissDetailService) {
             topicsService.TopicInfos = topics;
         }
 
@@ -26,6 +28,10 @@
         private Analysis(): void {
             //Hack: Processing something here....
             console.log('Being analysis.');
+        }
+
+        private SelectAmissedDeatil(amissed: AmissedInformation) {
+            this.amissed.AmissedInfo = amissed;
         }
     
     }
