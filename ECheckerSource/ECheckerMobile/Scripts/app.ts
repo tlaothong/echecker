@@ -28,9 +28,8 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
             .state('app', {
                 url: '/app',
                 abstract: true,
-
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl as cx'
+                //controller: 'AppCtrl as cx'
             })
 
             .state('app.vehicles', {

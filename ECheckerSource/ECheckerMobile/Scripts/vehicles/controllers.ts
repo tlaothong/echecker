@@ -3,15 +3,43 @@
 
     class VehicleListController {
 
-        static $inject = ['$state', 'data', 'app.shared.VehicleService']
-        constructor(private $state, private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
-        
+        private modal: any;
+
+        static $inject = [
+            '$state',
+            '$scope',
+            '$ionicModal',
+            '$timeout',
+            'data',
+            'app.shared.VehicleService',
+            'app.shared.UserService']
+        constructor(
+            private $state,
+            private $scope,
+            private $ionicModal,
+            private $timeout,
+            private data: VehicleInformation[],
+            private vehicle: app.shared.VehicleService,
+            private user: app.shared.UserService) {
+
             var IsDataEmpty = data.length < 1;
             if (IsDataEmpty) {
                 console.log('User is not has any vehicle.');
                 console.log('Go to manage vehicle page for add vehicle.');
                 $state.go('app.manvehicles')
             }
+
+            $ionicModal.fromTemplateUrl('templates/login.html', {
+                backdropClickToClose: false,
+                scope: $scope
+            }).then((modal) => {
+                this.modal = modal;
+                $scope.modal = modal;
+
+                console.log('Is user loging: ' + user.IsLogin);
+                if (!user.IsLogin) { this.modal.show(); }
+            });
+
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
@@ -34,6 +62,11 @@
             this.vehicle.VehicleSelected = vehicleSelected;
         }
 
+        //Login successed
+        public Logined() {
+            //Delay 1 sec to hide modal
+            this.$timeout(() => { this.modal.hide(); }, 1000);
+        }
     }
 
     class VehicleAddController {
@@ -63,7 +96,7 @@
             this.$state.go('app.manvehicles');
         }
     }
-    
+
     class ManageVehicleController {
 
         static $inject = ['data', 'app.shared.VehicleService'];

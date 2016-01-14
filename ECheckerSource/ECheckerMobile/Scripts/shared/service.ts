@@ -6,10 +6,12 @@
     }
 
     export class UserService {
+        public IsLogin: boolean;
         public UserData = new UserInformation();
         constructor() {
             //Hack: Fixed email
             this.UserData.Email = 'aa@aa.com';
+            this.IsLogin = false;
         }
     }
 
