@@ -11,7 +11,7 @@
         constructor() {
             //Hack: Fixed email
             this.UserData.Email = 'aa@aa.com';
-            this.IsLogin = false;
+            this.IsLogin = true;
         }
     }
 
