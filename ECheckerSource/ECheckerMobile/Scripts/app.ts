@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'app', 'app.shared', 
                 abstract: true,
 
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl'
+                controller: 'AppCtrl as cx'
             })
 
             .state('app.vehicles', {
