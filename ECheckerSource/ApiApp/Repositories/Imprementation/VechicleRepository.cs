@@ -64,7 +64,9 @@ namespace ApiApp.Repositories.Imprementation
         public Vehicle GetVehicle(string vehicleId)
         {
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
-            return coltn.Find(x => x.id == vehicleId).FirstOrDefault();
+
+            var result = coltn.Find(x => x.id == vehicleId);
+            return result != null ? result.FirstOrDefault() : null;
         }
 
         /// <summary>
@@ -101,14 +103,19 @@ namespace ApiApp.Repositories.Imprementation
             var now = DateTime.Now;
 
             var update = Builders<Vehicle>.Update
+              
                   .Set(x => x.PBRDate, vehicle.IsPBRActive ? vehicle.PBRDate : now)
                   .Set(x => x.IsPBRActive, vehicle.IsPBRActive)
+                
                   .Set(x => x.CheckDate, vehicle.IsCheckActive ? vehicle.CheckDate : now)
                   .Set(x => x.IsCheckActive, vehicle.IsCheckActive)
+                
                   .Set(x => x.DrivingLicenseDate, vehicle.IsDrivingLicenseActive ? vehicle.DrivingLicenseDate : now)
                   .Set(x => x.IsDrivingLicenseActive, vehicle.IsDrivingLicenseActive)
+               
                   .Set(x => x.PayDate, vehicle.IsPayActive ? vehicle.PayDate : now)
                   .Set(x => x.IsPayActive, vehicle.IsPayActive)
+                 
                   .Set(x => x.TaxDate, vehicle.IsTaxActive ? vehicle.TaxDate : now)
                   .Set(x => x.IsTaxActive, vehicle.IsTaxActive);
 
@@ -128,7 +135,6 @@ namespace ApiApp.Repositories.Imprementation
 
             var coltn = MongoUtil.GetCollection<Vehicle>(tableName);
             coltn.UpdateOne(v => v.id == vehicle.id, update);
-
 
            
         }
