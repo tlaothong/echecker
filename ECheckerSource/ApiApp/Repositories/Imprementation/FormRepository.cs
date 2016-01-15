@@ -26,7 +26,8 @@ namespace ApiApp.Repositories.Imprementation
         public IEnumerable<Topic> GetTopicByVehicleId(int id)
         {
             var collection = MongoAccess.MongoUtil._database.GetCollection<Topic>("echecker.Topics");
-            return collection.Find(x => x.VehicleTypeId == id).ToList();
+            var result = collection.Find(x => x.VehicleTypeId == id).ToList();
+            return result != null ? result : new List<Topic>();
         }
 
         /// <summary>
@@ -37,7 +38,13 @@ namespace ApiApp.Repositories.Imprementation
         public IEnumerable<Topic> GetForm(int fromId)
         {
             var coltn = MongoUtil.GetCollection<Topic>(tableName);
-            return coltn.Find(x => x.FormId == fromId).ToList();
+            var result = coltn.Find(x => x.FormId == fromId).ToList();
+
+            if (result == null || result.Count() <= 0)
+            {
+                throw new Exception("No data from GetForm repo");
+            }
+            return result;
         }
   
 
@@ -47,9 +54,15 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="topic"></param>
         public void CreateForm(IEnumerable<Topic> topic)
         {
-            var coltn = MongoUtil.GetCollection<Topic>(tableName);
-
-            coltn.InsertMany(topic);
+            if (topic == null || topic.Count() <= 0)
+            {
+                var coltn = MongoUtil.GetCollection<Topic>(tableName);
+                coltn.InsertMany(topic);
+            }
+            else
+            {
+                throw new ArgumentNullException("null input from CreateForm repo");
+            }
         }
     }
 }
