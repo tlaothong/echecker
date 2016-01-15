@@ -297,9 +297,9 @@ namespace ApiApp.Controllers
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
                     sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
 
-                    fileURL = ("~/CheckedImg/Img/" + Guid.NewGuid() + ".jpg");
+                    fileURL = System.Web.HttpContext.Current.Server.MapPath("~/CheckedImg/Img/" + Guid.NewGuid() + ".jpg");
 
-                    //fileInfo.MoveTo(fileURL);
+                    fileInfo.MoveTo(fileURL);
 
                     //fileURL = fileInfo.Name;                    
                 }
