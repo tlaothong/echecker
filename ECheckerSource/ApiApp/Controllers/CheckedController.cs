@@ -274,8 +274,6 @@ namespace ApiApp.Controllers
             string root = System.Web.HttpContext.Current.Server.MapPath("~/CheckedImg");
             var provider = new MultipartFormDataStreamProvider(root);
 
-            
-
             try
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder(); // Holds the response body
@@ -298,6 +296,10 @@ namespace ApiApp.Controllers
                 {
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
                     sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
+
+                    fileURL = ("~/CheckedImg/Img/" + Guid.NewGuid() + ".jpg");
+
+                    fileInfo.MoveTo(fileURL);
 
                     fileURL = fileInfo.Name;                    
                 }
