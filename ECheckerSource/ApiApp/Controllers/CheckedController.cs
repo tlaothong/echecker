@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace ApiApp.Controllers
@@ -263,7 +264,7 @@ namespace ApiApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("{id}/{topicid}/photo")]
-        public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
+        public async System.Threading.Tasks.Task<object> PostPhoto(string id, string topicid)
         {
             // Check if the request contains multipart/form-data.
             if (!Request.Content.IsMimeMultipartContent())
@@ -297,23 +298,26 @@ namespace ApiApp.Controllers
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
                     sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
 
-                    fileURL = System.Web.HttpContext.Current.Server.MapPath("~/CheckedImg/Img/" + Guid.NewGuid() + ".jpg");
+                    var fileName = new StringBuilder().Append("/CheckedImg/Img/").Append(Guid.NewGuid().ToString()).Append(".jpg").ToString();
+
+                    fileURL = System.Web.HttpContext.Current.Server.MapPath("~" + fileName);
 
                     fileInfo.MoveTo(fileURL);
 
-                    //fileURL = fileInfo.Name;                    
+                    //Fix URL
+                    fileURL = new StringBuilder().Append("http://echecker-vanlek.azurewebsites.net").Append(fileName).ToString();
                 }
 
-                //var fileURL = string.Empty;
-                return root +" xxxxx "+ fileURL;
+
+                return new { PhotoURL = fileURL };
                 //return new HttpResponseMessage()
                 //{
                 //    Content = new StringContent(sb.ToString())
                 //};
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e).ToString();
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
             }
         }
 
