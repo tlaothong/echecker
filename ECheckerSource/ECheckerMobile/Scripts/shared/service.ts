@@ -1,5 +1,7 @@
 ﻿module app.shared {
     'use strict';
+    
+    declare var Ionic;
 
     export class VehicleService {
         public VehicleSelected = new VehicleInformation();
@@ -12,6 +14,13 @@
             //Hack: Fixed email
             this.UserData.Email = 'aa@aa.com';
             this.IsLogin = true;
+            
+            Ionic.io();
+            var user = Ionic.User.current();
+
+            //this.IsLogin = user.id;
+            //if (this.IsLogin) this.UserData.Email = user.id;
+
         }
     }
 

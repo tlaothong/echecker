@@ -1,11 +1,10 @@
 ﻿module app.vehicles {
     'use strict';
 
-    declare var Ionic;
-
     class VehicleListController {
-    
+
         private modal: any;
+        private user: any;
 
         static $inject = [
             '$state',
@@ -13,30 +12,20 @@
             '$ionicModal',
             '$timeout',
             'data',
-            'app.shared.VehicleService',
-            'app.shared.UserService']
+            'app.shared.VehicleService']
         constructor(
             private $state,
             private $scope,
             private $ionicModal,
             private $timeout,
             private data: VehicleInformation[],
-            private vehicle: app.shared.VehicleService) {
+            private vehicle: app.shared.VehicleService,
+            private svc: app.vehicles.VehiclesService) {
 
             Ionic.io();
-            var user = Ionic.User.current();
+            this.user = Ionic.User.current();
 
-            $ionicModal.fromTemplateUrl('templates/login.html', {
-                backdropClickToClose: false,
-                scope: $scope
-            }).then((modal) => {
-                this.modal = modal;
-                $scope.modal = modal;
-
-                if (!user.id) this.modal.show();
-            });
-
-            if (user.id) {
+            if (this.user.id) {
                 var minimumDataLength = 1;
                 var IsDataEmpty = data.length < minimumDataLength;
                 if (IsDataEmpty) {
@@ -50,16 +39,19 @@
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
         private DisplayVehichleNotReady(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 0);
         }
 
         //Get vehicle is ready to analysis (รอส่งวิเคราะห์)
         private DisplayVehichleReady(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 1);
         }
 
         //Get vehicle analysis comepleted (วิเคราะห์แล้ว)
         private DisplayVehichleCompleted(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 2);
         }
         
@@ -67,18 +59,7 @@
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
         }
-
-        //Login successed
-        public Logined() {
-            //Delay 1 sec to hide modal
-
-
-            //TODO: user ionic get email
-            //this.user.IsLogin = true;
-            console.log('Login succeed.');
-            this.$timeout(() => { this.modal.hide(); }, 1000);
-        }
-
+        
         //Notify all vehicle on list
         private NotifyAllVehicle() {
             if (this.data == null) return;

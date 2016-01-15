@@ -54,6 +54,9 @@
 
 //.controller('PlaylistCtrl', function($scope, $stateParams) {
 //});
+
+declare var Ionic;
+
 module starter.controllers {
 
     //export class LoginController {
@@ -70,49 +73,115 @@ module starter.controllers {
 
     export class AppCtrl {
 
-        private modal: any;
-        private loginData = {};
+        private modalLogin: any;
+        private modalRegister: any;
+        //private loginData = {};
+        private user: any;
+        private email: any;
+        private password: any;
 
-        static $inject = ["$scope", "$ionicModal", "$timeout", '$state' ,'app.shared.UserService'];
-        constructor($scope, $ionicModal, private $timeout, private $state, private user: app.shared.UserService) {
+        static $inject = ["$scope", "$ionicModal", "$timeout", '$state'];
+        constructor($scope, $ionicModal, private $timeout, private $state) {
+
+            Ionic.io();
+            this.user = Ionic.User.current();
+
+            //Prepare login modal
+            $ionicModal.fromTemplateUrl('templates/login.html', {
+                backdropClickToClose: false,
+                scope: $scope
+            }).then((modal) => {
+                this.modalLogin = modal;
+                if (!this.user.id) this.modalLogin.show();
+            });
+
+            //Prepare register modal
             $ionicModal.fromTemplateUrl('templates/register.html', {
                 backdropClickToClose: false,
                 scope: $scope
             }).then((modal) => {
-                this.modal = modal;
-                $scope.modal = modal;
-                $scope.msg = "Hello, from menu!";
+                this.modalRegister = modal;
             });
         }
-
-        public login() {
-            this.modal.show();
+        
+        //Call register modal
+        private register() {
+            this.clear();
+            this.modalRegister.show();
         }
 
-        public closeLogin() {
-            this.modal.hide();
+        //Do register
+        private submitToRegister() {
+            this.user.id = this.email;
+            this.modalRegister.hide();
+            this.modalLogin.hide();
+            this.$state.go('app.vehicles', {}, { reload: true });
         }
 
-        public doLogin() {
-            console.log('Doing login', this.loginData);
-
-            // Simulate a login delay. Remove this and replace with your login
-            // code if using a login system
-            this.$timeout(() => {
-                this.closeLogin();
-            }, 1000);
+        //Cancel to register
+        private cancelToRegister() {
+            this.clear();
+            this.modalRegister.hide();
+        }
+        
+        //Do login
+        private login() {
+            this.user.id = this.email;
+            this.modalLogin.hide();
+            this.$state.go('app.vehicles', {}, { reload: true });
         }
 
-        private Logout() {
-            this.user.IsLogin = false;
+        //Logout from system
+        private logout() {
+            this.user = Ionic.User.current({});
+            //this.user = Ionic.User.current();
+
+            //alert('Before save: ' + this.user);
+            this.user.save();
+            //alert('After save: ' + this.user);
             console.log('Log out succeed.');
             this.$state.go('app.vehicles', {}, { reload: true });
         }
 
+        //Clear email and password input
+        private clear() {
+            this.email = '';
+            this.password = '';
+        }
+        
+        //public login() {
+        //    this.modal.show();
+        //}
+
+        //public closeLogin() {
+        //    this.modal.hide();
+        //}
+
+        //public doLogin() {
+        //    console.log('Doing login', this.loginData);
+
+        //    // Simulate a login delay. Remove this and replace with your login
+        //    // code if using a login system
+        //    this.$timeout(() => {
+        //        this.closeLogin();
+        //    }, 1000);
+        //}
+
+        
+        
+        //Login successed
+        //public Logined() {
+        //    //Delay 1 sec to hide modal
+            
+        //    //TODO: user ionic get email
+        //    //this.user.IsLogin = true;
+        //    console.log('Login succeed.');
+        //    this.$timeout(() => { this.modalLogin.hide(); }, 1000);
+        //}
     }
 
     angular
-        .module('starter.controllers',[])
+        .module('starter.controllers', [])
         .controller('AppCtrl', AppCtrl);
-        //.controller('LoginController', LoginController);
+    //.controller('LoginController', LoginController);
 }

@@ -1,17 +1,19 @@
 <ion-modal-view>
     <ion-header-bar>
         <h1 class="title">Login</h1>
-        <!--<div class="buttons">
-            <button class="button button-clear" ng-click="closeLogin()">Close</button>
-        </div>-->
     </ion-header-bar>
     <ion-content>
         <img class="col col-50 col-offset-25" src="img/Logodltmas.png" />
-        <form ng-submit="cx.Logined()">
+        <form ng-submit="cx.login()">
             <div class="padding">
+                <label class="item item-input">
+                    <input type="email" placeholder="Email" ng-model="cx.email" required>
+                    <input type="password" placeholder="Password" ng-model="cx.password" required>
+                </label>
+                <button class="button button-block button-positive" type="submit">Login</button>
                 <button class="button button-block button-positive" type="submit">Log in with facebook</button>
                 <button class="button button-block button-assertive" type="submit">Log in with google</button>
-                <button class="button button-block">Register</button>
+                <button class="button button-block" ng-click="cx.register()">Register</button>
             </div>
         </form>
         <div class="row">

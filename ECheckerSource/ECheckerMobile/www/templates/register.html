@@ -1,29 +1,16 @@
 ﻿<ion-modal-view>
     <ion-header-bar>
         <h1 class="title">Register</h1>
-        <!--<div class="buttons">
-            <button class="button button-clear" ng-click="closeLogin()">Close</button>
-        </div>-->
     </ion-header-bar>
     <ion-content>
-        <!--<img class="col col-50 col-offset-25" src="img/Logodltmas.png" />-->
-
-        <form ng-submit="cx.doLogin()">
+        <form ng-submit="cx.submitToRegister()">
             <div class="padding">
                 <label class="item item-input">
-                    <input type="email" placeholder="Email">
+                    <input type="email" placeholder="Email" ng-model="cx.email" required>
                 </label>
                 <button class="button button-block button-positive" type="submit">Register</button>
-                <button class="button button-block button-assertive" type="submit">Cancle</button>
+                <button class="button button-block button-assertive" type="submit" ng-click="cx.cancelToRegister()">Cancle</button>
             </div>
         </form>
-        <!--<div class="row">
-            <div class="col">
-                <img class="col" src="img/logo2.png" />
-            </div>
-            <div class="col">
-                <img class="col" src="img/IDDriver.png" />
-            </div>
-        </div>-->
     </ion-content>
 </ion-modal-view>
