@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl as cx'
+                controller: 'AppCtrl as cx',
             })
 
             .state('app.vehicles', {
@@ -99,7 +99,6 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     }
                 }
             })
-
             .state('app.vehicle.amisseddetail', {
                 url: '/amissed',
                 views: {
@@ -154,7 +153,22 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     }
                 }
             })
-
+            .state('app.playlists', {
+                url: '/playlists',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/playlists.html',
+                    }
+                }
+            })
+            .state('app.single', {
+                url: '/playlist',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/playlist.html',
+                    }
+                }
+            })
             .state('app.editvehicle', {
                 url: '/editvehicle',
                 views: {

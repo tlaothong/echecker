@@ -75,7 +75,7 @@ module starter.controllers {
 
         static $inject = ["$scope", "$ionicModal", "$timeout", '$state' ,'app.shared.UserService'];
         constructor($scope, $ionicModal, private $timeout, private $state, private user: app.shared.UserService) {
-            $ionicModal.fromTemplateUrl('templates/login.html', {
+            $ionicModal.fromTemplateUrl('templates/register.html', {
                 backdropClickToClose: false,
                 scope: $scope
             }).then((modal) => {
