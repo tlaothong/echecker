@@ -255,6 +255,67 @@ namespace ApiApp.Controllers
             //repoVehicle.UpdateLastChecked(xx.VehicleId, now);
         }
 
+        /// <summary>
+        /// upload photo and Return Photo URL
+        /// </summary>
+        /// <param name="id">รหัสรถ</param>
+        /// <param name="topicid"> รหัส Topic</param>
+        /// <returns></returns>
+        //[HttpPost]
+        //[Route("{id}/{topicid}/photo")]
+        //public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
+        [HttpPost]
+        [Route("photo")]
+        public async System.Threading.Tasks.Task<string> PostPhoto()
+        {
+            // Check if the request contains multipart/form-data.
+            //if (!Request.Content.IsMimeMultipartContent())
+            //{
+            //    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            //}
+
+            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
+            var provider = new MultipartFormDataStreamProvider(root);
+
+            try
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder(); // Holds the response body
+
+                // Read the form data and return an async task.
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                // This illustrates how to get the form data.
+                foreach (var key in provider.FormData.AllKeys)
+                {
+                    foreach (var val in provider.FormData.GetValues(key))
+                    {
+                        sb.Append(string.Format("{0}: {1}\n", key, val));
+                    }
+                }
+
+                var fileURL = string.Empty;
+                // This illustrates how to get the file names for uploaded files.
+                foreach (var file in provider.FileData)
+                {
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
+                    sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
+
+                    fileURL = fileInfo.Name;
+                }
+
+                //var fileURL = string.Empty;
+                return fileURL;
+                //return new HttpResponseMessage()
+                //{
+                //    Content = new StringContent(sb.ToString())
+                //};
+            }
+            catch (System.Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e).ToString();
+            }
+        }
+
 
         /// <summary>
         /// update checked
