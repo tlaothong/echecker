@@ -266,10 +266,10 @@ namespace ApiApp.Controllers
         public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
         {
             // Check if the request contains multipart/form-data.
-            //if (!Request.Content.IsMimeMultipartContent())
-            //{
-            //    throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            //}
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
 
             string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
@@ -297,7 +297,7 @@ namespace ApiApp.Controllers
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
                     sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
 
-                    fileURL = fileInfo.Name;
+                    fileURL = fileInfo.Name;                    
                 }
 
                 //var fileURL = string.Empty;
