@@ -127,20 +127,24 @@ module starter.controllers {
         //Do login
         private login() {
             this.user.id = this.email;
-            this.modalLogin.hide();
-            this.$state.go('app.vehicles', {}, { reload: true });
+            this.user.save().then(() => {
+                this.modalLogin.hide();
+                this.$state.go('app.vehicles', {}, { reload: true });
+            });
         }
 
         //Logout from system
         private logout() {
-            this.user = Ionic.User.current({});
+            //this.user = Ionic.User.current({});
             //this.user = Ionic.User.current();
 
-            //alert('Before save: ' + this.user);
-            this.user.save();
-            //alert('After save: ' + this.user);
-            console.log('Log out succeed.');
-            this.$state.go('app.vehicles', {}, { reload: true });
+            alert('Before save: ' + this.user.isValid());
+            this.user.delete().then(() => {
+                this.user = Ionic.User.current();
+                alert('After save: ' + this.user);
+                console.log('Log out succeed.');
+                this.$state.go('app.vehicles', {}, { reload: true });
+            });
         }
 
         //Clear email and password input
