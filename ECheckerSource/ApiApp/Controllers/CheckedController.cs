@@ -299,13 +299,13 @@ namespace ApiApp.Controllers
 
                     fileURL = ("~/CheckedImg/Img/" + Guid.NewGuid() + ".jpg");
 
-                    fileInfo.MoveTo(fileURL);
+                    //fileInfo.MoveTo(fileURL);
 
-                    fileURL = fileInfo.Name;                    
+                    //fileURL = fileInfo.Name;                    
                 }
 
                 //var fileURL = string.Empty;
-                return fileURL;
+                return root +" xxxxx "+ fileURL;
                 //return new HttpResponseMessage()
                 //{
                 //    Content = new StringContent(sb.ToString())
