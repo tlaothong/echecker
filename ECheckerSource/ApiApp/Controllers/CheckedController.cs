@@ -261,12 +261,9 @@ namespace ApiApp.Controllers
         /// <param name="id">รหัสรถ</param>
         /// <param name="topicid"> รหัส Topic</param>
         /// <returns></returns>
-        //[HttpPost]
-        //[Route("{id}/{topicid}/photo")]
-        //public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
         [HttpPost]
-        [Route("photo")]
-        public async System.Threading.Tasks.Task<string> PostPhoto()
+        [Route("{id}/{topicid}/photo")]
+        public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
         {
             // Check if the request contains multipart/form-data.
             //if (!Request.Content.IsMimeMultipartContent())
