@@ -122,11 +122,17 @@
             private vehicle: app.shared.VehicleService,
             private topics: app.shared.FormService,
             private checkeds: app.shared.CheckedsService,
-            private svc: app.checking.FormsService) {
+            private svc: app.checking.FormsService,
+            private howtourl: string) {
 
             var intialIndex = 0;
             this.Detail = topics.TopicInfos.filter(it=> it.id == data.id)[intialIndex].Detail;
             this.AmissIsPass = data.IsPass;
+            this.howtourl = topics.TopicInfos.filter(it=> it.id == data.id)[intialIndex].How2Url;
+        }
+
+        public OpenHowTo(): void {
+            window.open(this.howtourl, 'vContent', 'location=yes');
         }
 
         private IsDisableToSubmit(): boolean {
@@ -168,9 +174,22 @@
         }
     }
 
+    class HowToController {
+
+        private elm: HTMLDivElement;
+
+        static $inject = ['url', '$http'];
+        constructor(public url, private $http: ng.IHttpService) {
+            this.elm = <HTMLDivElement>document.getElementById("how2content");
+            this.$http.get(url).then(h => { this.elm.innerHTML = <string>h.data; });
+        }
+
+    }
+
     angular
         .module('app.checking')
         .controller('app.checking.TopicsController', TopicsController)
         .controller('app.checking.CheckedController', CheckedController)
-        .controller('app.checking.CheckAmissController', CheckAmissController);
+        .controller('app.checking.CheckAmissController', CheckAmissController)
+        .controller('app.checking.HowToController', HowToController);
 }

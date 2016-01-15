@@ -153,11 +153,18 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     }
                 }
             })
-            .state('app.playlists', {
-                url: '/playlists',
+            .state('app.vehicle.howto', {
+                url: '/howto/:url',
                 views: {
-                    'menuContent': {
-                        templateUrl: 'templates/playlists.html',
+                    'vContent': {
+                        templateUrl: 'templates/howto.html',
+                        controller: 'app.checking.HowToController as cx',
+                        resolve: {
+                            "url": ['$stateParams', (p) => {
+                                return p.url;
+                            }]
+                        }
+                        //templateUrl: 'https://examdeploy.blob.core.windows.net/echecker/browse2.html',
                     }
                 }
             })
