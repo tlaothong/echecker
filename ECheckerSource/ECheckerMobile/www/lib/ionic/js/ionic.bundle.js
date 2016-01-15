@@ -61487,7 +61487,7 @@ IonicModule
           $ionicHistory.nextViewOptions({
             historyRoot: true,
             disableAnimate: true,
-            expire: 300
+            expire: 2000
           });
           // if no transition in 300ms, reset nextViewOptions
           // the expire should take care of it, but will be cancelled in some
