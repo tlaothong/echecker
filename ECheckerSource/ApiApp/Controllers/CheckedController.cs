@@ -271,8 +271,10 @@ namespace ApiApp.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
+            string root = System.Web.HttpContext.Current.Server.MapPath("~/CheckedImg");
             var provider = new MultipartFormDataStreamProvider(root);
+
+            
 
             try
             {
