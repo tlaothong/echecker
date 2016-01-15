@@ -299,15 +299,15 @@ namespace ApiApp.Controllers
                     System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.LocalFileName);
                     sb.Append(string.Format("Uploaded file: {0} ({1} bytes)\n", fileInfo.Name, fileInfo.Length));
 
-                    var fileName = new StringBuilder().Append("/CheckedImg/Img/").Append(Guid.NewGuid().ToString()).Append(".jpg").ToString();
+                    var fileName = Guid.NewGuid().ToString() + ".jpg" ;
 
-                    localfileURL = System.Web.HttpContext.Current.Server.MapPath("~" + fileName);
+                    localfileURL = System.Web.HttpContext.Current.Server.MapPath("~/CheckedImg/Img/"+ fileName);
 
 
                     fileInfo.MoveTo(localfileURL);
 
                     //Fix URL
-                    serverfileURL = new StringBuilder().Append("http://echecker-vanlek.azurewebsites.net").Append(fileName).ToString();
+                    serverfileURL = new StringBuilder().Append("http://echecker-vanlek.azurewebsites.net").Append("/CheckedImg/Img/").Append(fileName).ToString();
                 }
 
 
