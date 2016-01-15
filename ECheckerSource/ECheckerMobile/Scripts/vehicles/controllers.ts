@@ -1,8 +1,10 @@
 ﻿module app.vehicles {
     'use strict';
 
-    class VehicleListController {
+    declare var Ionic;
 
+    class VehicleListController {
+    
         private modal: any;
 
         static $inject = [
@@ -19,15 +21,10 @@
             private $ionicModal,
             private $timeout,
             private data: VehicleInformation[],
-            private vehicle: app.shared.VehicleService,
-            private user: app.shared.UserService) {
+            private vehicle: app.shared.VehicleService) {
 
-            var IsDataEmpty = data.length < 1;
-            if (IsDataEmpty) {
-                console.log('User is not has any vehicle.');
-                console.log('Go to manage vehicle page for add vehicle.');
-                $state.go('app.manvehicles')
-            }
+            Ionic.io();
+            var user = Ionic.User.current();
 
             $ionicModal.fromTemplateUrl('templates/login.html', {
                 backdropClickToClose: false,
@@ -35,10 +32,20 @@
             }).then((modal) => {
                 this.modal = modal;
                 $scope.modal = modal;
-                
-                if (!user.IsLogin) this.modal.show();
-                });
-            if (user.IsLogin) this.NotifyAllVehicle();
+
+                if (!user.id) this.modal.show();
+            });
+
+            if (user.id) {
+                var minimumDataLength = 1;
+                var IsDataEmpty = data.length < minimumDataLength;
+                if (IsDataEmpty) {
+                    console.log('User is not has any vehicle.');
+                    console.log('Go to manage vehicle page for add vehicle.');
+                    $state.go('app.manvehicles')
+                }
+                else this.NotifyAllVehicle();
+            }
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
@@ -64,7 +71,10 @@
         //Login successed
         public Logined() {
             //Delay 1 sec to hide modal
-            this.user.IsLogin = true;
+
+
+            //TODO: user ionic get email
+            //this.user.IsLogin = true;
             console.log('Login succeed.');
             this.$timeout(() => { this.modal.hide(); }, 1000);
         }
