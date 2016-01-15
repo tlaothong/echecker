@@ -109,6 +109,7 @@
         static $inject = [
             '$state',
             '$cordovaCamera',
+            '$cordovaFileTransfer',
             'data',
             'app.shared.VehicleService',
             'app.shared.FormService',
@@ -118,6 +119,7 @@
         constructor(
             private $state: any,
             private $cordovaCamera, 
+            private $cordovaFileTransfer, 
             private data: CheckTopicInformation,
             private vehicle: app.shared.VehicleService,
             private topics: app.shared.FormService,
@@ -141,27 +143,26 @@
             this.$state.go('app.vehicle.checklists');
         }
 
-        private Capture(): void {
+        private Capture(): void {   
 
-            var options = {
-                quality: 50,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                allowEdit: true,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 100,
-                targetHeight: 100,
-                saveToPhotoAlbum: false,
-                correctOrientation: true
+            var options = {             
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,     
             };
 
             this.$cordovaCamera.getPicture(options).then(function (imageData) {
-                alert('Can capture.');
-
-
+                alert('Can capture.');     
+                
+                alert(imageData);    
+   
               
                 //var image = <HTMLImageElement>document.getElementById('myImage');
                 //image.src = "data:image/jpeg;base64," + imageData;
+
+                //alert(image);      
+                //alert(image.src);      
+
+               
 
                 //upload to blob
 
@@ -175,8 +176,19 @@
 
             }, function (err) {
                 alert('Capture failed.');
+                alert(err);
                 // error
                 });
+
+            //this.$cordovaFileTransfer.upload(server, filePath, options)
+            //    .then(function (result) {
+            //        // Success!
+            //    }, function (err) {
+            //        // Error
+            //    }, function (progress) {
+            //        // constant progress updates
+            //    });
+        
 
         }
     }
