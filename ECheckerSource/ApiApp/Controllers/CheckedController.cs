@@ -264,7 +264,7 @@ namespace ApiApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("{id}/{topicid}/photo")]
-        public async System.Threading.Tasks.Task<object> PostPhoto(string id, string topicid)
+        public async System.Threading.Tasks.Task<string> PostPhoto(string id, string topicid)
         {
             // Check if the request contains multipart/form-data.
             if (!Request.Content.IsMimeMultipartContent())
@@ -291,7 +291,8 @@ namespace ApiApp.Controllers
                     }
                 }
 
-                var fileURL = string.Empty;
+                var localfileURL = string.Empty;
+                var serverfileURL = string.Empty;
                 // This illustrates how to get the file names for uploaded files.
                 foreach (var file in provider.FileData)
                 {
@@ -300,16 +301,17 @@ namespace ApiApp.Controllers
 
                     var fileName = new StringBuilder().Append("/CheckedImg/Img/").Append(Guid.NewGuid().ToString()).Append(".jpg").ToString();
 
-                    fileURL = System.Web.HttpContext.Current.Server.MapPath("~" + fileName);
+                    localfileURL = System.Web.HttpContext.Current.Server.MapPath("~" + fileName);
 
-                    fileInfo.MoveTo(fileURL);
+
+                    fileInfo.MoveTo(localfileURL);
 
                     //Fix URL
-                    fileURL = new StringBuilder().Append("http://echecker-vanlek.azurewebsites.net").Append(fileName).ToString();
+                    serverfileURL = new StringBuilder().Append("http://echecker-vanlek.azurewebsites.net").Append(fileName).ToString();
                 }
 
 
-                return new { PhotoURL = fileURL };
+                return serverfileURL;
                 //return new HttpResponseMessage()
                 //{
                 //    Content = new StringContent(sb.ToString())
