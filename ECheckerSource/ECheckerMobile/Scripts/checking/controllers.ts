@@ -117,7 +117,7 @@
         ];
         constructor(
             private $state: any,
-            private $cordovaCamera,
+            private $cordovaCamera, 
             private data: CheckTopicInformation,
             private vehicle: app.shared.VehicleService,
             private topics: app.shared.FormService,
@@ -156,14 +156,27 @@
             };
 
             this.$cordovaCamera.getPicture(options).then(function (imageData) {
-
                 alert('Can capture.');
+
+
+              
                 //var image = <HTMLImageElement>document.getElementById('myImage');
                 //image.src = "data:image/jpeg;base64," + imageData;
+
+                //upload to blob
+
+
+                //get url
+                //var photoUrl = .....
+
+                //add urlto service
+                //this.data.PhotoURL = photoUrl
+
+
             }, function (err) {
                 alert('Capture failed.');
                 // error
-            });
+                });
 
         }
     }
