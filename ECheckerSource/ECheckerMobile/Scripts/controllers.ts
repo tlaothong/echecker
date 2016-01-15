@@ -73,8 +73,8 @@ module starter.controllers {
         private modal: any;
         private loginData = {};
 
-        static $inject = ["$scope", "$ionicModal", "$timeout"];
-        constructor($scope, $ionicModal, private $timeout) {
+        static $inject = ["$scope", "$ionicModal", "$timeout", '$state' ,'app.shared.UserService'];
+        constructor($scope, $ionicModal, private $timeout, private $state, private user: app.shared.UserService) {
             $ionicModal.fromTemplateUrl('templates/login.html', {
                 backdropClickToClose: false,
                 scope: $scope
@@ -101,6 +101,12 @@ module starter.controllers {
             this.$timeout(() => {
                 this.closeLogin();
             }, 1000);
+        }
+
+        private Logout() {
+            this.user.IsLogin = false;
+            console.log('Log out succeed.');
+            this.$state.go('app.vehicles', {}, { reload: true });
         }
 
     }

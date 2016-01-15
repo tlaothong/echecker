@@ -3,15 +3,42 @@
 
     class VehicleListController {
 
-        static $inject = ['$state', 'data', 'app.shared.VehicleService']
-        constructor(private $state, private data: VehicleInformation[], private vehicle: app.shared.VehicleService) {
-        
+        private modal: any;
+
+        static $inject = [
+            '$state',
+            '$scope',
+            '$ionicModal',
+            '$timeout',
+            'data',
+            'app.shared.VehicleService',
+            'app.shared.UserService']
+        constructor(
+            private $state,
+            private $scope,
+            private $ionicModal,
+            private $timeout,
+            private data: VehicleInformation[],
+            private vehicle: app.shared.VehicleService,
+            private user: app.shared.UserService) {
+
             var IsDataEmpty = data.length < 1;
             if (IsDataEmpty) {
                 console.log('User is not has any vehicle.');
                 console.log('Go to manage vehicle page for add vehicle.');
                 $state.go('app.manvehicles')
             }
+
+            $ionicModal.fromTemplateUrl('templates/login.html', {
+                backdropClickToClose: false,
+                scope: $scope
+            }).then((modal) => {
+                this.modal = modal;
+                $scope.modal = modal;
+                
+                if (!user.IsLogin) this.modal.show();
+                });
+            if (user.IsLogin) this.NotifyAllVehicle();
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
@@ -34,6 +61,60 @@
             this.vehicle.VehicleSelected = vehicleSelected;
         }
 
+        //Login successed
+        public Logined() {
+            //Delay 1 sec to hide modal
+            this.user.IsLogin = true;
+            console.log('Login succeed.');
+            this.$timeout(() => { this.modal.hide(); }, 1000);
+        }
+
+        //Notify all vehicle on list
+        private NotifyAllVehicle() {
+            if (this.data == null) return;
+            this.data.filter(it=> (it.IsPBRActive && this.IsNotify(it.PBRDate)));
+
+            var alertData = this.data.filter(it=>
+                (it.IsPBRActive && this.IsNotify(it.PBRDate)) ||
+                (it.IsDrivingLicenseActive && this.IsNotify(it.DrivingLicenseDate)) ||
+                (it.IsCheckActive && this.IsNotify(it.CheckDate)) ||
+                (it.IsTaxActive && this.IsNotify(it.TaxDate)) ||
+                (it.IsPayActive && this.IsNotify(it.PayDate)));
+
+            var message: Array<string> = [];
+            for (var item of alertData) {
+                message.push('ทะเบียน ' + item.PlateNumber + '\n');
+                if (item.IsPBRActive) message.push('ครบกำหนดพรบ\n');
+                if (item.IsDrivingLicenseActive) message.push('ครบกำหนดใบขับขี่\n');
+                if (item.IsCheckActive) message.push('ครบกำหนดตรวจสภาพรถ\n');
+                if (item.IsTaxActive) message.push('ครบกำหนดต่อภาษี\n');
+                if (item.PayDate) message.push('ครบกำหนดผ่อนงวด\n');
+            }
+            alert(message.join(''));
+        }
+
+        //Get should notify result
+        private IsNotify(notiDate: any): boolean {
+            var limitDateToNotify = 3;
+
+            var dateLimit = new Date();
+            dateLimit.setDate(dateLimit.getDate() + limitDateToNotify);
+            dateLimit.setHours(0, 0, 0, 0);
+
+            var currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+
+            var IsStillRunningOnDate = dateLimit.toISOString().substr(0, 10) >= notiDate.substr(0, 10);
+            var IsDateInRange = currentDate.toISOString().substr(0, 10) <= notiDate.substr(0, 10);
+
+            var result = IsStillRunningOnDate && IsDateInRange;
+            //console.log(
+            //    'DateLimit: ' + dateLimit.toISOString() +
+            //    '\nNotiDate: ' + notiDate +
+            //    '\nCurrentDate: ' + currentDate.toISOString() +
+            //    '\nResult: ' + result);
+            return result;
+        }
     }
 
     class VehicleAddController {
@@ -63,7 +144,7 @@
             this.$state.go('app.manvehicles');
         }
     }
-    
+
     class ManageVehicleController {
 
         static $inject = ['data', 'app.shared.VehicleService'];
