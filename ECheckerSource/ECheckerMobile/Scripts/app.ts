@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/sidemenu.html',
-                controller: 'AppCtrl as cx'
+                controller: 'AppCtrl as cx',
             })
 
             .state('app.vehicles', {
@@ -99,7 +99,6 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     }
                 }
             })
-
             .state('app.vehicle.amisseddetail', {
                 url: '/amissed',
                 views: {
@@ -154,7 +153,29 @@ angular.module('starter', ['ionic', 'ngCordova' , 'starter.controllers', 'app', 
                     }
                 }
             })
-
+            .state('app.vehicle.howto', {
+                url: '/howto/:url',
+                views: {
+                    'vContent': {
+                        templateUrl: 'templates/howto.html',
+                        controller: 'app.checking.HowToController as cx',
+                        resolve: {
+                            "url": ['$stateParams', (p) => {
+                                return p.url;
+                            }]
+                        }
+                        //templateUrl: 'https://examdeploy.blob.core.windows.net/echecker/browse2.html',
+                    }
+                }
+            })
+            .state('app.single', {
+                url: '/playlist',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/playlist.html',
+                    }
+                }
+            })
             .state('app.editvehicle', {
                 url: '/editvehicle',
                 views: {

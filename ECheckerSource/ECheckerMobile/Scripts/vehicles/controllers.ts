@@ -4,6 +4,7 @@
     class VehicleListController {
 
         private modal: any;
+        private user: any;
 
         static $inject = [
             '$state',
@@ -11,8 +12,7 @@
             '$ionicModal',
             '$timeout',
             'data',
-            'app.shared.VehicleService',
-            'app.shared.UserService']
+            'app.shared.VehicleService']
         constructor(
             private $state,
             private $scope,
@@ -20,39 +20,38 @@
             private $timeout,
             private data: VehicleInformation[],
             private vehicle: app.shared.VehicleService,
-            private user: app.shared.UserService) {
+            private svc: app.vehicles.VehiclesService) {
 
-            var IsDataEmpty = data.length < 1;
-            if (IsDataEmpty) {
-                console.log('User is not has any vehicle.');
-                console.log('Go to manage vehicle page for add vehicle.');
-                $state.go('app.manvehicles')
+            Ionic.io();
+            this.user = Ionic.User.current();
+
+            if (this.user.id) {
+                var minimumDataLength = 1;
+                var IsDataEmpty = data.length < minimumDataLength;
+                if (IsDataEmpty) {
+                    console.log('User is not has any vehicle.');
+                    console.log('Go to manage vehicle page for add vehicle.');
+                    $state.go('app.manvehicles')
+                }
+                else this.NotifyAllVehicle();
             }
-
-            $ionicModal.fromTemplateUrl('templates/login.html', {
-                backdropClickToClose: false,
-                scope: $scope
-            }).then((modal) => {
-                this.modal = modal;
-                $scope.modal = modal;
-                
-                if (!user.IsLogin) this.modal.show();
-                });
-            if (user.IsLogin) this.NotifyAllVehicle();
         }
         
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
         private DisplayVehichleNotReady(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 0);
         }
 
         //Get vehicle is ready to analysis (รอส่งวิเคราะห์)
         private DisplayVehichleReady(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 1);
         }
 
         //Get vehicle analysis comepleted (วิเคราะห์แล้ว)
         private DisplayVehichleCompleted(): VehicleInformation[] {
+            if (this.data == null) return null;
             return this.data.filter(it=> it.StatusCode == 2);
         }
         
@@ -60,15 +59,7 @@
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
         }
-
-        //Login successed
-        public Logined() {
-            //Delay 1 sec to hide modal
-            this.user.IsLogin = true;
-            console.log('Login succeed.');
-            this.$timeout(() => { this.modal.hide(); }, 1000);
-        }
-
+        
         //Notify all vehicle on list
         private NotifyAllVehicle() {
             if (this.data == null) return;

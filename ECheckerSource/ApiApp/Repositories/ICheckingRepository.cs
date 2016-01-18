@@ -81,6 +81,6 @@ namespace ApiApp.Repositories
         /// </summary>
         /// <param name="vehicleId"></param>
         /// <param name="latestCheckedDate"></param>
-        Checked CheckedDone(string vehicleId, DateTime latestCheckedDate);        
+        /*Checked*/void CheckedDone(string vehicleId, DateTime latestCheckedDate);        
     }
 }

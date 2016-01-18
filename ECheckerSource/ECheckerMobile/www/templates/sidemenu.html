@@ -1,16 +1,15 @@
-﻿<ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
-    <ion-nav-bar align-title="center" class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+﻿<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar align-title="center" class="bar-positive">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
 
-      <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-gear-a" menu-toggle="right">
-        </button>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-  </ion-side-menu-content>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon button-clear ion-gear-a" menu-toggle="right"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view loaded="cx.login()" name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
 
   <ion-side-menu side="right">
     <ion-header-bar align-title="center" class="bar-positive">
@@ -18,26 +17,27 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item class="item item-calm item-icon-right" menu-close href="#/app/vehicles">
+        <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.vehicles">
             <h2>
                 ตรวจรถ
                 <i class="icon ion-clipboard"></i>
             </h2>
         </ion-item>
-        <ion-item class="item item-calm item-icon-right" menu-close href="#/app/manvehicles">
+        <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.manvehicles">
             <h2>
                 จัดการรถ
                 <i class="icon ion-model-s"></i>
             </h2>
         </ion-item>
-        <ion-item class="item item-calm item-icon-right" menu-close ng-click="cx.Logout()">
+        <ion-item class="item item-calm item-icon-right" menu-close ng-click="cx.logout()">
             <h2>
                 ออกจากระบบ
                 <i class="icon ion-power"></i>
             </h2>
         </ion-item>
-       
+         
       </ion-list>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
+

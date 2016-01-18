@@ -9,7 +9,8 @@
         </label>
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-dark row row-no-padding">
-        <button class="button col col-33">วิธีการตวจ</button>
+        <button class="button col col-33" ui-sref="app.vehicle.howto({ url: cx.howtourl })">วิธีการตวจ</button>
+        <!--<button class="button col col-33" ng-click="cx.OpenHowTo()">วิธีการตวจ</button>-->
         <button class="button col col-33" ng-click="cx.Capture()">ถ่ายภาพ</button>
         <button class="button col col-33" ng-disabled="cx.IsDisableToSubmit()" ng-click="cx.Submit()">บันทึก</button>
     </ion-footer-bar>
