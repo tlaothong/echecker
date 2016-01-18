@@ -116,11 +116,7 @@ module starter.controllers {
         //Do register
         private submitToRegister() {
             this.user.id = this.email;
-            this.user.save().then(() => {
-                this.modalRegister.hide();
-                this.modalLogin.hide();
-                this.$state.go('app.vehicles', {}, { reload: true });
-            });
+            this.user.save().then(() => { this.navigateToIndex(); });
         }
 
         //Cancel to register
@@ -132,19 +128,17 @@ module starter.controllers {
         //Do login
         private login() {
             this.user.id = this.email;
-            this.user.save().then(() => {
-                this.modalLogin.hide();
-                this.$state.go('app.vehicles', {}, { reload: true });
-            });
+            this.user.save().then(() => { this.navigateToIndex(); });
         }
 
         //Logout from system
         private logout() {
-            alert('Before save: ' + this.user.isValid());
+            //alert('Before save: ' + this.user.isValid());
             this.user.delete().then(() => {
-                this.user = Ionic.User.current();
-                alert('After save: ' + this.user);
+                this.user = Ionic.User.current(new Ionic.User());
+                //alert('After save: ' + this.user);
                 console.log('Log out succeed.');
+                this.modalLogin.show()
                 this.$state.go('app.vehicles', {}, { reload: true });
             });
         }
@@ -153,6 +147,14 @@ module starter.controllers {
         private clear() {
             this.email = '';
             this.password = '';
+        }
+
+        //Navigate to index and clean eveything
+        private navigateToIndex() {
+            this.clear();
+            this.modalRegister.hide();
+            this.modalLogin.hide();
+            this.$state.go('app.vehicles', {}, { reload: true });
         }
         
         //public login() {

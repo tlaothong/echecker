@@ -28,6 +28,7 @@
                     var minimumDataLength = 1;
                     var IsDataEmpty = it.length < minimumDataLength;
                     if (IsDataEmpty) {
+                        alert('คุณยังไม่มีรถอยู่ในระบบ กรุณาเพิ่มรถลงในระบบก่อนใช้งาน');
                         console.log('User is not has any vehicle.');
                         console.log('Go to manage vehicle page for add vehicle.');
                         $state.go('app.manvehicles')
@@ -78,11 +79,12 @@
             var notifyMessage: Array<string> = [];
             for (var item of alertData) {
                 notifyMessage.push('ทะเบียน ' + item.PlateNumber + '\n');
-                if (item.IsPBRActive) notifyMessage.push('ครบกำหนดพรบ\n');
-                if (item.IsDrivingLicenseActive) notifyMessage.push('ครบกำหนดใบขับขี่\n');
-                if (item.IsCheckActive) notifyMessage.push('ครบกำหนดตรวจสภาพรถ\n');
-                if (item.IsTaxActive) notifyMessage.push('ครบกำหนดต่อภาษี\n');
-                if (item.IsPayActive) notifyMessage.push('ครบกำหนดผ่อนงวด\n');
+                if (item.IsPBRActive) notifyMessage.push('> ครบกำหนดพรบ\n');
+                if (item.IsDrivingLicenseActive) notifyMessage.push('> ครบกำหนดใบขับขี่\n');
+                if (item.IsCheckActive) notifyMessage.push('> ครบกำหนดตรวจสภาพรถ\n');
+                if (item.IsTaxActive) notifyMessage.push('> ครบกำหนดต่อภาษี\n');
+                if (item.IsPayActive) notifyMessage.push('> ครบกำหนดผ่อนงวด\n');
+                notifyMessage.push('\n');
             }
 
             var minimumLetter = 1;
