@@ -118,8 +118,8 @@
         ];
         constructor(
             private $state: any,
-            private $cordovaCamera, 
-            private $cordovaFileTransfer, 
+            private $cordovaCamera,
+            private $cordovaFileTransfer,
             private data: CheckTopicInformation,
             private vehicle: app.shared.VehicleService,
             private topics: app.shared.FormService,
@@ -143,18 +143,27 @@
             this.$state.go('app.vehicle.checklists');
         }
 
-        private Capture(): void {   
+        private Capture(): void {
 
-            var options = {             
+            var options = {
                 destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA,     
+                sourceType: Camera.PictureSourceType.CAMERA,
             };
 
+            var intialIndex = 0;
+            var topic = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == this.data.id)[intialIndex]
+            alert('topic: '+topic);
+            var apiUrl = 'http://echecker-vanlek.azurewebsites.net/api/checked/' + this.vehicle.VehicleSelected.id + '/' + topic.id + '/photo';
+            alert('apiUrl:' +apiUrl);
+
+
+
+            var photoUrl = '';
             this.$cordovaCamera.getPicture(options).then(function (imageData) {
-                alert('Can capture.');     
-                
-                alert(imageData);    
-   
+                alert('Can capture.');
+
+                alert('imageData:   '+imageData);
+                photoUrl = imageData;
               
                 //var image = <HTMLImageElement>document.getElementById('myImage');
                 //image.src = "data:image/jpeg;base64," + imageData;
@@ -176,19 +185,26 @@
 
             }, function (err) {
                 alert('Capture failed.');
-                alert(err);
+                alert('err' +err);
                 // error
+            });
+
+          
+
+            this.$cordovaFileTransfer.upload(apiUrl, photoUrl, options)
+                .then(function (result) {
+
+                    alert('Result: ' + result);
+                    this.data.PhotoURL = result
+                    // Success!
+                }, function (err) {
+                    alert('err:  '+ err);
+                    // Error
+                }, function (progress) {
+                    alert('progress:  '+progress);
+                    // constant progress updates
                 });
 
-            //this.$cordovaFileTransfer.upload(server, filePath, options)
-            //    .then(function (result) {
-            //        // Success!
-            //    }, function (err) {
-            //        // Error
-            //    }, function (progress) {
-            //        // constant progress updates
-            //    });
-        
 
         }
     }
