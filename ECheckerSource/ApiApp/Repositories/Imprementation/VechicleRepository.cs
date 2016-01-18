@@ -26,7 +26,7 @@ namespace ApiApp.Repositories.Imprementation
         /// <param name="vehicle"></param>
         public void AddVehicle(Vehicle vehicle)
         {
-            if (vehicle == null)
+            if (vehicle != null)
             {
                 var now = DateTime.Now;
 
