@@ -6,24 +6,7 @@
     export class VehicleService {
         public VehicleSelected = new VehicleInformation();
     }
-
-    export class UserService {
-        public IsLogin: boolean;
-        public UserData = new UserInformation();
-        constructor() {
-            //Hack: Fixed email
-            this.UserData.Email = 'aa@aa.com';
-            this.IsLogin = true;
-            
-            Ionic.io();
-            var user = Ionic.User.current();
-
-            //this.IsLogin = user.id;
-            //if (this.IsLogin) this.UserData.Email = user.id;
-
-        }
-    }
-
+    
     export class FormService {
         public TopicInfos: TopicInformation[];
     }
@@ -38,7 +21,6 @@
     angular
         .module('app.shared')
         .service('app.shared.VehicleService', VehicleService)
-        .service('app.shared.UserService', UserService)
         .service('app.shared.FormService', FormService)
         .service('app.shared.AmissDetailService', AmissDetailService)
         .service('app.shared.CheckedsService', CheckedsService);

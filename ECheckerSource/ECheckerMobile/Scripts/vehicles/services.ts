@@ -1,5 +1,7 @@
 ﻿module app.vehicles {
     'use strict';
+
+    declare var Ionic;
     
     //Interface vehicles api
     interface IVehiclesResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {}
@@ -19,8 +21,8 @@
         private addNewVehicleSvc: IAddNewVehiclesResourceClass<any>;
         private vehicleSvc: IVehicleResourceClass<any>;
 
-        static $inject = ['appConfig', '$resource', 'app.shared.UserService'];
-        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private user: app.shared.UserService) {
+        static $inject = ['appConfig', '$resource'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService) {
 
             //Set service to get vehicles
             this.vehiclesSvc = <IVehiclesResourceClass<any>>$resource(appConfig.VehiclesUrl, { 'id': '@id' });
@@ -36,7 +38,9 @@
 
         //Get vehicles datas
         public GetVehicles(): ng.IPromise<any> {
-            var userId = this.user.UserData.Email;
+            Ionic.io();
+            var user = Ionic.User.current();
+            var userId = user.id;
             return this.vehiclesSvc.query({ id: userId }).$promise;
         }
         

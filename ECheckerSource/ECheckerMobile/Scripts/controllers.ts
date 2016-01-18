@@ -75,7 +75,6 @@ module starter.controllers {
 
         private modalLogin: any;
         private modalRegister: any;
-        //private loginData = {};
         private user: any;
         private email: any;
         private password: any;
@@ -88,7 +87,9 @@ module starter.controllers {
 
             //Prepare login modal
             $ionicModal.fromTemplateUrl('templates/login.html', {
+                focusFirstInput: true,
                 backdropClickToClose: false,
+                hardwareBackButtonClose: false,
                 scope: $scope
             }).then((modal) => {
                 this.modalLogin = modal;
@@ -97,7 +98,9 @@ module starter.controllers {
 
             //Prepare register modal
             $ionicModal.fromTemplateUrl('templates/register.html', {
+                focusFirstInput: true,
                 backdropClickToClose: false,
+                hardwareBackButtonClose: false,
                 scope: $scope
             }).then((modal) => {
                 this.modalRegister = modal;
@@ -113,9 +116,11 @@ module starter.controllers {
         //Do register
         private submitToRegister() {
             this.user.id = this.email;
-            this.modalRegister.hide();
-            this.modalLogin.hide();
-            this.$state.go('app.vehicles', {}, { reload: true });
+            this.user.save().then(() => {
+                this.modalRegister.hide();
+                this.modalLogin.hide();
+                this.$state.go('app.vehicles', {}, { reload: true });
+            });
         }
 
         //Cancel to register
@@ -135,9 +140,6 @@ module starter.controllers {
 
         //Logout from system
         private logout() {
-            //this.user = Ionic.User.current({});
-            //this.user = Ionic.User.current();
-
             alert('Before save: ' + this.user.isValid());
             this.user.delete().then(() => {
                 this.user = Ionic.User.current();
