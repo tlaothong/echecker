@@ -86,6 +86,34 @@ namespace ApiApp.Repositories.Imprementation
             return result != null ? result.FirstOrDefault() : null;
         }
 
+        /// <summary>
+        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by email
+        /// </summary>
+        /// <param name="vehiclesId"> list of vehecleId</param>
+        /// <returns></returns>
+        public IEnumerable<Checked> GetlastCheckedByEmail(List<string> vehiclesId)
+        {
+            var coltn = MongoUtil.GetCollection<Checked>(tableName);
+
+            //List<Checked> result = new List<Checked>();
+
+            //var xxx = coltn.Find(it => it.VehicleId.Equals(it.VehicleId, StringComparison.CurrentCultureIgnoreCase));
+
+            //result = coltn.Find(it => it.VehicleId.Contains(vehiclesId.Select(its => its).FirstOrDefault()));
+
+            var result = coltn.Find(x => vehiclesId.Contains(x.VehicleId)).ToList();
+
+            //foreach (var item in vehiclesId)
+            //{
+            //    var check = coltn.Find(x => x.id == item).SortByDescending(x => x.CreateDate).FirstOrDefault();
+
+            //    result.Add(check);
+            //}
+
+
+            return result != null ? result : new List<Checked>();
+        }
+
 
 
         /// <summary> 
@@ -193,5 +221,7 @@ namespace ApiApp.Repositories.Imprementation
                 throw ex;
             }
         }
+
+
     }
 }

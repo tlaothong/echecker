@@ -36,11 +36,15 @@ namespace ApiApp.Controllers
         ///GET /vehicles/{user-id}
         public IEnumerable<VehiclesDTO> Get(string id)
         {
+            var vehicleList = repoVehicle.GetVehicles(id);
+            var checkedList = repoChecking.GetlastCheckedByEmail(vehicleList.Select(x => x.Email).ToList());
+
             List<VehiclesDTO> _vehicleList = new List<VehiclesDTO>();
-            var vehicle = repoVehicle.GetVehicles(id);
-            if (vehicle.Count() > 0)
+            //var vehicle = repoVehicle.GetVehicles(id);           
+
+            if (vehicleList.Count() > 0)
             {
-                foreach (var item in vehicle)
+                foreach (var item in vehicleList)
                 {
                     var now = DateTime.Now;
 
@@ -66,7 +70,8 @@ namespace ApiApp.Controllers
                         IsTaxActive = item.IsTaxActive,
                     };
 
-                    var qry = repoChecking.GetLastChecked(item.id);
+                    //var qry = repoChecking.GetLastChecked(item.id);
+                    var qry = checkedList.Where(x=>x.VehicleId == item.id).OrderByDescending(x=>x.CreateDate).FirstOrDefault();
 
                     if (qry != null)
                     {
