@@ -38,7 +38,6 @@
 
         //Get vehicles datas
         public GetVehicles(): ng.IPromise<any> {
-            Ionic.io();
             var user = Ionic.User.current();
             var userId = user.id;
             return this.vehiclesSvc.query({ id: userId }).$promise;

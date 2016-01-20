@@ -82,8 +82,7 @@ module starter.controllers {
         static $inject = ["$scope", "$ionicModal", "$timeout", '$state'];
         constructor($scope, $ionicModal, private $timeout, private $state) {
 
-            Ionic.io();
-            this.user = Ionic.User.current();
+            if (this.user == null) this.user = Ionic.User.current();
 
             //Prepare login modal
             $ionicModal.fromTemplateUrl('templates/login.html', {

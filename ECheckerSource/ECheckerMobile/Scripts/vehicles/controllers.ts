@@ -18,7 +18,6 @@
             private vehicle: app.shared.VehicleService,
             private svc: app.vehicles.VehiclesService) {
 
-            Ionic.io();
             this.user = Ionic.User.current();
 
             if (this.user.id) {
@@ -126,7 +125,6 @@
 
         //Send vehicle information to server
         private Submit(): void {
-            Ionic.io();
             var user = Ionic.User.current();
             this.newVehicle.Email = user.id;
             this.svc.AddVehicle(this.newVehicle);
