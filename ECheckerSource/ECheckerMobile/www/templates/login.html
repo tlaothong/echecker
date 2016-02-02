@@ -7,13 +7,15 @@
         <form ng-submit="cx.login()">
             <div class="padding">
                 <label class="item item-input">
-                    <input type="email" placeholder="Email" ng-model="cx.email" required>
+                    <input type="email" placeholder="example@email.com" ng-model="cx.email" required>
+                </label>
+                <label class="item item-input">
                     <input type="password" placeholder="Password" ng-model="cx.password" required>
                 </label>
                 <button class="button button-block button-positive" type="submit">Login</button>
-                <button class="button button-block button-positive" type="submit">Log in with facebook</button>
-                <button class="button button-block button-assertive" type="submit">Log in with google</button>
-                <button class="button button-block" ng-click="cx.register()">Register</button>
+                <button class="button button-block button-positive" type="button">Log in with facebook</button>
+                <button class="button button-block button-assertive" type="button">Log in with google</button>
+                <button class="button button-block" type="button" ng-click="cx.callRegister()">Register</button>
             </div>
         </form>
         <div class="row">

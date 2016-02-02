@@ -3,13 +3,16 @@
         <h1 class="title">Register</h1>
     </ion-header-bar>
     <ion-content>
-        <form ng-submit="cx.submitToRegister()">
+        <form ng-submit="cx.register()">
             <div class="padding">
                 <label class="item item-input">
-                    <input type="email" placeholder="Email" ng-model="cx.email" required>
+                    <input type="email" placeholder="example@email.com" ng-model="cx.email" required>
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="cx.password" required>
                 </label>
                 <button class="button button-block button-positive" type="submit">Register</button>
-                <button class="button button-block button-assertive" type="submit" ng-click="cx.cancelToRegister()">Cancle</button>
+                <button class="button button-block button-assertive" type="button" ng-click="cx.cancelRegister()">Cancle</button>
             </div>
         </form>
     </ion-content>
