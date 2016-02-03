@@ -1,10 +1,6 @@
 ﻿module app {
     'use strict';
     
-    export class UserInformation {
-        Email: string;
-    }
-
     export class TopicInformation {
         id: string;
         VehicleTypeId: number;

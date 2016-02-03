@@ -1,39 +1,42 @@
 ﻿module app.vehicles {
     'use strict';
 
+    declare var Ionic;
+
     class VehicleListController {
 
         private modal: any;
         private user: any;
+        private data: VehicleInformation[]
 
         static $inject = [
             '$state',
-            '$scope',
-            '$ionicModal',
-            '$timeout',
-            'data',
-            'app.shared.VehicleService']
+            'app.shared.VehicleService',
+            'app.vehicles.VehiclesService']
         constructor(
             private $state,
-            private $scope,
-            private $ionicModal,
-            private $timeout,
-            private data: VehicleInformation[],
             private vehicle: app.shared.VehicleService,
             private svc: app.vehicles.VehiclesService) {
 
-            Ionic.io();
             this.user = Ionic.User.current();
 
             if (this.user.id) {
-                var minimumDataLength = 1;
-                var IsDataEmpty = data.length < minimumDataLength;
-                if (IsDataEmpty) {
-                    console.log('User is not has any vehicle.');
-                    console.log('Go to manage vehicle page for add vehicle.');
-                    $state.go('app.manvehicles')
-                }
-                else this.NotifyAllVehicle();
+                console.log('Connecting to server.')
+                svc.GetVehicles().then((it) => {
+                    console.log('Connection completed.');
+                    var minimumDataLength = 1;
+                    var IsDataEmpty = it.length < minimumDataLength;
+                    if (IsDataEmpty) {
+                        alert('คุณยังไม่มีรถอยู่ในระบบ กรุณาเพิ่มรถลงในระบบก่อนใช้งาน');
+                        console.log('User is not has any vehicle.');
+                        console.log('Go to manage vehicle page for add vehicle.');
+                        $state.go('app.manvehicles')
+                    }
+                    else {
+                        this.data = it;
+                        this.NotifyAllVehicle();
+                    }
+                });
             }
         }
         
@@ -72,16 +75,20 @@
                 (it.IsTaxActive && this.IsNotify(it.TaxDate)) ||
                 (it.IsPayActive && this.IsNotify(it.PayDate)));
 
-            var message: Array<string> = [];
+            var notifyMessage: Array<string> = [];
             for (var item of alertData) {
-                message.push('ทะเบียน ' + item.PlateNumber + '\n');
-                if (item.IsPBRActive) message.push('ครบกำหนดพรบ\n');
-                if (item.IsDrivingLicenseActive) message.push('ครบกำหนดใบขับขี่\n');
-                if (item.IsCheckActive) message.push('ครบกำหนดตรวจสภาพรถ\n');
-                if (item.IsTaxActive) message.push('ครบกำหนดต่อภาษี\n');
-                if (item.PayDate) message.push('ครบกำหนดผ่อนงวด\n');
+                notifyMessage.push('ทะเบียน ' + item.PlateNumber + '\n');
+                if (item.IsPBRActive) notifyMessage.push('> ครบกำหนดพรบ\n');
+                if (item.IsDrivingLicenseActive) notifyMessage.push('> ครบกำหนดใบขับขี่\n');
+                if (item.IsCheckActive) notifyMessage.push('> ครบกำหนดตรวจสภาพรถ\n');
+                if (item.IsTaxActive) notifyMessage.push('> ครบกำหนดต่อภาษี\n');
+                if (item.IsPayActive) notifyMessage.push('> ครบกำหนดผ่อนงวด\n');
+                notifyMessage.push('\n');
             }
-            alert(message.join(''));
+
+            var minimumLetter = 1;
+            var IsNotifyMessageEmpty = notifyMessage.length < minimumLetter;
+            if (!IsNotifyMessageEmpty) alert(notifyMessage.join(''));
         }
 
         //Get should notify result
@@ -112,13 +119,14 @@
 
         private newVehicle: VehicleInformation;
 
-        static $inject = ['$state', 'app.vehicles.VehiclesService', 'app.shared.UserService']
-        constructor(private $state, private svc: app.vehicles.VehiclesService, private user: app.shared.UserService) {
+        static $inject = ['$state', 'app.vehicles.VehiclesService']
+        constructor(private $state, private svc: app.vehicles.VehiclesService) {
         }
 
         //Send vehicle information to server
         private Submit(): void {
-            this.newVehicle.Email = this.user.UserData.Email;
+            var user = Ionic.User.current();
+            this.newVehicle.Email = user.id;
             this.svc.AddVehicle(this.newVehicle);
             this.$state.go('app.manvehicles');
         }

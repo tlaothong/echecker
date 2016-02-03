@@ -75,7 +75,6 @@ module starter.controllers {
 
         private modalLogin: any;
         private modalRegister: any;
-        //private loginData = {};
         private user: any;
         private email: any;
         private password: any;
@@ -83,12 +82,12 @@ module starter.controllers {
         static $inject = ["$scope", "$ionicModal", "$timeout", '$state'];
         constructor($scope, $ionicModal, private $timeout, private $state) {
 
-            Ionic.io();
-            this.user = Ionic.User.current();
+            if (this.user == null) this.user = Ionic.User.current();
 
             //Prepare login modal
             $ionicModal.fromTemplateUrl('templates/login.html', {
                 backdropClickToClose: false,
+                hardwareBackButtonClose: false,
                 scope: $scope
             }).then((modal) => {
                 this.modalLogin = modal;
@@ -98,6 +97,7 @@ module starter.controllers {
             //Prepare register modal
             $ionicModal.fromTemplateUrl('templates/register.html', {
                 backdropClickToClose: false,
+                hardwareBackButtonClose: false,
                 scope: $scope
             }).then((modal) => {
                 this.modalRegister = modal;
@@ -105,52 +105,64 @@ module starter.controllers {
         }
         
         //Call register modal
-        private register() {
+        private callRegister() {
             this.clear();
             this.modalRegister.show();
         }
 
         //Do register
-        private submitToRegister() {
+        private register() {
             this.user.id = this.email;
-            this.modalRegister.hide();
-            this.modalLogin.hide();
-            this.$state.go('app.vehicles', {}, { reload: true });
+            console.log('Register succeeded.');
+            this.user.save().then(() => { this.navigateToIndex(); });
         }
 
-        //Cancel to register
-        private cancelToRegister() {
+        //Cancel register
+        private cancelRegister() {
             this.clear();
             this.modalRegister.hide();
         }
         
         //Do login
         private login() {
-            this.user.id = this.email;
-            this.user.save().then(() => {
-                this.modalLogin.hide();
-                this.$state.go('app.vehicles', {}, { reload: true });
-            });
+            if (this.checkLogin(this.email, this.password)) {
+                console.log('Login succeeded.');
+                this.user.id = this.email;
+                this.user.save().then(() => { this.navigateToIndex(); });
+            } else alert('Email or password is not correct.');
         }
 
         //Logout from system
         private logout() {
-            //this.user = Ionic.User.current({});
-            //this.user = Ionic.User.current();
-
-            alert('Before save: ' + this.user.isValid());
+            //alert('Before save: ' + this.user.isValid());
             this.user.delete().then(() => {
-                this.user = Ionic.User.current();
-                alert('After save: ' + this.user);
-                console.log('Log out succeed.');
+                this.user = Ionic.User.current(new Ionic.User());
+                //alert('After save: ' + this.user);
+                console.log('Log out succeeded.');
+                this.modalLogin.show()
                 this.$state.go('app.vehicles', {}, { reload: true });
             });
+        }
+
+        //Check login
+        private checkLogin(email: string, password: string): boolean {
+            //Hack: mock email and password for checking correct on login
+            var isAuthentication = ((email == 'aa@aa.com') && (password == 'password'));
+            return isAuthentication;
         }
 
         //Clear email and password input
         private clear() {
             this.email = '';
             this.password = '';
+        }
+
+        //Navigate to index and clean eveything
+        private navigateToIndex() {
+            this.clear();
+            this.modalRegister.hide();
+            this.modalLogin.hide();
+            this.$state.go('app.vehicles', {}, { reload: true });
         }
         
         //public login() {
@@ -170,8 +182,6 @@ module starter.controllers {
         //        this.closeLogin();
         //    }, 1000);
         //}
-
-        
         
         //Login successed
         //public Logined() {

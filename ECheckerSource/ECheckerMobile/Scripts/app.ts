@@ -19,6 +19,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                 // org.apache.cordova.statusbar required
                 window.StatusBar.styleDefault();
             }
+            Ionic.io();
         });
     })
 
@@ -38,9 +39,9 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                     'menuContent': {
                         templateUrl: 'templates/vehiclelist.html',
                         controller: 'app.vehicles.VehicleListController as cx',
-                        resolve: {
-                            "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
-                        }
+                        //resolve: {
+                        //    "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
+                        //}
                     }
                 }
             })

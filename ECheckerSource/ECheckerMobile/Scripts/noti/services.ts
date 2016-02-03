@@ -12,8 +12,8 @@
 
         private svc: INotificationResourceClass<any>;
 
-        static $inject = ['appConfig', '$resource', 'app.shared.UserService'];
-        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService, private user: app.shared.UserService) {
+        static $inject = ['appConfig', '$resource'];
+        constructor(appConfig: app.config.IAppConfig, private $resource: angular.resource.IResourceService) {
 
             //Set service to get vehicles
             this.svc = <INotificationResourceClass<any>>$resource(appConfig.NotificationUrl, { 'id': '@id' }, {
