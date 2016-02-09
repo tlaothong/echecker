@@ -37,7 +37,7 @@ namespace ApiApp.Controllers
         public IEnumerable<VehiclesDTO> Get(string id)
         {
             var vehicleList = repoVehicle.GetVehicles(id);
-            var checkedList = repoChecking.GetlastCheckedByEmail(vehicleList.Select(x => x.id).ToList());
+            var checkedList = repoChecking.GetlastCheckedByVehicleIdList(vehicleList.Select(x => x.id).ToList());
 
             List<VehiclesDTO> _vehicleList = new List<VehiclesDTO>();
             //var vehicle = repoVehicle.GetVehicles(id);           

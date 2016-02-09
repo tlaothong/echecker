@@ -87,29 +87,15 @@ namespace ApiApp.Repositories.Imprementation
         }
 
         /// <summary>
-        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by email
+        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by vehicleId
         /// </summary>
-        /// <param name="vehiclesId"> list of vehecleId</param>
+        /// <param name="vehiclesId"> list of vehicleId</param>
         /// <returns></returns>
-        public IEnumerable<Checked> GetlastCheckedByEmail(List<string> vehiclesId)
+        public IEnumerable<Checked> GetlastCheckedByVehicleIdList(List<string> vehiclesId)
         {
             var coltn = MongoUtil.GetCollection<Checked>(tableName);
 
-            //List<Checked> result = new List<Checked>();
-
-            //var xxx = coltn.Find(it => it.VehicleId.Equals(it.VehicleId, StringComparison.CurrentCultureIgnoreCase));
-
-            //result = coltn.Find(it => it.VehicleId.Contains(vehiclesId.Select(its => its).FirstOrDefault()));
-
             var result = coltn.Find(x => vehiclesId.Contains(x.VehicleId)).ToList();
-
-            //foreach (var item in vehiclesId)
-            //{
-            //    var check = coltn.Find(x => x.id == item).SortByDescending(x => x.CreateDate).FirstOrDefault();
-
-            //    result.Add(check);
-            //}
-
 
             return result != null ? result : new List<Checked>();
         }

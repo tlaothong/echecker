@@ -20,11 +20,11 @@ namespace ApiApp.Repositories
         Checked GetLastChecked(string vehicleId);
 
         /// <summary>
-        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by email
+        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by vehicleId
         /// </summary>
-        /// <param name="vehiclesId"> list of vehecleId</param>
+        /// <param name="vehiclesId"> list of vehicleId</param>
         /// <returns></returns>
-        IEnumerable<Checked> GetlastCheckedByEmail(List<string> vehiclesId);
+        IEnumerable<Checked> GetlastCheckedByVehicleIdList(List<string> vehiclesId);
 
         /// <summary> 
         /// ตรวจรถ
