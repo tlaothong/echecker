@@ -153,64 +153,29 @@
 
             var options = {
                 destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA,
+                sourceType: Camera.PictureSourceType.CAMERA
             };
 
+            //Prepare connection API service
             var intialIndex = 0;
-            var topic = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == this.data.id)[intialIndex]
-            alert('topic: '+topic);
-            var apiUrl = 'http://echecker-vanlek.azurewebsites.net/api/checked/' + this.vehicle.VehicleSelected.id + '/' + topic.id + '/photo';
-            alert('apiUrl:' +apiUrl);
+            var topicId = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == this.data.id)[intialIndex].id;
+            var apiUrl = 'http://echecker-vanlek.azurewebsites.net/api/checked/' + this.vehicle.VehicleSelected.id + '/' + topicId + '/photo';
+            
+            //Get Images
+            this.$cordovaCamera.getPicture(options)
+                .then(function (imageData) {
 
+                    //Upload Images
+                    this.$cordovaFileTransfer.upload(apiUrl, imageData, options)
+                        .then(function (result) {
+                            this.data.PhotoURL = result;
+                        }, function (uploadFailedMessage) {
+                            alert('Upload failed.\n' + uploadFailedMessage);
+                        }, function (uploadProgress) {
+                            alert('Upload progress: ' + (uploadProgress.loaded / uploadProgress.total) * 100);
+                        });
 
-
-            var photoUrl = '';
-            this.$cordovaCamera.getPicture(options).then(function (imageData) {
-                alert('Can capture.');
-
-                alert('imageData:   '+imageData);
-                photoUrl = imageData;
-              
-                //var image = <HTMLImageElement>document.getElementById('myImage');
-                //image.src = "data:image/jpeg;base64," + imageData;
-
-                //alert(image);      
-                //alert(image.src);      
-
-               
-
-                //upload to blob
-
-
-                //get url
-                //var photoUrl = .....
-
-                //add urlto service
-                //this.data.PhotoURL = photoUrl
-
-
-            }, function (err) {
-                alert('Capture failed.');
-                alert('err' +err);
-                // error
-            });
-
-          
-
-            this.$cordovaFileTransfer.upload(apiUrl, photoUrl, options)
-                .then(function (result) {
-
-                    alert('Result: ' + result);
-                    this.data.PhotoURL = result
-                    // Success!
-                }, function (err) {
-                    alert('err:  '+ err);
-                    // Error
-                }, function (progress) {
-                    alert('progress:  '+progress);
-                    // constant progress updates
-                });
-
+                }, function (captureFailedMessage) { alert('Capture failed.\n' + captureFailedMessage); });
 
         }
     }
