@@ -151,6 +151,7 @@
 
         private Capture(): void {
 
+            //Set options for camera and file transfer
             var options = {
                 destinationType: Camera.DestinationType.FILE_URI,
                 sourceType: Camera.PictureSourceType.CAMERA
@@ -163,20 +164,23 @@
             
             //Get Images
             this.$cordovaCamera.getPicture(options)
-                .then(function (imageData) {
-
+                .then((imageData) => {
+                
                     //Upload Images
                     this.$cordovaFileTransfer.upload(apiUrl, imageData, options)
-                        .then(function (result) {
-                            this.data.PhotoURL = result;
+                        .then((result) => {
+                            var photourl: string = result.response;
+                            var intiIndex: number = 13;
+                            var endIndex: number = photourl.length - 2;
+                            this.data.PhotoURL = photourl.substring(intiIndex, endIndex);
                         }, function (uploadFailedMessage) {
                             alert('Upload failed.\n' + uploadFailedMessage);
                         }, function (uploadProgress) {
-                            alert('Upload progress: ' + (uploadProgress.loaded / uploadProgress.total) * 100);
+                            console.log('Upload progress: ' + (uploadProgress.loaded / uploadProgress.total) * 100);
                         });
-
-                }, function (captureFailedMessage) { alert('Capture failed.\n' + captureFailedMessage); });
-
+                }, function (captureFailedMessage) {
+                    alert('Capture failed.\n' + captureFailedMessage);
+                });
         }
     }
 
