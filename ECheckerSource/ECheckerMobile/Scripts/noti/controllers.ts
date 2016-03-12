@@ -5,10 +5,43 @@
 
         private notiVehicle: VehicleInformation
 
-        static $inject = ['$state', 'app.noti.NotificationService', 'app.shared.VehicleService'];
-        constructor(private $state, private svc: app.noti.NotificationService, private vehicle: app.shared.VehicleService) {
+        static $inject = [
+            '$state',
+            '$cordovaDatePicker',
+            'app.noti.NotificationService',
+            'app.shared.VehicleService'];
+        constructor(private $state,
+            private $cordovaDatePicker,
+            private svc: app.noti.NotificationService,
+            private vehicle: app.shared.VehicleService) {
             this.notiVehicle = this.GetNotificationValue(vehicle.VehicleSelected);
         }
+
+        private Click(newDateFor: any) {
+
+            var noti = this.notiVehicle;
+            var currentDate;
+            if (newDateFor == 'PBRDate') currentDate = noti.PBRDate;
+            else if (newDateFor == 'DrivingLicenseDate') currentDate = noti.DrivingLicenseDate;
+            else if (newDateFor == 'CheckDate') currentDate = noti.CheckDate;
+            else if (newDateFor == 'TaxDate') currentDate = noti.TaxDate;
+            else if (newDateFor == 'PayDate') currentDate = noti.PayDate;
+
+            var options = {
+                date: new Date(currentDate.toString()),
+                mode: 'date'
+            };
+
+            this.$cordovaDatePicker.show(options)
+                .then((date: Date) => {
+                    if (newDateFor == 'PBRDate') { noti.PBRDate = date; }
+                    else if (newDateFor == 'DrivingLicenseDate') { noti.DrivingLicenseDate = date; }
+                    else if (newDateFor == 'CheckDate') { noti.CheckDate = date; }
+                    else if (newDateFor == 'TaxDate') { noti.TaxDate = date; }
+                    else if (newDateFor == 'PayDate') { noti.PayDate = date; }
+                });
+        }
+
 
         private Submit(): void {
             

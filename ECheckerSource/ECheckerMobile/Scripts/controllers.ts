@@ -59,18 +59,6 @@ declare var Ionic;
 
 module starter.controllers {
 
-    //export class LoginController {
-
-    //    static $inject = ["$scope"];
-    //    constructor(private $scope) {
-    //    }
-
-    //    public doLogin() {
-    //        alert('hi');
-    //        this.$scope.modal.hide();
-    //    }
-    //}
-
     export class AppCtrl {
 
         private modalLogin: any;
@@ -102,6 +90,7 @@ module starter.controllers {
             }).then((modal) => {
                 this.modalRegister = modal;
             });
+
         }
         
         //Call register modal
@@ -132,12 +121,11 @@ module starter.controllers {
             } else alert('Email or password is not correct.');
         }
 
-        //Logout from system
+        //Do logout
         private logout() {
             //alert('Before save: ' + this.user.isValid());
             this.user.delete().then(() => {
                 this.user = Ionic.User.current(new Ionic.User());
-                //alert('After save: ' + this.user);
                 console.log('Log out succeeded.');
                 this.modalLogin.show()
                 this.$state.go('app.vehicles', {}, { reload: true });
@@ -197,5 +185,4 @@ module starter.controllers {
     angular
         .module('starter.controllers', [])
         .controller('AppCtrl', AppCtrl);
-    //.controller('LoginController', LoginController);
 }
