@@ -56,6 +56,7 @@
 //});
 
 declare var Ionic;
+declare var WindowsAzure;
 
 module starter.controllers {
 
@@ -66,9 +67,18 @@ module starter.controllers {
         private user: any;
         private email: any;
         private password: any;
+        private appUrl = 'https://samplefordevelop.azurewebsites.net';
 
-        static $inject = ["$scope", "$ionicModal", "$timeout", '$state'];
-        constructor($scope, $ionicModal, private $timeout, private $state) {
+        static $inject = [
+            "$scope",
+            "$ionicModal",
+            "$timeout",
+            '$state'];
+        constructor(
+            private $scope,
+            private $ionicModal,
+            private $timeout,
+            private $state) {
 
             if (this.user == null) this.user = Ionic.User.current();
 
@@ -135,8 +145,40 @@ module starter.controllers {
         //Check login
         private checkLogin(email: string, password: string): boolean {
             //Hack: mock email and password for checking correct on login
-            var isAuthentication = ((email == 'aa@aa.com') && (password == 'password'));
-            return isAuthentication;
+            var isAuthenticated = ((email == 'aa@aa.com') && (password == 'password'));
+            return isAuthenticated;
+        }
+        
+        //Do login with facebook account
+        private facebookLogin() {
+            var mobileAppsClient = new WindowsAzure.MobileServiceClient(this.appUrl, null);
+            if (mobileAppsClient != null) {
+                console.log('Connection to azure successed!');
+                mobileAppsClient.login('facebook', null)
+                    .then((successed) => {
+                        //Hack: User id
+                        this.user.id = "aa@aa.com"
+                        this.user.save().then(() => { this.navigateToIndex(); });
+                    }, function (error) {
+                        alert('Failed to login with facebook\n > ' + error);
+                    });
+            }
+        }
+
+        //Do login with google account
+        private googleLogin() {
+            var mobileAppsClient = new WindowsAzure.MobileServiceClient(this.appUrl, null);
+            if (mobileAppsClient != null) {
+                console.log('Connection to azure successed!');
+                mobileAppsClient.login('google', null)
+                    .then((successed) => {
+                        //Hack: User id
+                        this.user.id = "aa@aa.com"
+                        this.user.save().then(() => { this.navigateToIndex(); });
+                    }, function (error) {
+                        alert('Failed to login with google\n > ' + error);
+                    });
+            }
         }
 
         //Clear email and password input
