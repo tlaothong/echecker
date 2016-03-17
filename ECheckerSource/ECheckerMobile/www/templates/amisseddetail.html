@@ -5,9 +5,9 @@
         <h5>{{ cx.amissed.AmissedInfo.SuggestDetail }}</h5>
         <h4>บันทึกเพิ่มเติม</h4>
         <label class="item item-input">
-            <textarea rows="8" cols="10" ng-model="cx.amissed.Amissed.Comment" disabled="disabled"></textarea>
+            <label>{{cx.amissed.AmissedInfo.Comment}}</label>
         </label>
-        <img class="col" src="cx.amissed.Amissed.PhotoUrl" />
+        <img class="col" src="{{cx.amissed.AmissedInfo.PhotoUrl}}" />
     </ion-content>
-   
+
 </ion-view>
