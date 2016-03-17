@@ -156,9 +156,18 @@ module starter.controllers {
                 console.log('Connection to azure successed!');
                 mobileAppsClient.login('facebook', null)
                     .then((successed) => {
-                        //Hack: User id
-                        this.user.id = "aa@aa.com"
-                        this.user.save().then(() => { this.navigateToIndex(); });
+
+                        mobileAppsClient._request(
+                            'GET',
+                            'https://samplefordevelop.azurewebsites.net/.auth/me',
+                            { authenticationToken: successed.mobileServiceAuthenticationToken },
+                            true,
+                            (error, response) => {
+                                var emailIndex = 0;
+                                this.user.id = JSON.parse(response.responseText)[emailIndex].user_id;
+                                this.user.save().then(() => { this.navigateToIndex(); });
+                            });
+
                     }, function (error) {
                         alert('Failed to login with facebook\n > ' + error);
                     });
@@ -172,9 +181,18 @@ module starter.controllers {
                 console.log('Connection to azure successed!');
                 mobileAppsClient.login('google', null)
                     .then((successed) => {
-                        //Hack: User id
-                        this.user.id = "aa@aa.com"
-                        this.user.save().then(() => { this.navigateToIndex(); });
+
+                        mobileAppsClient._request(
+                            'GET',
+                            'https://samplefordevelop.azurewebsites.net/.auth/me',
+                            { authenticationToken: successed.mobileServiceAuthenticationToken },
+                            true,
+                            (error, response) => {
+                                var emailIndex = 0;
+                                this.user.id = JSON.parse(response.responseText)[emailIndex].user_id;
+                                this.user.save().then(() => { this.navigateToIndex(); });
+                            });
+
                     }, function (error) {
                         alert('Failed to login with google\n > ' + error);
                     });
