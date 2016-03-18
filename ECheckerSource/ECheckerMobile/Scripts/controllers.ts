@@ -157,9 +157,10 @@ module starter.controllers {
                 mobileAppsClient.login('facebook', null)
                     .then((successed) => {
 
+                        var urlRequest = this.appUrl + '/.auth/me';
                         mobileAppsClient._request(
                             'GET',
-                            'https://samplefordevelop.azurewebsites.net/.auth/me',
+                            urlRequest,
                             { authenticationToken: successed.mobileServiceAuthenticationToken },
                             true,
                             (error, response) => {
@@ -182,9 +183,10 @@ module starter.controllers {
                 mobileAppsClient.login('google', null)
                     .then((successed) => {
 
+                        var urlRequest = this.appUrl + '/.auth/me';
                         mobileAppsClient._request(
                             'GET',
-                            'https://samplefordevelop.azurewebsites.net/.auth/me',
+                            urlRequest,
                             { authenticationToken: successed.mobileServiceAuthenticationToken },
                             true,
                             (error, response) => {
