@@ -65,37 +65,55 @@
             private checkeds: app.shared.CheckedsService) {
 
             //Reload topics when topics is null
-            var isTopicsNull = topics.TopicInfos == null;
+            var isTopicsNull = this.topics == null || this.topics.TopicInfos == null;
             if (isTopicsNull) {
                 console.log('Topics is missing.');
                 console.log('Retry download topics again.');
                 svc.GetForms().then((it) => {
-                    topics.TopicInfos = it;
+                    this.topics.TopicInfos = it;
                     console.log('Donwload topics completed!');
                 });
+
             }
             //Reload checkeds when checkeds is null
-            var isCheckedsNull = data == null;
-            if (isCheckedsNull) {
-                console.log('Checkeds is missing.');
-                console.log('Retry download checkeds again.');
-                svc.GetCheckeds().then((it) => {
-                    data = it;
-                    console.log('Donwload checkeds completed!');
-                });
+            if (this.checkeds == null || this.checkeds.CheckedsInfos == null) {
+                var isCheckedsNull = data == null;
+                if (isCheckedsNull) {
+                    console.log('Checkeds is missing.');
+                    console.log('Retry download checkeds again.');
+                    svc.GetCheckeds().then((it) => {
+                        data = it;
+                        console.log('Donwload checkeds completed!');
+                        this.checkeds.CheckedsInfos = data;
+                    });
+                } else {
+                    checkeds.CheckedsInfos = data;
+                }
+            } else if (this.checkeds.CheckedsInfos.VehicleId !== this.vehicle.VehicleSelected.id) {
+                var isCheckedsNull = data == null;
+                if (isCheckedsNull) {
+                    console.log('Checkeds is missing.');
+                    console.log('Retry download checkeds again.');
+                    svc.GetCheckeds().then((it) => {
+                        data = it;
+                        console.log('Donwload checkeds completed!');
+                        this.checkeds.CheckedsInfos = data;
+                    });
+                } else {
+                    this.checkeds.CheckedsInfos = data;
+                }
             }
-            checkeds.CheckedsInfos = data;
         }
 
         private IsPass(checkTopic: TopicInformation): boolean {
             var intialIndex = 0;
-            var checkTopicInfo = this.data.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
+            var checkTopicInfo = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
             if (checkTopicInfo.IsPass == null) return null;
             return checkTopicInfo.IsPass == true;
         }
         private IsFalse(checkTopic: TopicInformation): boolean {
             var intialIndex = 0;
-            var checkTopicInfo = this.data.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
+            var checkTopicInfo = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
             if (checkTopicInfo.IsPass == null) return null;
             return checkTopicInfo.IsPass == false;
         }

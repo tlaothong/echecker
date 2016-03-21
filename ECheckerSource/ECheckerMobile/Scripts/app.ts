@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'app', 'app.shared', 'app.amissed', 'app.checking', 'app.noti', 'app.regis', 'app.report', 'app.vehicles'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -38,7 +38,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/vehiclelist.html',
-                        controller: 'app.vehicles.VehicleListController as cx',
+                        controller: 'app.vehicles.VehicleListController as cx'
                         //resolve: {
                         //    "data": ['app.vehicles.VehiclesService', svc => { return svc.GetVehicles() }]
                         //}
@@ -78,7 +78,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                         templateUrl: 'templates/checkvehicle.html',
                         controller: 'app.checking.CheckedController as cx',
                         resolve: {
-                            "data": ['app.checking.FormsService', svc => { return svc.GetCheckeds(); }]
+                            "data": () => { return null; }
                         }
                     }
                 }
@@ -94,7 +94,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                             "data": ["$stateParams", 'app.shared.CheckedsService', (p, svc) => {
                                 var intialIndex = 0;
                                 return svc.CheckedsInfos.CheckedTopics.filter(it=> it.id == p.id)[intialIndex];
-                                
+
                             }]
                         }
                     }
@@ -106,7 +106,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova' , 'starter
                     'vContent': {
                         templateUrl: 'templates/amisseddetail.html',
                         controller: 'app.amissed.AmissedDetailController as cx',
-                       
+
                     }
                 }
             })
