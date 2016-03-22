@@ -3,7 +3,7 @@
         <div class="calm-bg padding">
             <label class="item item-light item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" class="light-bg" placeholder="Search">
+                <input type="text" class="light-bg" placeholder="Search" ng-model="searchPlateNumber">
             </label>
         </div>
         <div class="padding-top">
@@ -22,7 +22,7 @@
                         </div>
                     </ion-item>
 
-                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleNotReady()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleNotReady() | filter: searchPlateNumber" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">{{ item.VehicleProgress }}%</i>
@@ -42,10 +42,10 @@
                     <ion-item class="item-divider item item-light ic-selected">
                         <div class="row">
                             <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
-                            <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
+                            <div class="col col-67 text-right"><span class="">สถานะ</span></div>
                         </div>
                     </ion-item>
-                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleReady()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleReady() | filter: searchPlateNumber" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">รอส่งวิเคราะห์</i>
@@ -65,10 +65,10 @@
                     <ion-item class="item-divider item item-light ic-selected">
                         <div class="row">
                             <div class="col col-33 text-center"><span class="">ทะเบียนรถ</span></div>
-                            <div class="col col-67 text-right"><span class="">เปอร์เซ็นการตรวจ</span></div>
+                            <div class="col col-67 text-right"><span class="">สถานะ</span></div>
                         </div>
                     </ion-item>
-                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleCompleted()" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
+                    <ion-item class="item item-calm" ng-repeat="item in cx.DisplayVehichleCompleted() | filter: searchPlateNumber" href="" ui-sref="app.vehicle.status" ng-click="cx.SelectVehicle(item)">
                         <h2>
                             {{ item.PlateNumber }}
                             <i class="item-note">วิเคราะห์แล้ว</i>

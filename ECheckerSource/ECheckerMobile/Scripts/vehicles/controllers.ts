@@ -118,6 +118,7 @@
     class VehicleAddController {
 
         private newVehicle: VehicleInformation;
+        private VehicleTypeId: string;
 
         static $inject = ['$state', 'app.vehicles.VehiclesService']
         constructor(private $state, private svc: app.vehicles.VehiclesService) {
@@ -127,6 +128,7 @@
         private Submit(): void {
             var user = Ionic.User.current();
             this.newVehicle.Email = user.id;
+            this.newVehicle.VehicleTypeId = this.VehicleTypeId == 'รถยนต์' ? 11 : 13;
             this.svc.AddVehicle(this.newVehicle);
             this.$state.go('app.manvehicles');
         }
@@ -141,6 +143,12 @@
         private Submit(): void {
             this.svc.UpdateVehicle(this.vehicle.VehicleSelected);
             this.$state.go('app.manvehicles');
+        }
+
+        //Display vehicle type to html
+        private DisplayVehicleType(): string {
+            var VehicleType = this.vehicle.VehicleSelected.VehicleTypeId == 11 ? 'รถยนต์' : 'รถจักรยานยนต์';
+            return VehicleType;
         }
     }
 
