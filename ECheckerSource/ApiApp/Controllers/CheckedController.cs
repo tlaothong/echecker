@@ -149,11 +149,11 @@ namespace ApiApp.Controllers
 
                     if (amisseds.Any(x => x.IsCritical == true) || avg < 60)
                     {
-                        status.Status = string.Format("{0}% ไม่พร้อมใช้งาน", 100 - avg);
+                        status.Status = string.Format("{0}%\nไม่ควรใช้งาน", 100 - avg);
                     }
                     else
                     {
-                        status.Status = string.Format("{0}% พร้อมใช้งาน", 100 - avg);
+                        status.Status = string.Format("{0}%\nใช้งานได้ปกติ", 100 - avg);
                     }
 
                     //update checked[] to done
