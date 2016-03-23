@@ -137,8 +137,16 @@
         private newVehicle: VehicleInformation;
         private VehicleTypeId: string;
 
-        static $inject = ['$state', 'app.vehicles.VehiclesService']
-        constructor(private $state, private svc: app.vehicles.VehiclesService) {
+        static $inject = [
+            '$ionicLoading',
+            '$timeout',
+            '$state',
+            'app.vehicles.VehiclesService']
+        constructor(
+            private $ionicLoading,
+            private $timeout,
+            private $state,
+            private svc: app.vehicles.VehiclesService) {
         }
 
         //Send vehicle information to server
@@ -147,19 +155,51 @@
             this.newVehicle.Email = user.id;
             this.newVehicle.VehicleTypeId = this.VehicleTypeId == 'รถยนต์' ? 11 : 13;
             this.svc.AddVehicle(this.newVehicle);
-            this.$state.go('app.manvehicles');
+
+            //Delay 3 seconds before go to vehicle status
+            var delayTime = 3;
+            var miliDelay = delayTime * 1000;
+            this.$ionicLoading.show({
+                template: 'Loading... <ion-spinner></ion-spinner>'
+            });
+
+            this.$timeout(() => {
+                this.$ionicLoading.hide();
+                this.$state.go('app.manvehicles');
+            }, miliDelay);
         }
     }
 
     class VehicleEditController {
-        static $inject = ['$state', 'app.vehicles.VehiclesService', 'app.shared.VehicleService']
-        constructor(private $state, private svc: app.vehicles.VehiclesService, private vehicle: app.shared.VehicleService) {
+        static $inject = [
+            '$ionicLoading',
+            '$timeout',
+            '$state',
+            'app.vehicles.VehiclesService',
+            'app.shared.VehicleService']
+        constructor(
+            private $ionicLoading,
+            private $timeout,
+            private $state,
+            private svc: app.vehicles.VehiclesService,
+            private vehicle: app.shared.VehicleService) {
         }
 
         //Send vehicle information to server
         private Submit(): void {
             this.svc.UpdateVehicle(this.vehicle.VehicleSelected);
-            this.$state.go('app.manvehicles');
+            
+            //Delay 3 seconds before go to vehicle status
+            var delayTime = 3;
+            var miliDelay = delayTime * 1000;
+            this.$ionicLoading.show({
+                template: 'Loading... <ion-spinner></ion-spinner>'
+            });
+
+            this.$timeout(() => {
+                this.$ionicLoading.hide();
+                this.$state.go('app.manvehicles');
+            }, miliDelay);
         }
 
         //Display vehicle type to html
