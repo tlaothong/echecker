@@ -3,6 +3,9 @@
 
     class TopicsController {
 
+        private vehicleCheckRatio: any;
+        private vehicleStatus: any;
+
         static $inject = [
             '$ionicLoading',
             '$timeout',
@@ -28,6 +31,17 @@
             private amissed: app.shared.AmissDetailService,
             private svc: app.checking.FormsService) {
             topicsService.TopicInfos = topics;
+
+            var display = this.status.ReadyStatus.split(' ');
+            var isDisplayLengthLessThanMinimum = display.length < 2;
+            if (isDisplayLengthLessThanMinimum) {
+                this.vehicleCheckRatio = '0%';
+                this.vehicleStatus = display[0];
+            }
+            else {
+                this.vehicleCheckRatio = display[0];
+                this.vehicleStatus = display[1];
+            }
         }
 
         private IsDisableToAnalysis(): boolean {
@@ -46,8 +60,8 @@
             this.checkeds.CheckedsInfos = null;
             console.log('Analysis is done, Back to vehilce list.');
             
-            //Delay 3 seconds before go to vehicle list
-            var secondDelay = 3;
+            //Delay 5 seconds before go to vehicle list
+            var secondDelay = 5;
             var millisecondDelay = secondDelay * 1000;
             this.$ionicLoading.show({
                 template: 'Loading... <ion-spinner></ion-spinner>'
@@ -62,17 +76,6 @@
         private SelectAmissedDeatil(amissed: AmissedInformation) {
             this.amissed.AmissedInfo = amissed;
         }
-
-        //Display percent of checkeds
-        private DisplayCheckRatio(): string {
-            return this.status.ReadyStatus.split(' ')[0];
-        }
-
-        //Display vehicle status
-        private DisplayVehicleStatus(): string {
-            return this.status.ReadyStatus.split(' ')[1];
-        }
-
     }
 
     class CheckedController {
