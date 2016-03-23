@@ -7,13 +7,18 @@
 
         private modal: any;
         private user: any;
+        private loadingModal: any;
         private data: VehicleInformation[]
 
         static $inject = [
+            '$ionicLoading',
+            '$timeout',
             '$state',
             'app.shared.VehicleService',
             'app.vehicles.VehiclesService']
         constructor(
+            private $ionicLoading,
+            private $timeout,
             private $state,
             private vehicle: app.shared.VehicleService,
             private svc: app.vehicles.VehiclesService) {
@@ -61,6 +66,18 @@
         //Set select vehicle to service
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
+            
+            //Delay 3 seconds before go to vehicle status
+            var delayTime = 3;
+            var miliDelay = delayTime * 1000;
+            this.$ionicLoading.show({
+                template: 'Loading... <ion-spinner></ion-spinner>'
+            });
+
+            this.$timeout(() => {
+                this.$ionicLoading.hide();
+                this.$state.go('app.vehicle.status');
+            }, miliDelay);
         }
         
         //Notify all vehicle on list

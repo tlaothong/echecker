@@ -4,6 +4,8 @@
     class TopicsController {
 
         static $inject = [
+            '$ionicLoading',
+            '$timeout',
             '$state',
             'topics',
             'status',
@@ -14,6 +16,8 @@
             'app.shared.AmissDetailService',
             'app.checking.FormsService'];
         constructor(
+            private $ionicLoading,
+            private $timeout,
             private $state,
             private topics: any,
             private status: any,
@@ -41,7 +45,18 @@
             this.svc.AnalysisVehicle(this.vehicle.VehicleSelected);
             this.checkeds.CheckedsInfos = null;
             console.log('Analysis is done, Back to vehilce list.');
-            this.$state.go('app.vehicles');
+            
+            //Delay 3 seconds before go to vehicle list
+            var delayTime = 3;
+            var miliDelay = delayTime * 1000;
+            this.$ionicLoading.show({
+                template: 'Loading... <ion-spinner></ion-spinner>'
+            });
+
+            this.$timeout(() => {
+                this.$ionicLoading.hide();
+                this.$state.go('app.vehicles');
+            }, miliDelay);
         }
 
         private SelectAmissedDeatil(amissed: AmissedInformation) {

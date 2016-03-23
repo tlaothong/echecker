@@ -70,14 +70,12 @@ module starter.controllers {
         private appUrl = 'https://samplefordevelop.azurewebsites.net';
 
         static $inject = [
-            "$scope",
-            "$ionicModal",
-            "$timeout",
+            '$scope',
+            '$ionicModal',
             '$state'];
         constructor(
             private $scope,
             private $ionicModal,
-            private $timeout,
             private $state) {
 
             if (this.user == null) this.user = Ionic.User.current();
