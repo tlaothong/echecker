@@ -47,8 +47,8 @@
             console.log('Analysis is done, Back to vehilce list.');
             
             //Delay 3 seconds before go to vehicle list
-            var delayTime = 3;
-            var miliDelay = delayTime * 1000;
+            var secondDelay = 3;
+            var millisecondDelay = secondDelay * 1000;
             this.$ionicLoading.show({
                 template: 'Loading... <ion-spinner></ion-spinner>'
             });
@@ -56,11 +56,21 @@
             this.$timeout(() => {
                 this.$ionicLoading.hide();
                 this.$state.go('app.vehicles');
-            }, miliDelay);
+            }, millisecondDelay);
         }
 
         private SelectAmissedDeatil(amissed: AmissedInformation) {
             this.amissed.AmissedInfo = amissed;
+        }
+
+        //Display percent of checkeds
+        private DisplayCheckRatio(): string {
+            return this.status.ReadyStatus.split(' ')[0];
+        }
+
+        //Display vehicle status
+        private DisplayVehicleStatus(): string {
+            return this.status.ReadyStatus.split(' ')[1];
         }
 
     }

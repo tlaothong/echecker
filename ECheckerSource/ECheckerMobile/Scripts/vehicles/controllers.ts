@@ -67,9 +67,9 @@
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
             
-            //Delay 3 seconds before go to vehicle status
-            var delayTime = 3;
-            var miliDelay = delayTime * 1000;
+            //Delay 5 seconds before go to vehicle status
+            var secondDelay = 5;
+            var millisecondDelay = secondDelay * 1000;
             this.$ionicLoading.show({
                 template: 'Loading... <ion-spinner></ion-spinner>'
             });
@@ -77,7 +77,7 @@
             this.$timeout(() => {
                 this.$ionicLoading.hide();
                 this.$state.go('app.vehicle.status');
-            }, miliDelay);
+            }, millisecondDelay);
         }
         
         //Notify all vehicle on list
@@ -157,8 +157,8 @@
             this.svc.AddVehicle(this.newVehicle);
 
             //Delay 3 seconds before go to vehicle status
-            var delayTime = 3;
-            var miliDelay = delayTime * 1000;
+            var secondDelay = 3;
+            var millisecondDelay = secondDelay * 1000;
             this.$ionicLoading.show({
                 template: 'Loading... <ion-spinner></ion-spinner>'
             });
@@ -166,7 +166,7 @@
             this.$timeout(() => {
                 this.$ionicLoading.hide();
                 this.$state.go('app.manvehicles');
-            }, miliDelay);
+            }, millisecondDelay);
         }
     }
 
@@ -190,8 +190,8 @@
             this.svc.UpdateVehicle(this.vehicle.VehicleSelected);
             
             //Delay 3 seconds before go to vehicle status
-            var delayTime = 3;
-            var miliDelay = delayTime * 1000;
+            var secondDelay = 3;
+            var millisecondDelay = secondDelay * 1000;
             this.$ionicLoading.show({
                 template: 'Loading... <ion-spinner></ion-spinner>'
             });
@@ -199,7 +199,7 @@
             this.$timeout(() => {
                 this.$ionicLoading.hide();
                 this.$state.go('app.manvehicles');
-            }, miliDelay);
+            }, millisecondDelay);
         }
 
         //Display vehicle type to html

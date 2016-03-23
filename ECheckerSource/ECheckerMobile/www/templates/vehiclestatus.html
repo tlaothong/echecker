@@ -2,7 +2,8 @@
     <ion-content>
         <div class="calm-bg padding">
             <div class="text-center">
-                <h4 class="text-center"><i class="icon ion-checkmark"></i> {{ cx.status.ReadyStatus }}</h4>
+                <h4 class="text-center">ตรวจรถผ่าน {{ cx.DisplayCheckRatio() }} <i class="icon ion-checkmark balanced"></i></h4>
+                <h4 class="text-center">สถานะของรถ: {{ cx.DisplayVehicleStatus() }}</h4>
                 <div class="row">
                     <div class="col col-50">
                         <button class="button col button-energized" href="" ui-sref="app.vehicle.checklists">

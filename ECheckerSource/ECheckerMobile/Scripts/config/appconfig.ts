@@ -33,7 +33,7 @@
         
         //Create full path each url
         constructor() {
-            var defaulturl = 'http://echecker-vanlek.azurewebsites.net';
+            var defaulturl = 'http://dltchecker.azurewebsites.net';
             var apiurl = defaulturl + '/api';
 
             this.VehiclesUrl = apiurl + '/vehicles/:id';
@@ -46,13 +46,7 @@
             this.ReportUrl = apiurl + '/Report/:id';
             this.AnalysisVehicleUrl = apiurl + '/checked/:id/done';
             this.UploadPhoto = apiurl + '/checked/:id/:topicid/photo';
-            
-            //this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
-            //Hack: Fixed url
-            this.ReadyStatusUrl = 'http://echecker-ohae.azurewebsites.net/api/checked/:id/readystatus';
-
-
-
+            this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
         }
 
     }
