@@ -27,8 +27,12 @@
 
             if (this.user.id) {
                 console.log('Connecting to server.')
+                this.$ionicLoading.show({ template: 'Loading data... <ion-spinner></ion-spinner>' });
+
                 svc.GetVehicles().then((it) => {
                     console.log('Connection completed.');
+                    this.$ionicLoading.hide();
+
                     var minimumDataLength = 1;
                     var IsDataEmpty = it.length < minimumDataLength;
                     if (IsDataEmpty) {
