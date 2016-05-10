@@ -76,6 +76,10 @@
         private SelectAmissedDeatil(amissed: AmissedInformation) {
             this.amissed.AmissedInfo = amissed;
         }
+
+        private IsCar(): boolean {
+            return this.vehicle.VehicleSelected.VehicleTypeId == 11;
+        }
     }
 
     class CheckedController {
@@ -139,12 +143,24 @@
             if (checkTopicInfo.IsPass == null) return null;
             return checkTopicInfo.IsPass == true;
         }
+
         private IsFalse(checkTopic: TopicInformation): boolean {
             var intialIndex = 0;
             var checkTopicInfo = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
             if (checkTopicInfo.IsPass == null) return null;
             return checkTopicInfo.IsPass == false;
         }
+
+        private IsNotChosen(checkTopic: TopicInformation): boolean {
+            var intialIndex = 0;
+            var checkTopicInfo = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == checkTopic.id)[intialIndex]
+            return checkTopicInfo.IsPass == null;
+        }
+
+        private IsCar(): boolean {
+            return this.vehicle.VehicleSelected.VehicleTypeId == 11;
+        }
+
     }
 
     class CheckAmissController {

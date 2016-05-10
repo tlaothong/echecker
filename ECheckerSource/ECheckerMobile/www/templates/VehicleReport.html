@@ -5,7 +5,8 @@
             <ion-item class="item item-calm item-icon-right" ng-repeat="report in item.Amisseds" href="" ui-sref="app.vehicle.amisseddetail" ng-click="cx.SelectAmissedDeatil(report)">
                 <h2>
                     {{ report.Detail }}
-                    <i class="icon ion-model-s assertive"></i>
+                    <i class="icon ion-model-s assertive" ng-show="cx.IsCar()"></i>
+                    <img class="icon" src="img/motorcycleNotPass.png" ng-show="!cx.IsCar()" />
                 </h2>
             </ion-item>
         </ion-list>

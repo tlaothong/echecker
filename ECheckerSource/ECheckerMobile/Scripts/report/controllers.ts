@@ -9,6 +9,10 @@
         private SelectAmissedDeatil(amissed: AmissedInformation) {
             this.amissed.AmissedInfo = amissed;
         }
+
+        private IsCar(): boolean {
+            return this.vehicle.VehicleSelected.VehicleTypeId == 11;
+        }
     }
 
     angular
