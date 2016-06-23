@@ -139,7 +139,7 @@
     class VehicleAddController {
 
         private newVehicle: VehicleInformation;
-        private VehicleTypeId: string;
+        private VehicleTypeId: number;
 
         static $inject = [
             '$ionicLoading',
@@ -157,7 +157,7 @@
         private Submit(): void {
             var user = Ionic.User.current();
             this.newVehicle.Email = user.id;
-            this.newVehicle.VehicleTypeId = this.VehicleTypeId == 'รถยนต์' ? 11 : 13;
+            this.newVehicle.VehicleTypeId = this.VehicleTypeId;
             this.svc.AddVehicle(this.newVehicle);
 
             //Delay 3 seconds before go to vehicle status
