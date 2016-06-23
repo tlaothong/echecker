@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="dltchecker" version="2.9.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="297">
-  <name>ECheckerMobile</name>
+<widget id="dltchecker" version="2.9.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="297">
+  <name>dltechecker.iddrivers.thes</name>
   <description>
         An Ionic Framework and Cordova project.
     </description>
@@ -88,4 +88,5 @@
   <preference name="Fullscreen" value="True" />
   <plugin name="cordova-plugin-camera" version="2.2.1-dev" src="https://github.com/apache/cordova-plugin-camera.git" />
   <preference name="target-device" value="handset" />
+  <plugin name="cordova-sqlite-storage" version="1.4.3" />
 </widget>
