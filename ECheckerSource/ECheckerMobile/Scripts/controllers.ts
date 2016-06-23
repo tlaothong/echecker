@@ -100,11 +100,11 @@ module starter.controllers {
             //});
 
         }
-        
+
         //Do login (providerName: Require provider name such facebook or google)
         private login(providerName: string) {
-
-            //Connect to azure
+            
+            ////Connect to azure
             var mobileAppsClient = new WindowsAzure.MobileServiceClient(this.appUrl, null);
             if (mobileAppsClient != null) {
                 console.log('Connection to azure successed!');
@@ -139,7 +139,7 @@ module starter.controllers {
                     });
             }
         }
-        
+
         //Do logout
         private logout() {
 
@@ -161,9 +161,9 @@ module starter.controllers {
                 this.$state.go('app.vehicles', {}, { reload: true });
             });
         }
-        
+
         //------ Unuse code ------
-        
+
         //Do login
         //private login() {
         //    if (this.checkLogin(this.email, this.password)) {
@@ -172,7 +172,7 @@ module starter.controllers {
         //        this.user.save().then(() => { this.navigateToIndex(); });
         //    } else alert('Email or password is not correct.');
         //}
-        
+
         //Check login
         //private checkLogin(email: string, password: string): boolean {
         //    //Hack: mock email and password for checking correct on login
@@ -212,9 +212,9 @@ module starter.controllers {
         //    this.modalLogin.hide();
         //    this.$state.go('app.vehicles', {}, { reload: true });
         //}
-        
+
         //------ Old code (example) ------
-        
+
         //public login() {
         //    this.modal.show();
         //}
@@ -232,11 +232,11 @@ module starter.controllers {
         //        this.closeLogin();
         //    }, 1000);
         //}
-        
+
         //Login successed
         //public Logined() {
         //    //Delay 1 sec to hide modal
-            
+
         //    //TODO: user ionic get email
         //    //this.user.IsLogin = true;
         //    console.log('Login succeed.');
