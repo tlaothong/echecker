@@ -124,7 +124,7 @@ namespace ApiApp.Controllers
                         data.CheckedId = myLatestChecked.id;
                         data.VehicleId = id;
                         data.TopicId = item.id;
-                        data.Detail = form.Where(x=>x.id == item.id).FirstOrDefault().Detail;
+                        data.Detail = form.Where(x => x.id == item.id).FirstOrDefault().Detail;
                         data.SuggestTopic = form.Where(x => x.id == item.id).FirstOrDefault().SuggestTopic;
                         data.SuggestDetail = form.Where(x => x.id == item.id).FirstOrDefault().SuggestDetail;
                         data.DamagePercent = form.Where(x => x.id == item.id).FirstOrDefault().DamagePercent;
@@ -145,15 +145,15 @@ namespace ApiApp.Controllers
 
                     //sum calculate damage
                     int avg = 0;
-                    avg = amisseds.Sum(x => x.DamagePercent);
+                    avg = 100 - amisseds.Sum(x => x.DamagePercent);
 
-                    if (amisseds.Any(x => x.IsCritical == true) || avg < 60)
+                    if (amisseds.All(x => x.IsCritical == false) && avg >= 60)
                     {
-                        status.Status = string.Format("{0}% ไม่ควรใช้งาน", 100 - avg);
+                        status.Status = string.Format("{0}% ใช้งานได้ปกติ", avg);
                     }
                     else
                     {
-                        status.Status = string.Format("{0}% ใช้งานได้ปกติ", 100 - avg);
+                        status.Status = string.Format("{0}% ไม่ควรใช้งาน", avg);
                     }
 
                     //update checked[] to done
@@ -164,7 +164,10 @@ namespace ApiApp.Controllers
                     this.repoChecking.CreateReadyStatus(status);
 
                     //create amisseds
-                    this.repoChecking.CreateAmissed(amisseds);
+                    if (amisseds.Count() > 0)
+                    {
+                        this.repoChecking.CreateAmissed(amisseds);
+                    }
                 }
                 catch (Exception ex)
                 {
