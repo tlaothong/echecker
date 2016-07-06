@@ -13,8 +13,9 @@
         AmissedUrl: string;
         ReportUrl: string;
         AnalysisVehicleUrl: string;
+        UploadPhoto: string;
     }
-    
+
     export class AppConfig implements IAppConfig {
 
         //Set path
@@ -28,10 +29,11 @@
         public AmissedUrl: string;
         public ReportUrl: string;
         public AnalysisVehicleUrl: string;
+        public UploadPhoto: string;
         
         //Create full path each url
         constructor() {
-            var defaulturl = 'http://echecker-vanlek.azurewebsites.net';
+            var defaulturl = 'http://dltchecker.azurewebsites.net';
             var apiurl = defaulturl + '/api';
 
             this.VehiclesUrl = apiurl + '/vehicles/:id';
@@ -43,13 +45,10 @@
             this.AmissedUrl = apiurl + '/checked/:id/amissed';
             this.ReportUrl = apiurl + '/Report/:id';
             this.AnalysisVehicleUrl = apiurl + '/checked/:id/done';
-            
-            //this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
-            //Hack: Fixed url
-            this.ReadyStatusUrl = 'http://echecker-ohae.azurewebsites.net/api/checked/:id/readystatus';
-            
+            this.UploadPhoto = apiurl + '/checked/:id/:topicid/photo';
+            this.ReadyStatusUrl = apiurl + '/checked/:id/readystatus';
         }
-        
+
     }
 
     angular

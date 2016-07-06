@@ -4,7 +4,11 @@
             <ion-item class="item item-calm item-icon-right" collection-repeat="item in cx.topics.TopicInfos" href="" ui-sref="app.vehicle.checkamiss({ id: item.id })">
                 <h2>
                     {{ item.Detail }}
-                    <i class="icon ion-model-s" ng-class="{'balanced':  cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>
+
+                    <i class="icon ion-model-s" ng-show="cx.IsCar()" ng-class="{'balanced':  cx.IsPass(item), 'assertive': cx.IsFalse(item)}"></i>
+                    <img class="icon" src="img/motorcycle.png" ng-show="!cx.IsCar() && cx.IsNotChosen(item)" />
+                    <img class="icon" src="img/motorcycleNotPass.png" ng-show="!cx.IsCar() && cx.IsFalse(item)" />
+                    <img class="icon" src="img/motorcyclePass.png" ng-show="!cx.IsCar() && cx.IsPass(item)" />
                 </h2>
             </ion-item>
         </ion-list>

@@ -5,6 +5,7 @@
         .module('app.checking',
         [
             "ngResource",
-            'app.shared'
+            'app.shared',
+            'ngCordova'
         ]);
 })();

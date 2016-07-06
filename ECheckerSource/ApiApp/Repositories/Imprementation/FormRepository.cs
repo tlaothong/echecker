@@ -56,12 +56,13 @@ namespace ApiApp.Repositories.Imprementation
         {
             if (topic == null || topic.Count() <= 0)
             {
-                var coltn = MongoUtil.GetCollection<Topic>(tableName);
-                coltn.InsertMany(topic);
+                throw new ArgumentNullException("null input from CreateForm repo");
+              
             }
             else
             {
-                throw new ArgumentNullException("null input from CreateForm repo");
+                var coltn = MongoUtil.GetCollection<Topic>(tableName);
+                coltn.InsertMany(topic);
             }
         }
     }

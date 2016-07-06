@@ -86,6 +86,20 @@ namespace ApiApp.Repositories.Imprementation
             return result != null ? result.FirstOrDefault() : null;
         }
 
+        /// <summary>
+        ///  ดึงข้อมูล list การตรวจรถล่าสุด ทุกคัน by vehicleId
+        /// </summary>
+        /// <param name="vehiclesId"> list of vehicleId</param>
+        /// <returns></returns>
+        public IEnumerable<Checked> GetlastCheckedByVehicleIdList(List<string> vehiclesId)
+        {
+            var coltn = MongoUtil.GetCollection<Checked>(tableName);
+
+            var result = coltn.Find(x => vehiclesId.Contains(x.VehicleId)).ToList();
+
+            return result != null ? result : new List<Checked>();
+        }
+
 
 
         /// <summary> 
@@ -193,5 +207,7 @@ namespace ApiApp.Repositories.Imprementation
                 throw ex;
             }
         }
+
+
     }
 }

@@ -56,39 +56,34 @@
 //});
 
 declare var Ionic;
+declare var WindowsAzure;
 
 module starter.controllers {
 
-    //export class LoginController {
-
-    //    static $inject = ["$scope"];
-    //    constructor(private $scope) {
-    //    }
-
-    //    public doLogin() {
-    //        alert('hi');
-    //        this.$scope.modal.hide();
-    //    }
-    //}
-
     export class AppCtrl {
 
+        //private modalRegister: any;
+        //private email: any;
+        //private password: any;
         private modalLogin: any;
-        private modalRegister: any;
-        //private loginData = {};
         private user: any;
-        private email: any;
-        private password: any;
+        private appUrl = 'https://samplefordevelop.azurewebsites.net';
 
-        static $inject = ["$scope", "$ionicModal", "$timeout", '$state'];
-        constructor($scope, $ionicModal, private $timeout, private $state) {
+        static $inject = [
+            '$scope',
+            '$ionicModal',
+            '$state'];
+        constructor(
+            private $scope,
+            private $ionicModal,
+            private $state) {
 
-            Ionic.io();
-            this.user = Ionic.User.current();
+            if (this.user == null) this.user = Ionic.User.current();
 
             //Prepare login modal
             $ionicModal.fromTemplateUrl('templates/login.html', {
                 backdropClickToClose: false,
+                hardwareBackButtonClose: false,
                 scope: $scope
             }).then((modal) => {
                 this.modalLogin = modal;
@@ -96,63 +91,130 @@ module starter.controllers {
             });
 
             //Prepare register modal
-            $ionicModal.fromTemplateUrl('templates/register.html', {
-                backdropClickToClose: false,
-                scope: $scope
-            }).then((modal) => {
-                this.modalRegister = modal;
-            });
-        }
-        
-        //Call register modal
-        private register() {
-            this.clear();
-            this.modalRegister.show();
+            //$ionicModal.fromTemplateUrl('templates/register.html', {
+            //    backdropClickToClose: false,
+            //    hardwareBackButtonClose: false,
+            //    scope: $scope
+            //}).then((modal) => {
+            //    this.modalRegister = modal;
+            //});
+
         }
 
-        //Do register
-        private submitToRegister() {
-            this.user.id = this.email;
-            this.modalRegister.hide();
-            this.modalLogin.hide();
-            this.$state.go('app.vehicles', {}, { reload: true });
+        //Do login (providerName: Require provider name such facebook or google)
+        private login(providerName: string) {
+            
+            ////Connect to azure
+            var mobileAppsClient = new WindowsAzure.MobileServiceClient(this.appUrl, null);
+            if (mobileAppsClient != null) {
+                console.log('Connection to azure successed!');
+
+                //Call provider for login
+                mobileAppsClient.login(providerName, null)
+                    .then((successed) => {
+                        var urlRequest = this.appUrl + '/.auth/me';
+                        mobileAppsClient._request(
+                            'GET',
+                            urlRequest,
+                            { authenticationToken: successed.mobileServiceAuthenticationToken },
+                            true,
+                            (error, response) => {
+                                if (response != null) {
+
+                                    //Get email from provider account
+                                    var emailIndex = 0;
+                                    this.user.id = JSON.parse(response.responseText)[emailIndex].user_id;
+                                    this.user.save().then(() => {
+                                        console.log('login successed with ' + this.user.id + ' account');
+
+                                        //Navigate to index
+                                        this.modalLogin.hide();
+                                        this.$state.go('app.vehicles', {}, { reload: true });
+                                    });
+                                }
+                            });
+                    }, (error) => {
+                        //Alert error meesage when failed to login
+                        alert('Failed to login with ' + providerName + '\n > ' + error);
+                    });
+            }
         }
 
-        //Cancel to register
-        private cancelToRegister() {
-            this.clear();
-            this.modalRegister.hide();
-        }
-        
-        //Do login
-        private login() {
-            this.user.id = this.email;
-            this.user.save().then(() => {
-                this.modalLogin.hide();
-                this.$state.go('app.vehicles', {}, { reload: true });
-            });
-        }
-
-        //Logout from system
+        //Do logout
         private logout() {
-            //this.user = Ionic.User.current({});
-            //this.user = Ionic.User.current();
 
-            alert('Before save: ' + this.user.isValid());
+            //Remove user account on this mobile
             this.user.delete().then(() => {
-                this.user = Ionic.User.current();
-                alert('After save: ' + this.user);
-                console.log('Log out succeed.');
+
+                //Reset user account on this mobile
+                this.user = Ionic.User.current(new Ionic.User());
+                console.log('Log out succeeded.');
+
+                //Logout from azure
+                var mobileAppsClient = new WindowsAzure.MobileServiceClient(this.appUrl, null);
+                if (mobileAppsClient != null) mobileAppsClient.logout();
+
+                //Display login modal
+                this.modalLogin.show()
+
+                //Navigate to index
                 this.$state.go('app.vehicles', {}, { reload: true });
             });
         }
+
+        //------ Unuse code ------
+
+        //Do login
+        //private login() {
+        //    if (this.checkLogin(this.email, this.password)) {
+        //        console.log('Login succeeded.');
+        //        this.user.id = this.email;
+        //        this.user.save().then(() => { this.navigateToIndex(); });
+        //    } else alert('Email or password is not correct.');
+        //}
+
+        //Check login
+        //private checkLogin(email: string, password: string): boolean {
+        //    //Hack: mock email and password for checking correct on login
+        //    var isAuthenticated = ((email == 'aa@aa.com') && (password == 'password'));
+        //    return isAuthenticated;
+        //}
+
+        //Call register modal
+        //private callRegister() {
+        //    this.clear();
+        //    this.modalRegister.show();
+        //}
+
+        ////Do register
+        //private register() {
+        //    this.user.id = this.email;
+        //    console.log('Register succeeded.');
+        //    this.user.save().then(() => { this.navigateToIndex(); });
+        //}
+
+        ////Cancel register
+        //private cancelRegister() {
+        //    this.clear();
+        //    this.modalRegister.hide();
+        //}
 
         //Clear email and password input
-        private clear() {
-            this.email = '';
-            this.password = '';
-        }
-        
+        //private clear() {
+        //    this.email = '';
+        //    this.password = '';
+        //}
+
+        //Navigate to index and clean eveything
+        //private navigateToIndex() {
+        //    this.clear();
+        //    this.modalRegister.hide();
+        //    this.modalLogin.hide();
+        //    this.$state.go('app.vehicles', {}, { reload: true });
+        //}
+
+        //------ Old code (example) ------
+
         //public login() {
         //    this.modal.show();
         //}
@@ -171,12 +233,10 @@ module starter.controllers {
         //    }, 1000);
         //}
 
-        
-        
         //Login successed
         //public Logined() {
         //    //Delay 1 sec to hide modal
-            
+
         //    //TODO: user ionic get email
         //    //this.user.IsLogin = true;
         //    console.log('Login succeed.');
@@ -187,5 +247,4 @@ module starter.controllers {
     angular
         .module('starter.controllers', [])
         .controller('AppCtrl', AppCtrl);
-    //.controller('LoginController', LoginController);
 }

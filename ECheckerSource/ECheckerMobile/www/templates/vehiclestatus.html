@@ -2,7 +2,13 @@
     <ion-content>
         <div class="calm-bg padding">
             <div class="text-center">
-                <h4 class="text-center"><i class="icon ion-checkmark"></i> {{ cx.status.ReadyStatus }}</h4>
+                <h4 class="text-center">ตรวจรถผ่าน {{ cx.vehicleCheckRatio }} <i class="icon ion-checkmark balanced"></i></h4>
+                <h4 class="text-center">
+                    สถานะของรถ <span ng-class="{'assertive': (cx.vehicleStatus == 'ไม่ควรใช้งาน' || cx.vehicleStatus == 'ไม่พร้อมใช้งาน' ),
+                                     'balanced': (cx.vehicleStatus == 'ใช้งานได้ปกติ' || cx.vehicleStatus == 'พร้อมใช้งาน' )}">
+                        {{ cx.vehicleStatus }}
+                    </span>
+                </h4>
                 <div class="row">
                     <div class="col col-50">
                         <button class="button col button-energized" href="" ui-sref="app.vehicle.checklists">
@@ -22,7 +28,8 @@
             <ion-item class="item item-calm item-icon-right" collection-repeat="item in cx.amisseds" href="" ui-sref="app.vehicle.amisseddetail" ng-click="cx.SelectAmissedDeatil(item)">
                 <h2>
                     {{ item.Detail }}
-                    <i class="icon ion-model-s assertive"></i>
+                    <i class="icon ion-model-s assertive" ng-show="cx.IsCar()"></i>
+                    <img class="icon" src="img/motorcycleNotPass.png" ng-show="!cx.IsCar()" />
                 </h2>
             </ion-item>
         </ion-list>

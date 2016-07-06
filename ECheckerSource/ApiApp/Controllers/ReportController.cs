@@ -44,7 +44,7 @@ namespace ApiApp.Controllers
                 result.Add(dto);
             }
 
-            return result;
+            return result.OrderByDescending(it => it.CreateDate);
         }
     }
 }
