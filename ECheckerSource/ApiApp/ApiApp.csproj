@@ -181,6 +181,8 @@
     <Compile Include="Repositories\IVechicleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\dltchecker - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dltchecker - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

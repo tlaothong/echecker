@@ -139,7 +139,7 @@ namespace ApiApp.Controllers
 
                     //compute status
                     //check critical first!!
-                    ReadyStatus status = new Models.ReadyStatus { VehicleId = id };
+                    ReadyStatus status = new Models.ReadyStatus { VehicleId = id, CreateDateTime = DateTime.Now };
                     //var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
 
                     //sum calculate damage
