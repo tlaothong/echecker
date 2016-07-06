@@ -43,6 +43,12 @@ namespace ApiApp.Controllers
         public IEnumerable<Amissed> GetLatestAmisseds(string id)
         {
             var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
+            var result = this.repoChecking.GetLatestReadyStatus(id);
+            var percent = result.Status.Split('%')[0];
+            if (percent == "100")
+            {
+                amissedList = new List<Amissed>();
+            }
             return amissedList;
         }
 
