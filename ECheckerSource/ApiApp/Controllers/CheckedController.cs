@@ -44,10 +44,13 @@ namespace ApiApp.Controllers
         {
             var amissedList = this.repoChecking.GetAmissedByVehicleId(id);
             var result = this.repoChecking.GetLatestReadyStatus(id);
-            var percent = result.Status.Split('%')[0];
-            if (percent == "100")
+            if (result != null)
             {
-                amissedList = new List<Amissed>();
+                var percent = result.Status.Split('%')[0];
+                if (percent == "100")
+                {
+                    amissedList = new List<Amissed>();
+                }
             }
             return amissedList;
         }
