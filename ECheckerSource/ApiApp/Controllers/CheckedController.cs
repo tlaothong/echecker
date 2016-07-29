@@ -317,7 +317,7 @@ namespace ApiApp.Controllers
                     fileInfo.MoveTo(localfileURL);
 
                     //Fix URL
-                    serverfileURL = new StringBuilder().Append("http://echecker.azurewebsites.net").Append("/CheckedImg/Img/").Append(fileName).ToString();
+                    serverfileURL = new StringBuilder().Append("http://dltchecker.azurewebsites.net").Append("/CheckedImg/Img/").Append(fileName).ToString();
                 }
 
 
