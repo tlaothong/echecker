@@ -222,7 +222,7 @@
             //Prepare connection API service
             var intialIndex = 0;
             var topicId = this.checkeds.CheckedsInfos.CheckedTopics.filter(it=> it.id == this.data.id)[intialIndex].id;
-            var apiUrl = 'http://echecker-vanlek.azurewebsites.net/api/checked/' + this.vehicle.VehicleSelected.id + '/' + topicId + '/photo';
+            var apiUrl = 'http://dltchecker.azurewebsites.net/api/checked/' + this.vehicle.VehicleSelected.id + '/' + topicId + '/photo';
             
             //Get Images
             this.$cordovaCamera.getPicture(options)
