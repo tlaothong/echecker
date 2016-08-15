@@ -48,29 +48,29 @@
                 });
             }
         }
-        
+
         //Get vehicle is not ready to analysis (ตรวจยังไม่เสร็จ)
         private DisplayVehichleNotReady(): VehicleInformation[] {
             if (this.data == null) return null;
-            return this.data.filter(it=> it.StatusCode == 0);
+            return this.data.filter(it => it.StatusCode == 0);
         }
 
         //Get vehicle is ready to analysis (รอส่งวิเคราะห์)
         private DisplayVehichleReady(): VehicleInformation[] {
             if (this.data == null) return null;
-            return this.data.filter(it=> it.StatusCode == 1);
+            return this.data.filter(it => it.StatusCode == 1);
         }
 
         //Get vehicle analysis comepleted (วิเคราะห์แล้ว)
         private DisplayVehichleCompleted(): VehicleInformation[] {
             if (this.data == null) return null;
-            return this.data.filter(it=> it.StatusCode == 2);
+            return this.data.filter(it => it.StatusCode == 2);
         }
-        
+
         //Set select vehicle to service
         private SelectVehicle(vehicleSelected: VehicleInformation) {
             this.vehicle.VehicleSelected = vehicleSelected;
-            
+
             //Delay 5 seconds before go to vehicle status
             var secondDelay = 5;
             var millisecondDelay = secondDelay * 1000;
@@ -83,13 +83,13 @@
                 this.$state.go('app.vehicle.status');
             }, millisecondDelay);
         }
-        
+
         //Notify all vehicle on list
         private NotifyAllVehicle() {
-            if (this.data == null) return;
-            this.data.filter(it=> (it.IsPBRActive && this.IsNotify(it.PBRDate)));
+            var IsInvalid = this.data == null;
+            if (IsInvalid) return;
 
-            var alertData = this.data.filter(it=>
+            var alertData = this.data.filter(it =>
                 (it.IsPBRActive && this.IsNotify(it.PBRDate)) ||
                 (it.IsDrivingLicenseActive && this.IsNotify(it.DrivingLicenseDate)) ||
                 (it.IsCheckActive && this.IsNotify(it.CheckDate)) ||
@@ -99,11 +99,11 @@
             var notifyMessage: Array<string> = [];
             for (var item of alertData) {
                 notifyMessage.push('ทะเบียน ' + item.PlateNumber + '\n');
-                if (item.IsPBRActive) notifyMessage.push('> ครบกำหนดพรบ\n');
-                if (item.IsDrivingLicenseActive) notifyMessage.push('> ครบกำหนดใบขับขี่\n');
-                if (item.IsCheckActive) notifyMessage.push('> ครบกำหนดตรวจสภาพรถ\n');
-                if (item.IsTaxActive) notifyMessage.push('> ครบกำหนดต่อภาษี\n');
-                if (item.IsPayActive) notifyMessage.push('> ครบกำหนดผ่อนงวด\n');
+                if (item.IsPBRActive && this.IsNotify(item.PBRDate)) notifyMessage.push('> ครบกำหนดพรบ\n');
+                if (item.IsDrivingLicenseActive && this.IsNotify(item.DrivingLicenseDate)) notifyMessage.push('> ครบกำหนดใบขับขี่\n');
+                if (item.IsCheckActive && this.IsNotify(item.CheckDate)) notifyMessage.push('> ครบกำหนดตรวจสภาพรถ\n');
+                if (item.IsTaxActive && this.IsNotify(item.TaxDate)) notifyMessage.push('> ครบกำหนดต่อภาษี\n');
+                if (item.IsPayActive && this.IsNotify(item.PayDate)) notifyMessage.push('> ครบกำหนดผ่อนงวด\n');
                 notifyMessage.push('\n');
             }
 
@@ -192,7 +192,7 @@
         //Send vehicle information to server
         private Submit(): void {
             this.svc.UpdateVehicle(this.vehicle.VehicleSelected);
-            
+
             //Delay 3 seconds before go to vehicle status
             var secondDelay = 3;
             var millisecondDelay = secondDelay * 1000;
