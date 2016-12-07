@@ -50,5 +50,5 @@ gulp.task('tsc', function () {
                 return file.cwd + '../../app/';
             }
         }))
-        .pipe(gulp.dest('www/js/'));
+        .pipe(gulp.dest(''));
 });
