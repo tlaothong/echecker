@@ -89,4 +89,5 @@
   <plugin name="cordova-plugin-camera" version="2.2.1-dev" src="https://github.com/apache/cordova-plugin-camera.git" />
   <preference name="target-device" value="handset" />
   <plugin name="cordova-sqlite-storage" version="1.4.3" />
+  <plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" />
 </widget>

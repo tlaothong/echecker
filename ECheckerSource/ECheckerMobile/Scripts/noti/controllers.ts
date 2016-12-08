@@ -7,10 +7,13 @@
 
         static $inject = [
             '$state',
+            '$cordovaLocalNotification',
             '$cordovaDatePicker',
             'app.noti.NotificationService',
             'app.shared.VehicleService'];
-        constructor(private $state,
+        constructor(
+            private $state,
+            private $cordovaLocalNotification,
             private $cordovaDatePicker,
             private svc: app.noti.NotificationService,
             private vehicle: app.shared.VehicleService) {
@@ -41,14 +44,13 @@
                     else if (newDateFor == 'PayDate') { noti.PayDate = date; }
                 });
         }
-
-
+        
         private Submit(): void {
-            
+
             //Update local-vehicle checked
             this.vehicle.VehicleSelected.IsPBRActive = this.notiVehicle.IsPBRActive;
             this.vehicle.VehicleSelected.IsDrivingLicenseActive = this.notiVehicle.IsDrivingLicenseActive;
-            this.vehicle.VehicleSelected.IsCheckActive = this.notiVehicle.IsCheckActive;
+            this.vehicle.VehicleSelected.IsCheckActive = this.notiVehicle.IsCheckActive; 52
             this.vehicle.VehicleSelected.IsTaxActive = this.notiVehicle.IsTaxActive;
             this.vehicle.VehicleSelected.IsPayActive = this.notiVehicle.IsPayActive;
 
@@ -60,7 +62,51 @@
             this.vehicle.VehicleSelected.PayDate = this.notiVehicle.PayDate;
 
             this.svc.UpdateNotification(this.vehicle.VehicleSelected);
+
+            if (this.vehicle.VehicleSelected.IsPBRActive) this.LocalNotification(this.vehicle.VehicleSelected.PBRDate, this.vehicle.VehicleSelected.PlateNumber + " พรบ หมดอายุ");
+            if (this.vehicle.VehicleSelected.IsDrivingLicenseActive) this.LocalNotification(this.vehicle.VehicleSelected.DrivingLicenseDate, this.vehicle.VehicleSelected.PlateNumber + " ใบขับขี่หมดอายุ");
+            if (this.vehicle.VehicleSelected.IsCheckActive) this.LocalNotification(this.vehicle.VehicleSelected.CheckDate, this.vehicle.VehicleSelected.PlateNumber + " ตรวจสภาพ");
+            if (this.vehicle.VehicleSelected.IsTaxActive) this.LocalNotification(this.vehicle.VehicleSelected.TaxDate, this.vehicle.VehicleSelected.PlateNumber + " ต่อภาษีคู่มือรถ");
+            if (this.vehicle.VehicleSelected.IsPayActive) this.LocalNotification(this.vehicle.VehicleSelected.PayDate, this.vehicle.VehicleSelected.PlateNumber + " จ่ายงวดรถ");
+            
             this.$state.go('app.vehicle.status');
+        }
+
+        //Alert local notification
+        private LocalNotification(notiDate: Date, message: string): void {
+            
+            notiDate.setHours(8, 30, 0, 0);
+            var beforeNotiDateOneDay = new Date();
+            beforeNotiDateOneDay.setDate(notiDate.getDate() - 1);
+            beforeNotiDateOneDay.setHours(8, 30, 0, 0);
+            var beforeNotiDateTwoeDay = new Date();
+            beforeNotiDateTwoeDay.setDate(notiDate.getDate() - 2);
+            beforeNotiDateTwoeDay.setHours(8, 30, 0, 0);
+            
+            this.$cordovaLocalNotification.schedule([
+                {
+                    id: 1,
+                    title: 'DLTChecker',
+                    text: message,
+                    at: beforeNotiDateTwoeDay
+                },
+                {
+                    id: 2,
+                    title: 'DLTChecker',
+                    text: message,
+                    at: beforeNotiDateOneDay
+                },
+                {
+                    id: 3,
+                    title: 'DLTChecker',
+                    text: message,
+                    at: notiDate
+                }
+            ]).then(function (result) {
+                // ...
+            });
+            
+            
         }
 
         //Get only notification value from vehicle (such IsPBRActive, PBRDate etc.)
