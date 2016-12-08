@@ -186,6 +186,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                         controller: 'app.vehicles.VehicleEditController as cx',
                     }
                 }
+            })
+
+            .state('app.emergencyphonenumber', {
+                url: '/emergencyphonenumber',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/emergencyphonenumber.html',
+                        controller: 'EmergencyCtrl as cx'
+                    }
+                }
             });
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/vehicles');

@@ -1,0 +1,20 @@
+﻿<ion-view view-title="Emergency Numbers" cache-view="false">
+    <ion-content>
+
+        <div class="calm-bg padding">
+            <label class="item item-light item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" class="light-bg" placeholder="Search" ng-model="search">
+            </label>
+        </div>
+        <div class="padding-top list">
+
+            <div class="item" ng-repeat="item in cx.emergencyPhoneNumber | filter: search">
+                {{ item.Title }}
+                <span class="item-note">
+                    {{ item.PhoneNumber }}
+                </span>
+            </div> 
+            
+    </ion-content>
+</ion-view>

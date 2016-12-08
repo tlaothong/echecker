@@ -11,33 +11,38 @@
         <ion-nav-view loaded="cx.login()" name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
 
-  <ion-side-menu side="right">
-    <ion-header-bar align-title="center" class="bar-positive">
-      <h1 class="title">Option</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.vehicles">
-            <h2>
-                ตรวจรถ
-                <i class="icon ion-clipboard"></i>
-            </h2>
-        </ion-item>
-        <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.manvehicles">
-            <h2>
-                จัดการรถ
-                <i class="icon ion-model-s"></i>
-            </h2>
-        </ion-item>
-        <ion-item class="item item-calm item-icon-right" menu-close ng-click="cx.logout()">
-            <h2>
-                ออกจากระบบ
-                <i class="icon ion-power"></i>
-            </h2>
-        </ion-item>
-         
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+    <ion-side-menu side="right">
+        <ion-header-bar align-title="center" class="bar-positive">
+            <h1 class="title">Option</h1>
+        </ion-header-bar>
+        <ion-content>
+            <ion-list>
+                <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.vehicles">
+                    <h2>
+                        ตรวจรถ
+                        <i class="icon ion-clipboard"></i>
+                    </h2>
+                </ion-item>
+                <ion-item class="item-calm item-icon-right" menu-close href="" ui-sref="app.manvehicles">
+                    <h2>
+                        จัดการรถ
+                        <i class="icon ion-model-s"></i>
+                    </h2>
+                </ion-item>
+                <ion-item class="item item-calm item-icon-right" menu-close ui-sref="app.emergencyphonenumber">
+                    <h2>
+                        เบอร์โทรศัพท์ฉุกเฉิน
+                        <i class="icon ion-ios-telephone"></i>
+                    </h2>
+                </ion-item>
+                <ion-item class="item item-calm item-icon-right" menu-close ng-click="cx.logout()">
+                    <h2>
+                        ออกจากระบบ
+                        <i class="icon ion-power"></i>
+                    </h2>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
 </ion-side-menus>
 
