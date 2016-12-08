@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="dltchecker" version="2.9.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="299">
-  <name>dltechecker.iddrivers.thes</name>
+<widget id="dltechecker.iddrivers.thes" version="2.9.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="299">
+  <name>dltechecker</name>
   <description>
         An Ionic Framework and Cordova project.
     </description>

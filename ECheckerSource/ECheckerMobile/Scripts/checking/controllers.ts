@@ -215,8 +215,8 @@
 
             //Set options for camera and file transfer
             var options = {
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA
+                destinationType: 'Camera.DestinationType.FILE_URI',
+                sourceType: 'Camera.PictureSourceType.CAMERA'
             };
 
             //Prepare connection API service
