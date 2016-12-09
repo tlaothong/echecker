@@ -4,6 +4,7 @@
     class NotificationController {
 
         private notiVehicle: VehicleInformation
+        private _localNotificationId: number = 1;
 
         static $inject = [
             '$state',
@@ -44,7 +45,7 @@
                     else if (newDateFor == 'PayDate') { noti.PayDate = date; }
                 });
         }
-        
+
         private Submit(): void {
 
             //Update local-vehicle checked
@@ -61,52 +62,62 @@
             this.vehicle.VehicleSelected.TaxDate = this.notiVehicle.TaxDate;
             this.vehicle.VehicleSelected.PayDate = this.notiVehicle.PayDate;
 
+            //Update notification to server
             this.svc.UpdateNotification(this.vehicle.VehicleSelected);
+            this.$state.go('app.vehicle.status');
 
+
+            //Local Notifications
+            this.$cordovaLocalNotification.cancelAll().then(function (result) {
+                // ...
+                console.log("Cancel all local notifications!");
+            });
             if (this.vehicle.VehicleSelected.IsPBRActive) this.LocalNotification(this.vehicle.VehicleSelected.PBRDate, this.vehicle.VehicleSelected.PlateNumber + " พรบ หมดอายุ");
             if (this.vehicle.VehicleSelected.IsDrivingLicenseActive) this.LocalNotification(this.vehicle.VehicleSelected.DrivingLicenseDate, this.vehicle.VehicleSelected.PlateNumber + " ใบขับขี่หมดอายุ");
             if (this.vehicle.VehicleSelected.IsCheckActive) this.LocalNotification(this.vehicle.VehicleSelected.CheckDate, this.vehicle.VehicleSelected.PlateNumber + " ตรวจสภาพ");
             if (this.vehicle.VehicleSelected.IsTaxActive) this.LocalNotification(this.vehicle.VehicleSelected.TaxDate, this.vehicle.VehicleSelected.PlateNumber + " ต่อภาษีคู่มือรถ");
             if (this.vehicle.VehicleSelected.IsPayActive) this.LocalNotification(this.vehicle.VehicleSelected.PayDate, this.vehicle.VehicleSelected.PlateNumber + " จ่ายงวดรถ");
-            
-            this.$state.go('app.vehicle.status');
         }
 
         //Alert local notification
         private LocalNotification(notiDate: Date, message: string): void {
-            
-            notiDate.setHours(8, 30, 0, 0);
+
+            var currentNotiDate = new Date(notiDate)
+            currentNotiDate.setHours(8, 30, 0, 0);
             var beforeNotiDateOneDay = new Date();
-            beforeNotiDateOneDay.setDate(notiDate.getDate() - 1);
+            beforeNotiDateOneDay.setDate(currentNotiDate.getDate() - 1);
             beforeNotiDateOneDay.setHours(8, 30, 0, 0);
             var beforeNotiDateTwoeDay = new Date();
-            beforeNotiDateTwoeDay.setDate(notiDate.getDate() - 2);
+            beforeNotiDateTwoeDay.setDate(currentNotiDate.getDate() - 2);
             beforeNotiDateTwoeDay.setHours(8, 30, 0, 0);
-            
+
+            var textLocalNoti = message + "วันที่ " + currentNotiDate.toLocaleDateString();
+
             this.$cordovaLocalNotification.schedule([
                 {
-                    id: 1,
-                    title: 'DLTChecker',
-                    text: message,
+                    id: this._localNotificationId++,
+                    title: 'DLTEChecker',
+                    text: textLocalNoti,
                     at: beforeNotiDateTwoeDay
                 },
                 {
-                    id: 2,
-                    title: 'DLTChecker',
-                    text: message,
+                    id: this._localNotificationId++,
+                    title: 'DLTEChecker',
+                    text: textLocalNoti,
                     at: beforeNotiDateOneDay
                 },
                 {
-                    id: 3,
-                    title: 'DLTChecker',
-                    text: message,
-                    at: notiDate
+                    id: this._localNotificationId++,
+                    title: 'DLTEChecker',
+                    text: textLocalNoti,
+                    at: currentNotiDate
                 }
             ]).then(function (result) {
                 // ...
+                console.log("Set schedule for local notifications!");
             });
-            
-            
+
+
         }
 
         //Get only notification value from vehicle (such IsPBRActive, PBRDate etc.)
