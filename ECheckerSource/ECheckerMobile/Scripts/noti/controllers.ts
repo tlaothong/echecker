@@ -82,6 +82,11 @@
         //Alert local notification
         private LocalNotification(notiDate: Date, message: string): void {
 
+            //Check notification date is available
+            var isUnavailableNotiDate = !notiDate || notiDate == undefined || notiDate == null;
+            if (isUnavailableNotiDate) notiDate = new Date();
+
+            //Create date for notification before notiDate 3 days
             var currentNotiDate = new Date(notiDate)
             currentNotiDate.setHours(8, 30, 0, 0);
             var beforeNotiDateOneDay = new Date();
@@ -93,6 +98,7 @@
 
             var textLocalNoti = message + "วันที่ " + currentNotiDate.toLocaleDateString();
 
+            //Set Local Notifications
             this.$cordovaLocalNotification.schedule([
                 {
                     id: this._localNotificationId++,
